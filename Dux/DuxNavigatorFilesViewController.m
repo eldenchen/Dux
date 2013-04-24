@@ -60,7 +60,7 @@ static NSArray *filesExcludeList;
   
   self.cacheQueue = [[NSOperationQueue alloc] init];
   self.cacheQueue.maxConcurrentOperationCount = 1;
-
+  
   if (!filesExcludeList) {
     filesExcludeList = @[@".svn",@".git"];
   }
@@ -77,7 +77,7 @@ static NSArray *filesExcludeList;
   DuxNavigatorFileCell *imageAndTextCell = [[DuxNavigatorFileCell alloc] init];
   [imageAndTextCell setEditable:YES];
   [tableColumn setDataCell:imageAndTextCell];
-
+  
   folderImage = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kGenericFolderIcon)];
   [folderImage setSize:NSMakeSize(kIconImageSize, kIconImageSize)];
 }
@@ -156,14 +156,14 @@ static NSArray *filesExcludeList;
 
 - (void)outlineView:(NSOutlineView *)olv willDisplayCell:(NSCell*)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
-		if ([self outlineView:olv isItemExpandable:item])
-		{
-      [(DuxNavigatorFileCell *)cell setImage:folderImage];
-    }
-    else {
-      NSString *fileExtension = [(NSURL *)item pathExtension];
-      [(DuxNavigatorFileCell *)cell setImage:[[NSWorkspace sharedWorkspace] iconForFileType:fileExtension]];
-    }
+  if ([self outlineView:olv isItemExpandable:item])
+  {
+    [(DuxNavigatorFileCell *)cell setImage:folderImage];
+  }
+  else {
+    NSString *fileExtension = [(NSURL *)item pathExtension];
+    [(DuxNavigatorFileCell *)cell setImage:[[NSWorkspace sharedWorkspace] iconForFileType:fileExtension]];
+  }
 }
 
 - (void)setRootURL:(NSURL *)rootURL
@@ -202,7 +202,7 @@ static NSArray *filesExcludeList;
     // make sure it isn't already cached (we often have a cache miss on the same URL many times)
     // get children, and sort them
     childUrls = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:url includingPropertiesForKeys:@[NSURLIsPackageKey, NSURLIsDirectoryKey] options:0 error:NULL];
-
+    
     mutableChildUrls = [[NSMutableArray alloc] initWithArray:childUrls];
     
     NSIndexSet *matchingPathsSet = [mutableChildUrls indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
@@ -303,7 +303,7 @@ static NSArray *filesExcludeList;
 {
   // walk down the tree starting at rootURL, untli we get to fileURL
   NSURL *nextUrl = self.rootURL;
-  while (fileURL.pathComponents.count > nextUrl.pathComponents.count) {
+  while (fileURL.pathComponents.count >= nextUrl.pathComponents.count) {
     // make sure nextDir is in our cache
     if (![self.cachedUrls containsObject:nextUrl]) {
       [self cacheDidMiss:nextUrl waitUntilFinished:1000]; // wait 1 second for the cache to fill
@@ -316,18 +316,38 @@ static NSArray *filesExcludeList;
       return;
     }
     
-    // is it in the outline view?
-    if ([self.filesView rowForItem:nextUrl] == -1) {
-      NSLog(@"cannot find %@ in files view. issue with NSURL isEqual?", nextUrl);
-      NSBeep();
-      return;
+    if (nextUrl != self.rootURL)
+    {
+      
+      // find the row
+      NSInteger rowIndex = 0;
+      id rowItem = nil;
+      while ((rowItem = [self.filesView itemAtRow:rowIndex])) {
+        if ([rowItem isEqual:nextUrl]) {
+          break;
+        }
+        rowIndex++;
+      }
+      
+      // find it in the outline view
+      if (!rowItem) {
+        NSLog(@"cannot find %@ in files view. issue with NSURL isEqual?", nextUrl);
+        NSBeep();
+        return;
+      }
+      
+      // got the target file? select it now
+      if (fileURL.pathComponents.count == nextUrl.pathComponents.count) {
+        [self.filesView selectRowIndexes:[NSIndexSet indexSetWithIndex:rowIndex] byExtendingSelection:NO];
+        [self.filesView scrollRowToVisible:rowIndex];
+        break;
+      }
+      
+      // expand it
+      [self.filesView expandItem:rowItem];
     }
     
-    // expand it
-    NSLog(@"expand: %@ in %@ (index %i)", nextUrl, self.filesView, (int)[self.filesView rowForItem:nextUrl]);
-    [self.filesView expandItem:nextUrl];
-    
-    // get the next dir
+    // go to the next url
     nextUrl = [nextUrl URLByAppendingPathComponent:[fileURL.pathComponents objectAtIndex:nextUrl.pathComponents.count]];
   }
 }
