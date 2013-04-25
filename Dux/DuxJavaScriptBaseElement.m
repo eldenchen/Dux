@@ -67,29 +67,31 @@ static DuxJavaScriptRegexElement *regexElement;
     
     // did we find a / character? check if it's a comment or a regex pattern
     characterFound = [string.string characterAtIndex:foundCharacterSetRange.location];
-    if (string.string.length > (foundCharacterSetRange.location + 1) && characterFound == '/') {
-      characterFound = [string.string characterAtIndex:foundCharacterSetRange.location + 1];
-      if (characterFound == '/') {
-        foundSingleLineComment = YES;
-        foundRegexPattern = NO;
-      } else if (characterFound == '*') {
-        foundSingleLineComment = NO;
-        foundRegexPattern = NO;
-      } else if ([[NSCharacterSet whitespaceAndNewlineCharacterSet] characterIsMember:characterFound]) { // whitespace, not a regex pattern
-        foundSingleLineComment = NO;
-        foundRegexPattern = NO;
-        keepLooking = YES;
-        searchStartLocation += 1;
-        continue;
+    if (characterFound == '/') {
+      if (string.string.length > (foundCharacterSetRange.location + 1)) {
+        characterFound = [string.string characterAtIndex:foundCharacterSetRange.location + 1];
+        if (characterFound == '/') {
+          foundSingleLineComment = YES;
+          foundRegexPattern = NO;
+        } else if (characterFound == '*') {
+          foundSingleLineComment = NO;
+          foundRegexPattern = NO;
+        } else if ([[NSCharacterSet whitespaceAndNewlineCharacterSet] characterIsMember:characterFound]) { // whitespace, not a regex pattern
+          foundSingleLineComment = NO;
+          foundRegexPattern = NO;
+          keepLooking = YES;
+          searchStartLocation += 1;
+          continue;
+        } else { // regex pattern
+          foundSingleLineComment = NO;
+          foundRegexPattern = YES;
+          characterFound = '/';
+        }
       } else { // regex pattern
         foundSingleLineComment = NO;
         foundRegexPattern = YES;
         characterFound = '/';
       }
-    } else { // regex pattern
-      foundSingleLineComment = NO;
-      foundRegexPattern = YES;
-      characterFound = '/';
     }
     
     keepLooking = NO;
