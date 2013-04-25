@@ -27,7 +27,7 @@ static DuxCSSColorValueElement *colorValueElement;
 {
   [super initialize];
   
-  nextElementCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"/;#-0123456789"];
+  nextElementCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"/;#-0123456789}\n"];
   numericCharacterSet = [NSCharacterSet decimalDigitCharacterSet];
   
   commentElement = [DuxCSSCommentElement sharedInstance];
@@ -84,6 +84,8 @@ static DuxCSSColorValueElement *colorValueElement;
       *nextElement = commentElement;
       return foundCharacterSetRange.location - startingAt;
     case ';':
+    case '}':
+    case '\n':
       return foundCharacterSetRange.location - startingAt;
     case '#':
       *nextElement = colorValueElement;
