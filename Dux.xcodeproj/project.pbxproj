@@ -134,6 +134,12 @@
 		38F1060916490F8A00467839 /* DuxMultiFileSearchWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38F1060716490F8A00467839 /* DuxMultiFileSearchWindowController.m */; };
 		38F1060A16490F8A00467839 /* DuxMultiFileSearchWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38F1060816490F8A00467839 /* DuxMultiFileSearchWindowController.xib */; };
 		38FBDAD815DF895300B9FE70 /* DuxFileContentsWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 38FBDAD715DF895300B9FE70 /* DuxFileContentsWatcher.m */; };
+		6C2EEB5F172A4C2500B9E411 /* DuxJSONBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2EEB54172A4C2500B9E411 /* DuxJSONBaseElement.m */; };
+		6C2EEB60172A4C2500B9E411 /* DuxJSONKeyElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2EEB56172A4C2500B9E411 /* DuxJSONKeyElement.m */; };
+		6C2EEB61172A4C2500B9E411 /* DuxJSONKeywordElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2EEB58172A4C2500B9E411 /* DuxJSONKeywordElement.m */; };
+		6C2EEB62172A4C2500B9E411 /* DuxJSONLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2EEB5A172A4C2500B9E411 /* DuxJSONLanguage.m */; };
+		6C2EEB63172A4C2500B9E411 /* DuxJSONNumberElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2EEB5C172A4C2500B9E411 /* DuxJSONNumberElement.m */; };
+		6C2EEB64172A4C2500B9E411 /* DuxJSONStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C2EEB5E172A4C2500B9E411 /* DuxJSONStringElement.m */; };
 		C97713171724C90B00AC1757 /* DuxNavigatorFileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C97713161724C90B00AC1757 /* DuxNavigatorFileCell.m */; };
 		C9F4E9441725543100E7AEC8 /* PaneGradientBar.png in Resources */ = {isa = PBXBuildFile; fileRef = C9F4E9421725543100E7AEC8 /* PaneGradientBar.png */; };
 		C9F4E9451725543100E7AEC8 /* PaneGradientBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9F4E9431725543100E7AEC8 /* PaneGradientBar@2x.png */; };
@@ -360,6 +366,18 @@
 		38F1060816490F8A00467839 /* DuxMultiFileSearchWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DuxMultiFileSearchWindowController.xib; sourceTree = "<group>"; };
 		38FBDAD615DF895300B9FE70 /* DuxFileContentsWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxFileContentsWatcher.h; sourceTree = "<group>"; };
 		38FBDAD715DF895300B9FE70 /* DuxFileContentsWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxFileContentsWatcher.m; sourceTree = "<group>"; };
+		6C2EEB53172A4C2500B9E411 /* DuxJSONBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJSONBaseElement.h; sourceTree = "<group>"; };
+		6C2EEB54172A4C2500B9E411 /* DuxJSONBaseElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJSONBaseElement.m; sourceTree = "<group>"; };
+		6C2EEB55172A4C2500B9E411 /* DuxJSONKeyElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJSONKeyElement.h; sourceTree = "<group>"; };
+		6C2EEB56172A4C2500B9E411 /* DuxJSONKeyElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJSONKeyElement.m; sourceTree = "<group>"; };
+		6C2EEB57172A4C2500B9E411 /* DuxJSONKeywordElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJSONKeywordElement.h; sourceTree = "<group>"; };
+		6C2EEB58172A4C2500B9E411 /* DuxJSONKeywordElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJSONKeywordElement.m; sourceTree = "<group>"; };
+		6C2EEB59172A4C2500B9E411 /* DuxJSONLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJSONLanguage.h; sourceTree = "<group>"; };
+		6C2EEB5A172A4C2500B9E411 /* DuxJSONLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJSONLanguage.m; sourceTree = "<group>"; };
+		6C2EEB5B172A4C2500B9E411 /* DuxJSONNumberElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJSONNumberElement.h; sourceTree = "<group>"; };
+		6C2EEB5C172A4C2500B9E411 /* DuxJSONNumberElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJSONNumberElement.m; sourceTree = "<group>"; };
+		6C2EEB5D172A4C2500B9E411 /* DuxJSONStringElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxJSONStringElement.h; sourceTree = "<group>"; };
+		6C2EEB5E172A4C2500B9E411 /* DuxJSONStringElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxJSONStringElement.m; sourceTree = "<group>"; };
 		C97713151724C90B00AC1757 /* DuxNavigatorFileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxNavigatorFileCell.h; sourceTree = "<group>"; };
 		C97713161724C90B00AC1757 /* DuxNavigatorFileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxNavigatorFileCell.m; sourceTree = "<group>"; };
 		C9F4E9421725543100E7AEC8 /* PaneGradientBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PaneGradientBar.png; sourceTree = "<group>"; };
@@ -395,6 +413,7 @@
 				38CD8FA9147F9CD000062D34 /* C/C++ */,
 				3824F0821452307300F00B96 /* HTML */,
 				38CD8FC2147FA21600062D34 /* JavaScript */,
+				6C2EEB52172A4C0000B9E411 /* JSON */,
 				38CC7D8714E24D9E00FE1594 /* Ruby */,
 				3804A8181478DA1D005C587A /* Plain Text */,
 				38CFEEBC1473AEBB00F81E6F /* PHP */,
@@ -795,6 +814,25 @@
 			name = XML;
 			sourceTree = "<group>";
 		};
+		6C2EEB52172A4C0000B9E411 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				6C2EEB53172A4C2500B9E411 /* DuxJSONBaseElement.h */,
+				6C2EEB54172A4C2500B9E411 /* DuxJSONBaseElement.m */,
+				6C2EEB55172A4C2500B9E411 /* DuxJSONKeyElement.h */,
+				6C2EEB56172A4C2500B9E411 /* DuxJSONKeyElement.m */,
+				6C2EEB59172A4C2500B9E411 /* DuxJSONLanguage.h */,
+				6C2EEB5A172A4C2500B9E411 /* DuxJSONLanguage.m */,
+				6C2EEB5D172A4C2500B9E411 /* DuxJSONStringElement.h */,
+				6C2EEB5E172A4C2500B9E411 /* DuxJSONStringElement.m */,
+				6C2EEB5B172A4C2500B9E411 /* DuxJSONNumberElement.h */,
+				6C2EEB5C172A4C2500B9E411 /* DuxJSONNumberElement.m */,
+				6C2EEB57172A4C2500B9E411 /* DuxJSONKeywordElement.h */,
+				6C2EEB58172A4C2500B9E411 /* DuxJSONKeywordElement.m */,
+			);
+			name = JSON;
+			sourceTree = "<group>";
+		};
 		C9F4E9411725543100E7AEC8 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -1053,6 +1091,12 @@
 				38D4B49117209FA300B2EDEC /* DuxAcknowledgementsController.m in Sources */,
 				389ACC4D172265A100E01DB3 /* DuxNavigatorFilesViewController.m in Sources */,
 				C97713171724C90B00AC1757 /* DuxNavigatorFileCell.m in Sources */,
+				6C2EEB5F172A4C2500B9E411 /* DuxJSONBaseElement.m in Sources */,
+				6C2EEB60172A4C2500B9E411 /* DuxJSONKeyElement.m in Sources */,
+				6C2EEB61172A4C2500B9E411 /* DuxJSONKeywordElement.m in Sources */,
+				6C2EEB62172A4C2500B9E411 /* DuxJSONLanguage.m in Sources */,
+				6C2EEB63172A4C2500B9E411 /* DuxJSONNumberElement.m in Sources */,
+				6C2EEB64172A4C2500B9E411 /* DuxJSONStringElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1238,6 +1282,7 @@
 				386EC897172A22B9000C7430 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		38D6057D1403859600D70F81 /* Build configuration list for PBXProject "Dux" */ = {
 			isa = XCConfigurationList;
