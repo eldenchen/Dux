@@ -10,13 +10,6 @@
 
 #import "DuxJavaScriptBaseElement.h"
 #import "DuxJavaScriptLanguage.h"
-#import "DuxJavaScriptSingleQuotedStringElement.h"
-#import "DuxJavaScriptDoubleQuotedStringElement.h"
-#import "DuxJavaScriptNumberElement.h"
-#import "DuxJavaScriptKeywordElement.h"
-#import "DuxJavaScriptSingleLineCommentElement.h"
-#import "DuxJavaScriptBlockCommentElement.h"
-#import "DuxJavaScriptRegexElement.h"
 
 @implementation DuxJavaScriptBaseElement
 
