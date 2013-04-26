@@ -74,6 +74,19 @@
 		389B016B172B1E7C003ADE63 /* DuxJavaScriptSingleLineCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FD6147FA27A00062D34 /* DuxJavaScriptSingleLineCommentElement.m */; };
 		389B016C172B1E7C003ADE63 /* DuxJavaScriptBlockCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FD9147FA28700062D34 /* DuxJavaScriptBlockCommentElement.m */; };
 		389B016D172B1E7C003ADE63 /* DuxJavaScriptRegexElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 386FE37516194A31002C0755 /* DuxJavaScriptRegexElement.m */; };
+		389B016E172B2418003ADE63 /* DuxCSSLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3886D4B114790FD700970CAE /* DuxCSSLanguage.m */; };
+		389B016F172B2418003ADE63 /* DuxCSSBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3886D4B414790FE700970CAE /* DuxCSSBaseElement.m */; };
+		389B0170172B2418003ADE63 /* DuxCSSCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3886D4B71479100000970CAE /* DuxCSSCommentElement.m */; };
+		389B0171172B2418003ADE63 /* DuxCSSClassSelectorElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3886D4C2147912BC00970CAE /* DuxCSSClassSelectorElement.m */; };
+		389B0172172B2418003ADE63 /* DuxCSSIDSelectorElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 385A1E9B147916760084F48E /* DuxCSSIDSelectorElement.m */; };
+		389B0173172B2418003ADE63 /* DuxCSSPseudoSelectorElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 385A1E9F147917590084F48E /* DuxCSSPseudoSelectorElement.m */; };
+		389B0174172B2418003ADE63 /* DuxCSSDefinitionBlockElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 385A1EA2147918770084F48E /* DuxCSSDefinitionBlockElement.m */; };
+		389B0175172B2418003ADE63 /* DuxCSSPropertyNameElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 385A1EA5147919A80084F48E /* DuxCSSPropertyNameElement.m */; };
+		389B0176172B2418003ADE63 /* DuxCSSPropertyValueElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38110AE714791AF50028B786 /* DuxCSSPropertyValueElement.m */; };
+		389B0177172B2418003ADE63 /* DuxCSSNumberValueElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38110AEB14791C3C0028B786 /* DuxCSSNumberValueElement.m */; };
+		389B0178172B2418003ADE63 /* DuxCSSColorValueElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38110AEE14791E850028B786 /* DuxCSSColorValueElement.m */; };
+		389B017B172B2513003ADE63 /* DuxCSSAtRuleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 389B017A172B2512003ADE63 /* DuxCSSAtRuleElement.m */; };
+		389B017C172B2513003ADE63 /* DuxCSSAtRuleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 389B017A172B2512003ADE63 /* DuxCSSAtRuleElement.m */; };
 		389C8EC4148B0E530029B942 /* DuxStringLineEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C8EC3148B0E530029B942 /* DuxStringLineEnumerator.m */; };
 		38B5BB0E171E5526000C8525 /* NSColor+DuxColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B5BB0D171E5526000C8525 /* NSColor+DuxColors.m */; };
 		38BB441D147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BB441C147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m */; };
@@ -243,6 +256,8 @@
 		38983C7514751B65004DD914 /* DuxLanguageMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxLanguageMenuItem.m; sourceTree = "<group>"; };
 		389ACC4B172265A100E01DB3 /* DuxNavigatorFilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxNavigatorFilesViewController.h; sourceTree = "<group>"; };
 		389ACC4C172265A100E01DB3 /* DuxNavigatorFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxNavigatorFilesViewController.m; sourceTree = "<group>"; };
+		389B0179172B2512003ADE63 /* DuxCSSAtRuleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSAtRuleElement.h; sourceTree = "<group>"; };
+		389B017A172B2512003ADE63 /* DuxCSSAtRuleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSAtRuleElement.m; sourceTree = "<group>"; };
 		389C8EC2148B0E530029B942 /* DuxStringLineEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxStringLineEnumerator.h; sourceTree = "<group>"; };
 		389C8EC3148B0E530029B942 /* DuxStringLineEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxStringLineEnumerator.m; sourceTree = "<group>"; };
 		38B5BB0C171E5526000C8525 /* NSColor+DuxColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+DuxColors.h"; sourceTree = "<group>"; };
@@ -558,6 +573,8 @@
 				38110AEB14791C3C0028B786 /* DuxCSSNumberValueElement.m */,
 				38110AED14791E850028B786 /* DuxCSSColorValueElement.h */,
 				38110AEE14791E850028B786 /* DuxCSSColorValueElement.m */,
+				389B0179172B2512003ADE63 /* DuxCSSAtRuleElement.h */,
+				389B017A172B2512003ADE63 /* DuxCSSAtRuleElement.m */,
 			);
 			name = CSS;
 			sourceTree = "<group>";
@@ -1005,6 +1022,18 @@
 				389B016B172B1E7C003ADE63 /* DuxJavaScriptSingleLineCommentElement.m in Sources */,
 				389B016C172B1E7C003ADE63 /* DuxJavaScriptBlockCommentElement.m in Sources */,
 				389B016D172B1E7C003ADE63 /* DuxJavaScriptRegexElement.m in Sources */,
+				389B016E172B2418003ADE63 /* DuxCSSLanguage.m in Sources */,
+				389B016F172B2418003ADE63 /* DuxCSSBaseElement.m in Sources */,
+				389B0170172B2418003ADE63 /* DuxCSSCommentElement.m in Sources */,
+				389B0171172B2418003ADE63 /* DuxCSSClassSelectorElement.m in Sources */,
+				389B0172172B2418003ADE63 /* DuxCSSIDSelectorElement.m in Sources */,
+				389B0173172B2418003ADE63 /* DuxCSSPseudoSelectorElement.m in Sources */,
+				389B0174172B2418003ADE63 /* DuxCSSDefinitionBlockElement.m in Sources */,
+				389B0175172B2418003ADE63 /* DuxCSSPropertyNameElement.m in Sources */,
+				389B0176172B2418003ADE63 /* DuxCSSPropertyValueElement.m in Sources */,
+				389B0177172B2418003ADE63 /* DuxCSSNumberValueElement.m in Sources */,
+				389B0178172B2418003ADE63 /* DuxCSSColorValueElement.m in Sources */,
+				389B017C172B2513003ADE63 /* DuxCSSAtRuleElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1115,6 +1144,7 @@
 				6C2EEB62172A4C2500B9E411 /* DuxJSONLanguage.m in Sources */,
 				6C2EEB63172A4C2500B9E411 /* DuxJSONNumberElement.m in Sources */,
 				6C2EEB64172A4C2500B9E411 /* DuxJSONStringElement.m in Sources */,
+				389B017B172B2513003ADE63 /* DuxCSSAtRuleElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
