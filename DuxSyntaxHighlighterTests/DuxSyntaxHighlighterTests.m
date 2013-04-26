@@ -26,7 +26,7 @@
 {
   [super setUp];
   
-  self.phpLanguage = self.phpLanguage;
+  self.phpLanguage = [[DuxPHPLanguage alloc] init];
   self.phpDoubleQuotedStringElement = [[DuxPHPDoubleQuoteStringElement alloc] initWithLanguage:self.phpLanguage];
   
   self.jsLanguage = [[DuxJavaScriptLanguage alloc] init];
