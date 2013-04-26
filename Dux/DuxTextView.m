@@ -119,7 +119,7 @@ if ([DuxPreferences editorDarkMode]) {
 {
   [super awakeFromNib];
   
-  [self addObserver:self forKeyPath:@"textStorage.delegate" options:NSKeyValueChangeSetting context:NULL];
+  [self addObserver:self forKeyPath:@"textStorage.delegate" options:NSKeyValueObservingOptionOld context:NULL];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
