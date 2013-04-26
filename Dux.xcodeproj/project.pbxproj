@@ -65,6 +65,15 @@
 		38983C731474FEC8004DD914 /* JumpToLinePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38983C721474FEC8004DD914 /* JumpToLinePanel.xib */; };
 		38983C7614751B66004DD914 /* DuxLanguageMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 38983C7514751B65004DD914 /* DuxLanguageMenuItem.m */; };
 		389ACC4D172265A100E01DB3 /* DuxNavigatorFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 389ACC4C172265A100E01DB3 /* DuxNavigatorFilesViewController.m */; };
+		389B0165172B1E7C003ADE63 /* DuxJavaScriptLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FC4147FA23000062D34 /* DuxJavaScriptLanguage.m */; };
+		389B0166172B1E7C003ADE63 /* DuxJavaScriptBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FC7147FA24200062D34 /* DuxJavaScriptBaseElement.m */; };
+		389B0167172B1E7C003ADE63 /* DuxJavaScriptSingleQuotedStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FCA147FA24E00062D34 /* DuxJavaScriptSingleQuotedStringElement.m */; };
+		389B0168172B1E7C003ADE63 /* DuxJavaScriptDoubleQuotedStringElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FCD147FA25900062D34 /* DuxJavaScriptDoubleQuotedStringElement.m */; };
+		389B0169172B1E7C003ADE63 /* DuxJavaScriptNumberElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FD0147FA26100062D34 /* DuxJavaScriptNumberElement.m */; };
+		389B016A172B1E7C003ADE63 /* DuxJavaScriptKeywordElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FD3147FA26D00062D34 /* DuxJavaScriptKeywordElement.m */; };
+		389B016B172B1E7C003ADE63 /* DuxJavaScriptSingleLineCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FD6147FA27A00062D34 /* DuxJavaScriptSingleLineCommentElement.m */; };
+		389B016C172B1E7C003ADE63 /* DuxJavaScriptBlockCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FD9147FA28700062D34 /* DuxJavaScriptBlockCommentElement.m */; };
+		389B016D172B1E7C003ADE63 /* DuxJavaScriptRegexElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 386FE37516194A31002C0755 /* DuxJavaScriptRegexElement.m */; };
 		389C8EC4148B0E530029B942 /* DuxStringLineEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C8EC3148B0E530029B942 /* DuxStringLineEnumerator.m */; };
 		38B5BB0E171E5526000C8525 /* NSColor+DuxColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B5BB0D171E5526000C8525 /* NSColor+DuxColors.m */; };
 		38BB441D147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BB441C147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m */; };
@@ -987,6 +996,15 @@
 				386EC8A2172A248F000C7430 /* DuxLanguage.m in Sources */,
 				386EC8A3172A248F000C7430 /* DuxLanguageElement.m in Sources */,
 				386EC8A4172A249D000C7430 /* DuxPreferences.m in Sources */,
+				389B0165172B1E7C003ADE63 /* DuxJavaScriptLanguage.m in Sources */,
+				389B0166172B1E7C003ADE63 /* DuxJavaScriptBaseElement.m in Sources */,
+				389B0167172B1E7C003ADE63 /* DuxJavaScriptSingleQuotedStringElement.m in Sources */,
+				389B0168172B1E7C003ADE63 /* DuxJavaScriptDoubleQuotedStringElement.m in Sources */,
+				389B0169172B1E7C003ADE63 /* DuxJavaScriptNumberElement.m in Sources */,
+				389B016A172B1E7C003ADE63 /* DuxJavaScriptKeywordElement.m in Sources */,
+				389B016B172B1E7C003ADE63 /* DuxJavaScriptSingleLineCommentElement.m in Sources */,
+				389B016C172B1E7C003ADE63 /* DuxJavaScriptBlockCommentElement.m in Sources */,
+				389B016D172B1E7C003ADE63 /* DuxJavaScriptRegexElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
