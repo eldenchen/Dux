@@ -45,6 +45,9 @@ static NSColor *color;
   if (startingAt + 2 < stringLength && [string.string characterAtIndex:startingAt + 1] == 'x') {
     foundRange = [string.string rangeOfCharacterFromSet:nonHexCharacterSet options:NSLiteralSearch range:NSMakeRange(startingAt + 2, stringLength - startingAt - 2)];
     
+    if (foundRange.location == NSNotFound)
+      return stringLength - startingAt;
+    
     if (foundRange.location == startingAt + 2)
       foundRange = NSMakeRange(NSNotFound, 0);
   }
@@ -53,9 +56,9 @@ static NSColor *color;
     foundRange = [string.string rangeOfCharacterFromSet:nextElementCharacterSet options:NSLiteralSearch range:NSMakeRange(startingAt, stringLength - startingAt)];
   }
   
-  // not found, or the last character in the string?
-  if (foundRange.location == NSNotFound || foundRange.location == (stringLength - 1))
+  if (foundRange.location == NSNotFound) {
     return stringLength - startingAt;
+  }
   
   return foundRange.location - startingAt;
 }
