@@ -35,6 +35,41 @@
   length = [[DuxPHPDoubleQuoteStringElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo \"string$\" bar"] startingAt:4 nextElement:&nextElement];
   STAssertNil(nextElement, @"should be nil but is %@", nextElement);
   STAssertEquals(length, (NSUInteger)9, nil);
+  
+  nextElement = nil;
+  length = [[DuxPHPBaseElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo 42 bar"] startingAt:0 nextElement:&nextElement];
+  STAssertEquals(nextElement, [DuxPHPNumberElement sharedInstance], nil);
+  STAssertEquals(length, (NSUInteger)4, nil);
+  
+  nextElement = nil;
+  length = [[DuxPHPBaseElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo 42"] startingAt:0 nextElement:&nextElement];
+  STAssertEquals(nextElement, [DuxPHPNumberElement sharedInstance], nil);
+  STAssertEquals(length, (NSUInteger)4, nil);
+  
+  nextElement = nil;
+  length = [[DuxPHPNumberElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo 42 bar"] startingAt:4 nextElement:&nextElement];
+  STAssertNil(nextElement, nil);
+  STAssertEquals(length, (NSUInteger)2, nil);
+  
+  nextElement = nil;
+  length = [[DuxPHPNumberElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo 42"] startingAt:4 nextElement:&nextElement];
+  STAssertNil(nextElement, nil);
+  STAssertEquals(length, (NSUInteger)2, nil);
+  
+  nextElement = nil;
+  length = [[DuxPHPBaseElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo42 bar"] startingAt:0 nextElement:&nextElement];
+  STAssertNil(nextElement, nil);
+  STAssertEquals(length, (NSUInteger)9, nil);
+  
+  nextElement = nil;
+  length = [[DuxPHPBaseElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo42"] startingAt:0 nextElement:&nextElement];
+  STAssertNil(nextElement, nil);
+  STAssertEquals(length, (NSUInteger)5, nil);
+  
+  nextElement = nil;
+  length = [[DuxPHPBaseElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo 42bar"] startingAt:0 nextElement:&nextElement];
+  STAssertNil(nextElement, nil);
+  STAssertEquals(length, (NSUInteger)9, nil);
 }
 
 - (void)testJavaScript
