@@ -14,6 +14,8 @@
 @implementation DuxJavaScriptBaseElement
 
 static NSCharacterSet *nextElementCharacterSet;
+static NSCharacterSet *numericCharacterSet;
+static NSCharacterSet *alphabeticCharacterSet;
 
 static DuxJavaScriptSingleQuotedStringElement *singleQuotedStringElement;
 static DuxJavaScriptDoubleQuotedStringElement *doubleQuotedStringElement;
@@ -28,6 +30,8 @@ static DuxJavaScriptRegexElement *regexElement;
   [super initialize];
   
   nextElementCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"'\"/0123456789"];
+  numericCharacterSet = [NSCharacterSet decimalDigitCharacterSet];
+  alphabeticCharacterSet = [NSCharacterSet letterCharacterSet];
   
   singleQuotedStringElement = [DuxJavaScriptSingleQuotedStringElement sharedInstance];
   doubleQuotedStringElement = [DuxJavaScriptDoubleQuotedStringElement sharedInstance];
@@ -84,6 +88,31 @@ static DuxJavaScriptRegexElement *regexElement;
         foundSingleLineComment = NO;
         foundRegexPattern = YES;
         characterFound = '/';
+      }
+    }
+    
+    // did we find a number? make sure it is wrapped in non-alpha characters
+    else if ([numericCharacterSet characterIsMember:characterFound]) {
+      BOOL prevCharIsAlphabetic;
+      if (foundCharacterSetRange.location == 0) {
+        prevCharIsAlphabetic = NO;
+      } else {
+        prevCharIsAlphabetic = [alphabeticCharacterSet characterIsMember:[string.string characterAtIndex:foundCharacterSetRange.location - 1]];
+      }
+      
+      NSUInteger nextNonNumericCharacterLocation = [string.string rangeOfCharacterFromSet:numericCharacterSet.invertedSet options:NSLiteralSearch range:NSMakeRange(foundCharacterSetRange.location, string.string.length - foundCharacterSetRange.location)].location;
+      BOOL nextCharIsAlphabetic;
+      if (nextNonNumericCharacterLocation == NSNotFound) {
+        nextNonNumericCharacterLocation = string.string.length;
+        nextCharIsAlphabetic = NO;
+      } else {
+        nextCharIsAlphabetic = [alphabeticCharacterSet characterIsMember:[string.string characterAtIndex:nextNonNumericCharacterLocation]];
+      }
+      
+      if (prevCharIsAlphabetic || nextCharIsAlphabetic) {
+        searchStartLocation = nextNonNumericCharacterLocation;
+        keepLooking = YES;
+        continue;
       }
     }
     

@@ -41,13 +41,54 @@
 {
   id nextElement = nil;
   NSUInteger length = [[DuxJavaScriptRegexElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo /regex/ bar"] startingAt:4 nextElement:&nextElement];
-  STAssertNil(nextElement, @"should be nil but is %@", nextElement);
+  STAssertNil(nextElement, nil);
   STAssertEquals(length, (NSUInteger)7, nil);
   
   nextElement = nil;
   length = [[DuxJavaScriptRegexElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo /re\\/gex/ bar"] startingAt:4 nextElement:&nextElement];
-  STAssertNil(nextElement, @"should be nil but is %@", nextElement);
+  STAssertNil(nextElement, nil);
   STAssertEquals(length, (NSUInteger)9, nil);
+  
+  nextElement = nil;
+  length = [[DuxJavaScriptBaseElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo 42 bar"] startingAt:0 nextElement:&nextElement];
+  STAssertEquals(nextElement, [DuxJavaScriptNumberElement sharedInstance], nil);
+  STAssertEquals(length, (NSUInteger)4, nil);
+  
+  nextElement = nil;
+  length = [[DuxJavaScriptBaseElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo 42"] startingAt:0 nextElement:&nextElement];
+  STAssertEquals(nextElement, [DuxJavaScriptNumberElement sharedInstance], nil);
+  STAssertEquals(length, (NSUInteger)4, nil);
+  
+  nextElement = nil;
+  length = [[DuxJavaScriptNumberElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo 42 bar"] startingAt:4 nextElement:&nextElement];
+  STAssertNil(nextElement, nil);
+  STAssertEquals(length, (NSUInteger)2, nil);
+  
+  nextElement = nil;
+  length = [[DuxJavaScriptNumberElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo 42"] startingAt:4 nextElement:&nextElement];
+  STAssertNil(nextElement, nil);
+  STAssertEquals(length, (NSUInteger)2, nil);
+  
+  nextElement = nil;
+  length = [[DuxJavaScriptBaseElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo42 bar"] startingAt:0 nextElement:&nextElement];
+  STAssertNil(nextElement, nil);
+  STAssertEquals(length, (NSUInteger)9, nil);
+  
+  nextElement = nil;
+  length = [[DuxJavaScriptBaseElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo42"] startingAt:0 nextElement:&nextElement];
+  STAssertNil(nextElement, nil);
+  STAssertEquals(length, (NSUInteger)5, nil);
+  
+  nextElement = nil;
+  length = [[DuxJavaScriptBaseElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo 42bar"] startingAt:0 nextElement:&nextElement];
+  STAssertNil(nextElement, nil);
+  STAssertEquals(length, (NSUInteger)9, nil);
+  
+  
+  nextElement = nil;
+  length = [[DuxJavaScriptBaseElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo (42) bar"] startingAt:0 nextElement:&nextElement];
+  STAssertEquals(nextElement, [DuxJavaScriptNumberElement sharedInstance], nil);
+  STAssertEquals(length, (NSUInteger)5, nil);
 }
 
 - (void)testCss
