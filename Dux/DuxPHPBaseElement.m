@@ -15,6 +15,7 @@
 
 static NSCharacterSet *nextElementCharacterSet;
 static NSCharacterSet *numericCharacterSet;
+static NSCharacterSet *nonNumericCharacterSet;
 static NSCharacterSet *alphabeticCharacterSet;
 static NSRegularExpression *keywordsExpression;
 
@@ -32,6 +33,7 @@ static DuxPHPBlockCommentElement *blockCommentElement;
   
   nextElementCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"'\"/#$0123456789"];
   numericCharacterSet = [NSCharacterSet decimalDigitCharacterSet];
+  nonNumericCharacterSet = [numericCharacterSet invertedSet];
   alphabeticCharacterSet = [NSCharacterSet letterCharacterSet];
   
   NSArray *keywords = [NSArray arrayWithObjects:@"class", @"extends", @"if", @"public", @"function", @"exit", nil];
@@ -83,9 +85,9 @@ static DuxPHPBlockCommentElement *blockCommentElement;
         prevCharIsAlphabetic = [alphabeticCharacterSet characterIsMember:[string.string characterAtIndex:foundCharacterSetRange.location - 1]];
       }
       
-      NSUInteger nextNonNumericCharacterLocation = [string.string rangeOfCharacterFromSet:numericCharacterSet.invertedSet options:NSLiteralSearch range:NSMakeRange(foundCharacterSetRange.location, string.string.length - foundCharacterSetRange.location)].location;
+      NSUInteger nextNonNumericCharacterLocation = [string.string rangeOfCharacterFromSet:nonNumericCharacterSet options:NSLiteralSearch range:NSMakeRange(foundCharacterSetRange.location, string.string.length - foundCharacterSetRange.location)].location;
       BOOL nextCharIsAlphabetic;
-      if (nextNonNumericCharacterLocation == NSNotFound) {
+      if (nextNonNumericCharacterLocation == NSNotFound || [string.string characterAtIndex:nextNonNumericCharacterLocation] == 'x') {
         nextNonNumericCharacterLocation = string.string.length;
         nextCharIsAlphabetic = NO;
       } else {
