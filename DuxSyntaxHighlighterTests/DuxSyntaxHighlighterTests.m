@@ -115,6 +115,11 @@
   STAssertEquals(length, (NSUInteger)2, nil);
   
   nextElement = nil;
+  length = [[DuxJavaScriptNumberElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo 42;"] startingAt:4 nextElement:&nextElement];
+  STAssertNil(nextElement, nil);
+  STAssertEquals(length, (NSUInteger)2, nil);
+  
+  nextElement = nil;
   length = [[DuxJavaScriptBaseElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo42 bar"] startingAt:0 nextElement:&nextElement];
   STAssertNil(nextElement, nil);
   STAssertEquals(length, (NSUInteger)9, nil);
@@ -134,6 +139,11 @@
   length = [[DuxJavaScriptBaseElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo (42) bar"] startingAt:0 nextElement:&nextElement];
   STAssertEquals(nextElement, [DuxJavaScriptNumberElement sharedInstance], nil);
   STAssertEquals(length, (NSUInteger)5, nil);
+  
+  nextElement = nil;
+  length = [[DuxJavaScriptNumberElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo 0xFF bar"] startingAt:4 nextElement:&nextElement];
+  STAssertNil(nextElement, nil);
+  STAssertEquals(length, (NSUInteger)4, nil);
 }
 
 - (void)testCss
