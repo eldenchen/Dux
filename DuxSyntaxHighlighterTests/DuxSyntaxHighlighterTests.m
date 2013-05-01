@@ -57,6 +57,11 @@
   STAssertEquals(length, (NSUInteger)2, nil);
   
   nextElement = nil;
+  length = [[DuxPHPNumberElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo 42;"] startingAt:4 nextElement:&nextElement];
+  STAssertNil(nextElement, nil);
+  STAssertEquals(length, (NSUInteger)2, nil);
+  
+  nextElement = nil;
   length = [[DuxPHPBaseElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo42 bar"] startingAt:0 nextElement:&nextElement];
   STAssertNil(nextElement, nil);
   STAssertEquals(length, (NSUInteger)9, nil);
@@ -70,6 +75,11 @@
   length = [[DuxPHPBaseElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo 42bar"] startingAt:0 nextElement:&nextElement];
   STAssertNil(nextElement, nil);
   STAssertEquals(length, (NSUInteger)9, nil);
+  
+  nextElement = nil;
+  length = [[DuxPHPNumberElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo 0xFF bar"] startingAt:4 nextElement:&nextElement];
+  STAssertNil(nextElement, nil);
+  STAssertEquals(length, (NSUInteger)4, nil);
 }
 
 - (void)testJavaScript
