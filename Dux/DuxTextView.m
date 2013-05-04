@@ -86,6 +86,10 @@ if ([DuxPreferences editorDarkMode]) {
 //  container.widthTracksTextView = NO;
 //  self.horizontallyResizable = YES;
   
+  if (!self.textStorage.delegate)
+    NSLog(@"oops! can't  find syntax highlighter!");
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syntaxHighlighterDidFinishHighlighting:) name:@"DuxSyntaxHighlighterDidFinishHighlighting" object:self.textStorage.delegate];
+  
   // apply the text view
   [self replaceTextContainer:container];
   
@@ -115,29 +119,12 @@ if ([DuxPreferences editorDarkMode]) {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)awakeFromNib
-{
-  [super awakeFromNib];
-  
-  [self addObserver:self forKeyPath:@"textStorage.delegate" options:NSKeyValueObservingOptionOld context:NULL];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-  if (object != self)
-    return;
-  
-  if ([keyPath isEqualToString:@"textStorage.delegate"]) {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(syntaxHighlighterDidFinishHighlighting:) name:@"DuxSyntaxHighlighterDidFinishHighlighting" object:self.textStorage.delegate];
-  }
-}
-
 - (void)syntaxHighlighterDidFinishHighlighting:(NSNotification *)notif
 {
   if (self.textStorage.length == 0)
     return;
   
-  NSUInteger index = (self.selectedRange.location > 0) ? self.selectedRange.location - 1 : 0;
+  NSUInteger index = (self.selectedRange.location > 0) ? self.selectedRange.location : 0;
   index = MIN(index, self.textStorage.length - 1);
   [self setTypingAttributes:[self.textStorage attributesAtIndex:index effectiveRange:NULL]];
 }
@@ -1282,16 +1269,18 @@ if ([DuxPreferences editorDarkMode]) {
 - (void)editorFontDidChange:(NSNotification *)notif
 {
   dispatch_async(dispatch_get_main_queue(), ^{
-    [self.textStorage setAttributes:[NSDictionary dictionary] range:NSMakeRange(0, self.textStorage.length)];
-    [self.highlighter updateHighlightingForStorage:self.textStorage];
+    NSRange range = NSMakeRange(0, self.textStorage.length);
+    [self.textStorage setAttributes:[NSDictionary dictionary] range:range];
+    [self.highlighter updateHighlightingForStorage:self.textStorage range:range];
   });
 }
 
 - (void)editorTabWidthDidChange:(NSNotification *)notif
 {
   dispatch_async(dispatch_get_main_queue(), ^{
-    [self.textStorage setAttributes:[NSDictionary dictionary] range:NSMakeRange(0, self.textStorage.length)];
-    [self.highlighter updateHighlightingForStorage:self.textStorage];
+    NSRange range = NSMakeRange(0, self.textStorage.length);
+    [self.textStorage setAttributes:[NSDictionary dictionary] range:range];
+    [self.highlighter updateHighlightingForStorage:self.textStorage range:range];
   });
 }
 
