@@ -172,7 +172,10 @@ if ([DuxPreferences editorDarkMode]) {
     oldAttsRange = NSIntersectionRange(oldAttsRange, attsRange);
     
     // apply new value if there's anything to apply
+    BOOL didApplyChange = NO;
     if (attsRange.length != 0 && !(attsRange.location >= oldAttsRange.location && NSMaxRange(attsRange) <= NSMaxRange(oldAttsRange) && [elementStack isEqual:oldElementStack])) {
+      didApplyChange = YES;
+      
       if (!didBeginEditing) {
         [textStorage beginEditing];
         didBeginEditing = YES;
@@ -182,7 +185,7 @@ if ([DuxPreferences editorDarkMode]) {
     }
     
     // if we are now outside minHighlightRange and haven't edited anything... stop doing stuff now
-    if (!didBeginEditing && highlightIndex > minHighlightRange.location + minHighlightRange.length) {
+    if (!didApplyChange && highlightIndex > minHighlightRange.location + minHighlightRange.length) {
       break;
     }
     
