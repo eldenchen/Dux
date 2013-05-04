@@ -185,7 +185,7 @@ if ([DuxPreferences editorDarkMode]) {
     }
     
     // if we are now outside minHighlightRange and haven't edited anything... stop doing stuff now
-    if (!didApplyChange && highlightIndex > minHighlightRange.location + minHighlightRange.length) {
+    if (!didApplyChange && attsRange.length != 0 && highlightIndex > minHighlightRange.location + minHighlightRange.length) {
       break;
     }
     
