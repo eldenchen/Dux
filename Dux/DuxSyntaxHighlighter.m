@@ -131,7 +131,7 @@ if ([DuxPreferences editorDarkMode]) {
     DuxLanguageElement *thisElement = [elementStack lastObject];
     if (thisElement.language != thisLanguage) {
       thisLanguage = thisElement.language;
-      [thisLanguage prepareToParseTextStorage:textStorage];
+      [thisLanguage prepareToParseTextStorage:textStorage inRange:minHighlightRange];
     }
     
     // how long is this element, and what is the next one?

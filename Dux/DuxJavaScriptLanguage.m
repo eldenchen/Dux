@@ -52,9 +52,9 @@ static NSIndexSet *keywordIndexSet = nil;
   return keywordIndexSet;
 }
 
-- (void)prepareToParseTextStorage:(NSTextStorage *)textStorage
+- (void)prepareToParseTextStorage:(NSTextStorage *)textStorage inRange:(NSRange)range
 {
-  [super prepareToParseTextStorage:textStorage];
+  [super prepareToParseTextStorage:textStorage inRange:range];
   
   if (!keywordsExpression) {
     NSArray *keywords = [[NSArray alloc] initWithObjects:@"\\$", @"break", @"case", @"catch", @"continue", @"debugger", @"default", @"delete", @"do", @"else", @"finally", @"for", @"function", @"if", @"in", @"instanceof", @"new", @"return", @"switch", @"this", @"throw", @"try", @"typeof", @"var", @"void", @"while", @"with", nil];
@@ -63,7 +63,7 @@ static NSIndexSet *keywordIndexSet = nil;
   }
   
   NSMutableIndexSet *keywordIndexesMutable = [[NSIndexSet indexSet] mutableCopy];
-  [keywordsExpression enumerateMatchesInString:textStorage.string options:0 range:NSMakeRange(0, textStorage.length) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
+  [keywordsExpression enumerateMatchesInString:textStorage.string options:0 range:range usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
     [keywordIndexesMutable addIndexesInRange:match.range];
   }];
   

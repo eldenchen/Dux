@@ -59,7 +59,7 @@ static NSMutableArray *registeredLanguages = nil;
 {
 }
 
-- (void)prepareToParseTextStorage:(NSTextStorage *)textStorage
+- (void)prepareToParseTextStorage:(NSTextStorage *)textStorage inRange:(NSRange)range
 {
 }
 
