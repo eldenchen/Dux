@@ -1141,6 +1141,7 @@ if ([DuxPreferences editorDarkMode]) {
   
   NSUInteger whitespaceCount;
   NSNumber *oldWhitespaceCount;
+  NSUInteger tabWidth = [DuxPreferences tabWidth];
   
   while (lineIndex < 99999) {
     if (characterIndex >= stringLength) {
@@ -1168,7 +1169,7 @@ if ([DuxPreferences editorDarkMode]) {
             break;
           case '\t':
             whitespaceCount++;
-            while (whitespaceCount % [DuxPreferences tabWidth] != 0) {
+            while (whitespaceCount % tabWidth != 0) {
               whitespaceCount++;
             }
             break;
