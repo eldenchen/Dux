@@ -203,7 +203,12 @@ if ([DuxPreferences editorDarkMode]) {
     [textStorage endEditing];
   isHighlighting = NO;
   
-  [[NSNotificationCenter defaultCenter] postNotificationName:@"DuxSyntaxHighlighterDidFinishHighlighting" object:self];
+  // on the _next_ pass of the event loop, post the finished highlighting message. This is beacuse there are edge cases where changing the text storage inside -[NSTextStorageDelegateProtocol textStorageDidProcessEditing:] will cause corruption
+  double delayInSeconds = 0.0;
+  dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+  dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"DuxSyntaxHighlighterDidFinishHighlighting" object:self];
+  });
 }
 
 - (void)textStorageDidProcessEditing:(NSNotification *)notification
