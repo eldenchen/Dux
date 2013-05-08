@@ -80,6 +80,11 @@
   length = [[DuxPHPNumberElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo 0xFF bar"] startingAt:4 nextElement:&nextElement];
   STAssertNil(nextElement, nil);
   STAssertEquals(length, (NSUInteger)4, nil);
+  
+  nextElement = nil;
+  [[DuxPHPBaseElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo true bar"] startingAt:0 nextElement:&nextElement];
+  STAssertEquals(nextElement, [DuxPHPKeywordElement sharedInstance], nil);
+  STAssertEquals(length, (NSUInteger)4, nil);
 }
 
 - (void)testJavaScript
@@ -133,6 +138,11 @@
   length = [[DuxJavaScriptBaseElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo 42bar"] startingAt:0 nextElement:&nextElement];
   STAssertNil(nextElement, nil);
   STAssertEquals(length, (NSUInteger)9, nil);
+  
+  nextElement = nil;
+  [[DuxJavaScriptBaseElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo true bar"] startingAt:0 nextElement:&nextElement];
+  STAssertEquals(nextElement, [DuxJavaScriptKeywordElement sharedInstance], nil);
+  STAssertEquals(length, (NSUInteger)4, nil);
   
   
   nextElement = nil;
