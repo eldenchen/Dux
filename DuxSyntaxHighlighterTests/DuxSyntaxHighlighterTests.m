@@ -158,6 +158,10 @@
 
 - (void)testCss
 {
+  STAssertFalse([DuxCSSLanguage isDefaultLanguageForURL:[NSURL fileURLWithPath:@"~/foo.bar"] textContents:nil], nil);
+  STAssertTrue([DuxCSSLanguage isDefaultLanguageForURL:[NSURL fileURLWithPath:@"~/foo.css"] textContents:nil], nil);
+  STAssertTrue([DuxCSSLanguage isDefaultLanguageForURL:[NSURL fileURLWithPath:@"~/foo.less"] textContents:nil], nil);
+  
   id nextElement = nil;
   NSUInteger length = [[DuxCSSBaseElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo @rule bar"] startingAt:0 nextElement:&nextElement];
   STAssertEquals(nextElement, [DuxCSSAtRuleElement sharedInstance], nil);
