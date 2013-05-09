@@ -140,7 +140,7 @@
   STAssertEquals(length, (NSUInteger)9, nil);
   
   nextElement = nil;
-  [[DuxJavaScriptBaseElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo true bar"] startingAt:0 nextElement:&nextElement];
+  length = [[DuxJavaScriptBaseElement sharedInstance] lengthInString:[[NSAttributedString alloc] initWithString:@"foo true bar"] startingAt:0 nextElement:&nextElement];
   STAssertEquals(nextElement, [DuxJavaScriptKeywordElement sharedInstance], nil);
   STAssertEquals(length, (NSUInteger)4, nil);
   
