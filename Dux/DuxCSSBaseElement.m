@@ -58,7 +58,7 @@ static DuxCSSAtRuleElement *atRuleElement;
     characterFound = [string.string characterAtIndex:foundCharacterSetRange.location];
     if (string.string.length > (foundCharacterSetRange.location + 1) && characterFound == '/') {
       characterFound = [string.string characterAtIndex:foundCharacterSetRange.location + 1];
-      if (characterFound != '/' && characterFound != '*') {
+      if (characterFound != '*') {
         searchStartLocation++;
         continue;
       }
