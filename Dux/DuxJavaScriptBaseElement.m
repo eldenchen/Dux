@@ -123,7 +123,10 @@ static DuxJavaScriptRegexElement *regexElement;
   
   // search for the next keyword
   BOOL needKeywordSearch = NO;
-  if (string != [DuxJavaScriptLanguage keywordIndexString])
+  id keywordString = string;
+  if ([keywordString isKindOfClass:[NSAttributedString class]])
+    keywordString = [keywordString string];
+  if (keywordString != [DuxJavaScriptLanguage keywordIndexString])
     needKeywordSearch = YES;
   if (!NSLocationInRange(startingAt, [DuxJavaScriptLanguage keywordIndexRange]))
     needKeywordSearch = YES;
@@ -132,9 +135,6 @@ static DuxJavaScriptRegexElement *regexElement;
   if (foundCharacterSetRange.location == NSNotFound && !NSLocationInRange(string.length - 1, [DuxJavaScriptLanguage keywordIndexRange]))
     needKeywordSearch = YES;
   if (needKeywordSearch) {
-    id keywordString = string;
-    if ([keywordString isKindOfClass:[NSAttributedString class]])
-      keywordString = [keywordString string];
     [[DuxJavaScriptLanguage sharedInstance] findKeywordsInString:keywordString inRange:NSMakeRange(startingAt, MIN(string.length, startingAt + 10000) - startingAt)];
   }
   
