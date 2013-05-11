@@ -62,14 +62,12 @@ static NSCharacterSet *newlineCharacterSet;
   
   self.drawsBackground = NO; // disable NSTextView's background so we can draw our own
   
-if ([DuxPreferences editorDarkMode]) {
-  self.insertionPointColor = [NSColor colorWithCalibratedWhite:1 alpha:1];
-  
-// cannot do the following, because it is ignored when we are not the first responder, and then the text attributes lead to unreadable text
-//  self.selectedTextAttributes = @{NSBackgroundColorAttributeName: [NSColor colorWithCalibratedRed:0.504 green:0.710 blue:1.000 alpha:0.3]};
-// instead we do this:
-  self.selectedTextAttributes = @{NSBackgroundColorAttributeName: [NSColor selectedTextBackgroundColor], NSForegroundColorAttributeName: [NSColor blackColor]};
-}
+  if ([DuxPreferences editorDarkMode]) {
+    self.insertionPointColor = [NSColor colorWithCalibratedWhite:1 alpha:1];
+    
+    // built in selected text attributes are useless in dark mode, and we cannot set the value of some of them, so instead we disable super's selected text attributes and specify our own ones in setSelectedRange:
+    self.selectedTextAttributes = @{};
+  }
   
   
   self.showLineNumbers = [DuxPreferences showLineNumbers];
@@ -435,6 +433,29 @@ if ([DuxPreferences editorDarkMode]) {
   
   // restore modified selected ranges
   [self setSelectedRanges:selectedRanges];
+}
+
+- (void)setSelectedRanges:(NSArray *)ranges affinity:(NSSelectionAffinity)affinity stillSelecting:(BOOL)stillSelectingFlag
+{
+  // built in selected text attributes are useless in dark mode, and we cannot set the value of some of them, so instead we disable super's selected text attributes and specify our own ones in setSelectedRange:
+  if ([DuxPreferences editorDarkMode]) {
+    for (NSValue *value in self.selectedRanges) {
+      if (value.rangeValue.length == 0)
+        continue;
+      
+      [self.textStorage removeAttribute:NSBackgroundColorAttributeName range:value.rangeValue];
+    }
+    
+    // apply new bacgkround colors
+    for (NSValue *value in ranges) {
+      if (value.rangeValue.length == 0)
+        continue;
+      
+      [self.textStorage addAttribute:NSBackgroundColorAttributeName value:[NSColor colorWithCalibratedRed:0.504 green:0.710 blue:1.000 alpha:0.3] range:value.rangeValue];
+    }
+  }
+  
+  [super setSelectedRanges:ranges affinity:affinity stillSelecting:stillSelectingFlag];
 }
 
 - (NSArray *)completionsForPartialWordRange:(NSRange)charRange indexOfSelectedItem:(NSInteger *)index
