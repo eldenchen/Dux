@@ -529,6 +529,21 @@ static NSCharacterSet *newlineCharacterSet;
   [self breakUndoCoalescing];
 }
 
+- (void)insertText:(id)insertString
+{
+  // built in selected text attributes are useless in dark mode, and we cannot set the value of some of them, so instead we disable super's selected text attributes and specify our own ones in setSelectedRange:
+  if ([DuxPreferences editorDarkMode]) {
+    for (NSValue *value in self.selectedRanges) {
+      if (value.rangeValue.length == 0)
+        continue;
+      
+      [self.textStorage removeAttribute:NSBackgroundColorAttributeName range:value.rangeValue];
+    }
+  }
+  
+  [super insertText:insertString];
+}
+
 - (void)insertSnippet:(NSString *)snippet
 {
   if (snippet.length == 0)
