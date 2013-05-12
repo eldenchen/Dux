@@ -113,7 +113,7 @@ static NSCharacterSet *nonWhitespaceCharacterSet;
     
     // if we are at a \r character and the next character is a \n, we have windows newlines and should skip the next character
     if (characterNewlineType == DuxNewlineClassicMac &&
-        stringLength > characterLocation &&
+        stringLength > (characterLocation + 1) &&
         [self characterAtIndex:characterLocation + 1] == '\n') {
       
       characterNewlineType = DuxNewlineWindows;
