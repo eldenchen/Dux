@@ -106,7 +106,10 @@ static DuxPHPBlockCommentElement *blockCommentElement;
   
   // search for the next keyword
   BOOL needKeywordSearch = NO;
-  if (string != [DuxPHPLanguage keywordIndexString])
+  id keywordString = string;
+  if ([keywordString isKindOfClass:[NSAttributedString class]])
+    keywordString = [keywordString string];
+  if (keywordString != [DuxPHPLanguage keywordIndexString])
     needKeywordSearch = YES;
   if (!NSLocationInRange(startingAt, [DuxPHPLanguage keywordIndexRange]))
     needKeywordSearch = YES;
