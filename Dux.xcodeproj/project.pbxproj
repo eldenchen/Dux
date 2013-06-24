@@ -476,6 +476,8 @@
 				388682AB1480409F00C362EE /* DuxLineNumberString.h */,
 				388682AC1480409F00C362EE /* DuxLineNumberString.m */,
 				38983C721474FEC8004DD914 /* JumpToLinePanel.xib */,
+				38B5BB0C171E5526000C8525 /* NSColor+DuxColors.h */,
+				38B5BB0D171E5526000C8525 /* NSColor+DuxColors.m */,
 				3804A8161478DA00005C587A /* Languages */,
 			);
 			name = "Text View";
@@ -772,8 +774,6 @@
 				38F1060616490F8A00467839 /* DuxMultiFileSearchWindowController.h */,
 				38F1060716490F8A00467839 /* DuxMultiFileSearchWindowController.m */,
 				38F1060816490F8A00467839 /* DuxMultiFileSearchWindowController.xib */,
-				38B5BB0C171E5526000C8525 /* NSColor+DuxColors.h */,
-				38B5BB0D171E5526000C8525 /* NSColor+DuxColors.m */,
 				389ACC4B172265A100E01DB3 /* DuxNavigatorFilesViewController.h */,
 				389ACC4C172265A100E01DB3 /* DuxNavigatorFilesViewController.m */,
 				C97713151724C90B00AC1757 /* DuxNavigatorFileCell.h */,

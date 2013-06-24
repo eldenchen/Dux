@@ -126,6 +126,7 @@ if ([DuxPreferences editorDarkMode]) {
   // begin highlighting
   DuxLanguage *thisLanguage = nil;
   NSUInteger endlessLoopDetectionRecentHighlightIndexes[10] = { [0 ... 9] = NSNotFound };
+  BOOL lastElementDidChange = YES;
   while (highlightIndex < textStorage.length) {
     // prepare this element
     DuxLanguageElement *thisElement = [elementStack lastObject];
@@ -184,10 +185,11 @@ if ([DuxPreferences editorDarkMode]) {
       [textStorage addAttribute:@"DuxLanguageElementStack" value:elementStack range:attsRange];
     }
     
-    // if we are now outside minHighlightRange and haven't edited anything... stop doing stuff now
-    if (!didApplyChange && attsRange.length != 0 && highlightIndex > minHighlightRange.location + minHighlightRange.length) {
+    // if we are now outside minHighlightRange and haven't edited anything for two cycles... stop doing stuff now
+    if (!didApplyChange && !lastElementDidChange && attsRange.length != 0 && highlightIndex > minHighlightRange.location + minHighlightRange.length) {
       break;
     }
+    lastElementDidChange = didApplyChange;
     
     
     // prepare for next element
