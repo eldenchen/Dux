@@ -233,7 +233,7 @@
   NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:[NSURL fileURLWithPath:self.searchPath.stringByStandardizingPath] includingPropertiesForKeys:[NSArray arrayWithObject:NSURLIsDirectoryKey] options:0 errorHandler:nil];
   NSSet *excludeFilesWithExtension = [NSSet setWithArray:[DuxPreferences openQuicklyExcludesFilesWithExtension]];
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
       [self.progressIndicator setIndeterminate:YES];
       [self.progressIndicator startAnimation:self];
       self.progressIndicator.alphaValue = 1.0;
@@ -264,7 +264,7 @@
     }
     
     // finish up
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
       self.searchPaths = [scratchSearchPaths copy];
       self.progressIndicator.alphaValue = 0;
       [self.progressIndicator stopAnimation:self];

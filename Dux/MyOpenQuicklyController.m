@@ -230,7 +230,7 @@
     }
     
     // add the final items in the scratch to the search paths, refresh the search, and stop the animation
-    dispatch_sync(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
       if (scratchSearchPaths.count > 0) {
         self.searchPaths = [self.searchPaths arrayByAddingObjectsFromArray:scratchSearchPaths];
         
