@@ -74,9 +74,9 @@ static __weak id keywordIndexString = nil;
 - (void)findKeywordsInString:(NSString *)string inRange:(NSRange)range
 {
   if (!keywordsExpression) {
-    NSArray *keywords = [[NSArray alloc] initWithObjects:@"\\$", @"break", @"case", @"catch", @"continue", @"debugger", @"default", @"delete", @"do", @"else", @"false", @"finally", @"for", @"function", @"if", @"in", @"instanceof", @"new", @"return", @"switch", @"this", @"throw", @"true", @"try", @"typeof", @"var", @"void", @"while", @"with", nil];
+    NSArray *keywords = [[NSArray alloc] initWithObjects:@"\\$", @"break", @"case", @"catch", @"continue", @"debugger", @"default", @"delete", @"do", @"else", @"finally", @"for", @"function", @"if", @"in", @"instanceof", @"new", @"return", @"switch", @"this", @"throw", @"try", @"typeof", @"var", @"void", @"while", @"with", @"null", @"true", @"false", @"undefined", @"Object", @"Function", @"String", @"Array", @"Number", @"Boolean", @"Date", @"RegExp", @"Error", nil];
     
-    keywordsExpression = [[NSRegularExpression alloc] initWithPattern:[[NSString alloc] initWithFormat:@"\\b(%@)\\b", [keywords componentsJoinedByString:@"|"]] options:NSRegularExpressionCaseInsensitive error:NULL];
+    keywordsExpression = [[NSRegularExpression alloc] initWithPattern:[[NSString alloc] initWithFormat:@"\\b(%@)\\b", [keywords componentsJoinedByString:@"|"]] options:0 error:NULL];
   }
   
   NSMutableIndexSet *keywordIndexesMutable = [[NSIndexSet indexSet] mutableCopy];
