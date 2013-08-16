@@ -88,17 +88,29 @@ static DuxJavaScriptRegexElement *regexElement;
           ch = [string.string characterAtIndex:range.location];
           
           if (strchr(",=:({&|ne", ch)) {
-            if (ch == 'n' && range.location >= 5 && [[string.string substringWithRange:NSMakeRange(range.location - 5, 5)] isEqualToString:@"retur"]) {
-              foundRegexPattern = YES;
-              
-              if (range.location > 5 && !isspace([string.string characterAtIndex:range.location - 6])) {
-                foundRegexPattern = NO;
+            if (ch == 'n') {
+              if (range.location >= 5 && [[string.string substringWithRange:NSMakeRange(range.location - 5, 5)] isEqualToString:@"retur"]) {
+                foundRegexPattern = YES;
+                
+                if (range.location > 5) {
+                  ch = [string.string characterAtIndex:range.location - 6];
+                  
+                  if (ch != ';' && !isspace(ch)) {
+                    foundRegexPattern = NO;
+                  }
+                }
               }
-            } else if (ch == 'e' && range.location >= 3 && [[string.string substringWithRange:NSMakeRange(range.location - 3, 3)] isEqualToString:@"cas"]) {
-              foundRegexPattern = YES;
-              
-              if (range.location > 3 && !isspace([string.string characterAtIndex:range.location - 4])) {
-                foundRegexPattern = NO;
+            } else if (ch == 'e') {
+              if (range.location >= 3 && [[string.string substringWithRange:NSMakeRange(range.location - 3, 3)] isEqualToString:@"cas"]) {
+                foundRegexPattern = YES;
+                
+                if (range.location > 3) {
+                  ch = [string.string characterAtIndex:range.location - 4];
+                  
+                  if (ch != ';' && !isspace(ch)) {
+                    foundRegexPattern = NO;
+                  }
+                }
               }
             } else {
               foundRegexPattern = YES;
