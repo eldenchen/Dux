@@ -73,4 +73,9 @@ static NSColor *attributeColor;
   return attributeColor;
 }
 
+- (BOOL)isString
+{
+  return YES;
+}
+
 @end

@@ -143,6 +143,8 @@ static NSCharacterSet *newlineCharacterSet;
     whitespace = [self.textStorage.string substringWithRange:whitespaceRange];
   }
   
+  [self breakUndoCoalescing];
+  
   // are we about to insert a unix newline immediately after a mac newline? This will create a windows newline, which
   // do nothing as far as the user is concerned, and we need to insert *two* unix newlines
   if (self.textDocument.activeNewlineStyle == DuxNewlineUnix) {
@@ -158,6 +160,8 @@ static NSCharacterSet *newlineCharacterSet;
   if (whitespace) {
     [self insertText:whitespace];
   }
+  
+  [self breakUndoCoalescing];
 }
 
 - (void)deleteBackward:(id)sender
@@ -633,6 +637,8 @@ static NSCharacterSet *newlineCharacterSet;
     }
   }
   
+  if ([self handleOpeningClosingCharactersInEvent:theEvent])
+    return;
   
   // handle other key
   switch ([[theEvent charactersIgnoringModifiers] characterAtIndex:0]) {
@@ -657,6 +663,11 @@ static NSCharacterSet *newlineCharacterSet;
       }
       return;
     case NSDeleteCharacter: // "delete" on mac keyboards, but "backspace" on others
+      if ([theEvent modifierFlags] == 1 << 8 && self.selectedRange.length == 0) {
+        if ([self removeEmptyMarkPairIfFound])
+          return;
+      }
+      
       if (!([theEvent modifierFlags] & NSControlKeyMask))
         break;
       
@@ -684,6 +695,109 @@ static NSCharacterSet *newlineCharacterSet;
   }
   
   [super keyDown:theEvent];
+}
+
+- (BOOL)handleOpeningClosingCharactersInEvent:(NSEvent *)event
+{
+  unichar ch = [[event charactersIgnoringModifiers] characterAtIndex:0];
+  
+  char *found = NULL;
+  static char *openingChars = "{[(\"'";
+  static char *closingChars = "}])\"'";
+  static char *closingBrackets = "}])";
+  NSRange selectedRange = self.selectedRange;
+  
+  if (ch < 128 && (found = strchr(openingChars, ch))) {
+    if ((ch == '"' || ch == '\'') && selectedRange.location > 0) {
+      NSRange stringElementRange;
+      DuxLanguageElement *element = [self.highlighter elementAtIndex:selectedRange.location - 1 longestEffectiveRange:&stringElementRange inTextStorage:self.textStorage];
+      
+      if (element.isString) {
+        NSUInteger indexOfLastChar = stringElementRange.location + stringElementRange.length - 1;
+        
+        if (stringElementRange.length == 1 || [self.string characterAtIndex:stringElementRange.location] != [self.string characterAtIndex:indexOfLastChar]) {
+          [super keyDown:event];
+          return YES;
+        }
+      }
+    }
+    
+    if (selectedRange.location > 0 && selectedRange.location < self.string.length) {
+      NSRange stringElementRange;
+      DuxLanguageElement *element = [self.highlighter elementAtIndex:selectedRange.location longestEffectiveRange:&stringElementRange inTextStorage:self.textStorage];
+      
+      if (element.isString) {
+        NSUInteger indexOfLastChar = stringElementRange.location + stringElementRange.length - 1;
+        
+        if ((ch == '"' || ch == '\'') && selectedRange.location == NSMaxRange(stringElementRange) - 1 && [self.string characterAtIndex:indexOfLastChar] == ch) {
+          [self moveRight:nil];
+          return YES;
+        } else {
+          [super keyDown:event];
+          return YES;
+        }
+      }
+    }
+    
+    [self breakUndoCoalescing];
+    [self insertText:[NSString stringWithFormat:@"%c%c", ch, closingChars[found - openingChars]]];
+    [self moveLeft:nil];
+    
+    return YES;
+  }
+  
+  else if (ch < 128 && (found = strchr(closingBrackets, ch))) {
+    if (selectedRange.length == 0 && selectedRange.location > 0 && selectedRange.location < self.string.length) {
+      DuxLanguageElement *element = [self.highlighter elementAtIndex:selectedRange.location longestEffectiveRange:NULL inTextStorage:self.textStorage];
+      
+      if (!element.isString && [self.string characterAtIndex:selectedRange.location] == ch) {
+        [self moveRight:nil];
+        return YES;
+      }
+    }
+  }
+  
+  return NO;
+}
+
+- (BOOL)removeEmptyMarkPairIfFound
+{
+  NSRange selectedRange = self.selectedRange;
+  
+  if (selectedRange.location > 0 && selectedRange.location < self.string.length) {
+    NSRange stringElementRange;
+    DuxLanguageElement *element = [self.highlighter elementAtIndex:selectedRange.location
+                                             longestEffectiveRange:&stringElementRange
+                                                     inTextStorage:self.textStorage];
+    
+    if (element.isString) {
+      if (stringElementRange.length == 2 && selectedRange.location == stringElementRange.location + 1) {
+        if ([self shouldChangeTextInRange:stringElementRange replacementString:@""]) {
+          [self replaceCharactersInRange:stringElementRange withString:@""];
+          [self didChangeText];
+          return YES;
+        }
+      }
+    } else {
+      unichar leftChar = [self.string characterAtIndex:selectedRange.location - 1];
+      unichar rightChar = [self.string characterAtIndex:selectedRange.location];
+      static char *openingBrackets = "{[(";
+      static char *closingBrackets = "}])";
+      char *found = NULL;
+      
+      if (leftChar < 128 && (found = strchr(openingBrackets, leftChar)) && rightChar == closingBrackets[found - openingBrackets]) {
+        NSRange range = NSMakeRange(selectedRange.location - 1, 2);
+        
+        if ([self shouldChangeTextInRange:range replacementString:@""]) {
+          [self replaceCharactersInRange:range withString:@""];
+          [self didChangeText];
+          return YES;
+        }
+      }
+    }
+  }
+  
+  return NO;
 }
 
 - (BOOL)insertionPointInLeadingWhitespace

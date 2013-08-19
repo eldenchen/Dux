@@ -34,5 +34,6 @@
 
 - (NSColor *)color;
 - (BOOL)isComment;
+- (BOOL)isString;
 
 @end

@@ -58,4 +58,9 @@ static NSColor *color;
   return color;
 }
 
+- (BOOL)isString
+{
+  return YES;
+}
+
 @end
