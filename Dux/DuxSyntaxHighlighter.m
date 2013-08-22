@@ -216,7 +216,10 @@ if ([DuxPreferences editorDarkMode]) {
 - (void)textStorageDidProcessEditing:(NSNotification *)notification
 {
   NSTextStorage *storage = notification.object;
-  [self updateHighlightingForStorage:storage range:storage.editedRange];
+  
+  if (storage.editedMask & NSTextStorageEditedCharacters) {
+    [self updateHighlightingForStorage:storage range:storage.editedRange];
+  }
 }
 
 - (DuxLanguage *)languageForRange:(NSRange)range ofTextStorage:(NSTextStorage *)textStorage

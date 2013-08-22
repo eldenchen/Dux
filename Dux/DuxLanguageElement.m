@@ -81,6 +81,11 @@ static NSColor *color = nil;
   return NO;
 }
 
+- (BOOL)isString
+{
+  return NO;
+}
+
 - (BOOL)shouldHighlightOtherIdenticalElements
 {
   return NO;

@@ -17,6 +17,7 @@ static NSCharacterSet *nextElementCharacterSet;
 static NSCharacterSet *numericCharacterSet;
 static NSCharacterSet *nonNumericCharacterSet;
 static NSCharacterSet *alphabeticCharacterSet;
+static NSCharacterSet *nonWhitespaceCharacterSet;
 
 static DuxJavaScriptSingleQuotedStringElement *singleQuotedStringElement;
 static DuxJavaScriptDoubleQuotedStringElement *doubleQuotedStringElement;
@@ -34,6 +35,7 @@ static DuxJavaScriptRegexElement *regexElement;
   numericCharacterSet = [NSCharacterSet decimalDigitCharacterSet];
   nonNumericCharacterSet = [numericCharacterSet invertedSet];
   alphabeticCharacterSet = [NSCharacterSet letterCharacterSet];
+  nonWhitespaceCharacterSet = [[NSCharacterSet whitespaceCharacterSet] invertedSet];
   
   singleQuotedStringElement = [DuxJavaScriptSingleQuotedStringElement sharedInstance];
   doubleQuotedStringElement = [DuxJavaScriptDoubleQuotedStringElement sharedInstance];
@@ -57,7 +59,9 @@ static DuxJavaScriptRegexElement *regexElement;
   NSRange foundCharacterSetRange;
   unichar characterFound;
   BOOL foundSingleLineComment = NO;
+  BOOL foundBlockComment = NO;
   BOOL foundRegexPattern = NO;
+  
   while (keepLooking) {
     foundCharacterSetRange = [string.string rangeOfCharacterFromSet:nextElementCharacterSet options:NSLiteralSearch range:NSMakeRange(searchStartLocation, string.string.length - searchStartLocation)];
     
@@ -68,28 +72,61 @@ static DuxJavaScriptRegexElement *regexElement;
     characterFound = [string.string characterAtIndex:foundCharacterSetRange.location];
     if (characterFound == '/') {
       if (string.string.length > (foundCharacterSetRange.location + 1)) {
-        characterFound = [string.string characterAtIndex:foundCharacterSetRange.location + 1];
-        if (characterFound == '/') {
+        unichar ch = [string.string characterAtIndex:foundCharacterSetRange.location + 1];
+        
+        if (ch == '/') {
           foundSingleLineComment = YES;
-          foundRegexPattern = NO;
-        } else if (characterFound == '*') {
-          foundSingleLineComment = NO;
-          foundRegexPattern = NO;
-        } else if ([[NSCharacterSet whitespaceAndNewlineCharacterSet] characterIsMember:characterFound]) { // whitespace, not a regex pattern
-          foundSingleLineComment = NO;
-          foundRegexPattern = NO;
-          keepLooking = YES;
+          break;
+        } else if (ch == '*') {
+          foundBlockComment = YES;
+          break;
+        }
+        
+        NSRange range = [string.string rangeOfCharacterFromSet:nonWhitespaceCharacterSet options:NSLiteralSearch|NSBackwardsSearch range:NSMakeRange(0, foundCharacterSetRange.location)];
+        
+        if (range.location != NSNotFound) {
+          ch = [string.string characterAtIndex:range.location];
+          
+          if (ch < 128 && strchr(",=:({&|ne", ch)) {
+            if (ch == 'n') {
+              if (range.location >= 5 && [[string.string substringWithRange:NSMakeRange(range.location - 5, 5)] isEqualToString:@"retur"]) {
+                foundRegexPattern = YES;
+                
+                if (range.location > 5) {
+                  ch = [string.string characterAtIndex:range.location - 6];
+                  
+                  if (ch != ';' && !isspace(ch)) {
+                    foundRegexPattern = NO;
+                  }
+                }
+              }
+            } else if (ch == 'e') {
+              if (range.location >= 3 && [[string.string substringWithRange:NSMakeRange(range.location - 3, 3)] isEqualToString:@"cas"]) {
+                foundRegexPattern = YES;
+                
+                if (range.location > 3) {
+                  ch = [string.string characterAtIndex:range.location - 4];
+                  
+                  if (ch != ';' && !isspace(ch)) {
+                    foundRegexPattern = NO;
+                  }
+                }
+              }
+            } else {
+              foundRegexPattern = YES;
+            }
+          }
+        }
+      }
+      
+      if (!foundRegexPattern) {
+        BOOL shouldContinue = string.string.length > (foundCharacterSetRange.location + 1);
+        foundCharacterSetRange = NSMakeRange(NSNotFound, 0);
+        
+        if (shouldContinue) {
           searchStartLocation += 1;
           continue;
-        } else { // regex pattern
-          foundSingleLineComment = NO;
-          foundRegexPattern = YES;
-          characterFound = '/';
         }
-      } else { // regex pattern
-        foundSingleLineComment = NO;
-        foundRegexPattern = YES;
-        characterFound = '/';
       }
     }
     
@@ -194,13 +231,14 @@ static DuxJavaScriptRegexElement *regexElement;
       if (foundSingleLineComment) {
         *nextElement = singleLineCommentElement;
         return foundCharacterSetRange.location - startingAt;
+      }
+      else if (foundBlockComment) {
+        *nextElement = blockCommentElement;
+        return foundCharacterSetRange.location - startingAt;
       } else if (foundRegexPattern) {
         *nextElement = regexElement;
         return foundCharacterSetRange.location - startingAt;
       }
-    case '*':
-      *nextElement = blockCommentElement;
-      return foundCharacterSetRange.location - startingAt;
   }
   
   // should never reach this, but add this line anyway to make the compiler happy
