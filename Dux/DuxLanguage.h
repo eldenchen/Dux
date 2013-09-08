@@ -28,4 +28,8 @@
 // subclasses must override this to check if they are the correct editor. URL will be nil for unsaved documents, but textContents will always be set
 + (BOOL)isDefaultLanguageForURL:(NSURL *)URL textContents:(NSString *)textContents;
 
+// searches for an array of "symbols". Each result is a dictionary, format: @{@"name": @"helloWorld", @"range": [NSValue valueWithRange:{42, 12}}}
+// default implementation returns nil
+- (NSArray *)findSymbolsInDocumentContents:(NSString *)string;
+
 @end

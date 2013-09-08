@@ -229,6 +229,38 @@ static NSCharacterSet *newlineCharacterSet;
   [self.goToLinePanel performClose:self];
 }
 
+- (IBAction)goToSymbol:(id)sender
+{
+  if (!self.goToSymbolPanel) {
+    self.goToSymbolPanel = [[DuxQuickFindPanelController alloc] init];
+    self.goToSymbolPanel.title = @"Go to Symbol";
+    self.goToSymbolPanel.target = self;
+    self.goToSymbolPanel.action = @selector(goToSymbolPanelAction:);
+  }
+  
+  DuxLanguage *language = self.highlighter.baseLanguage;
+  self.goToSymbolPanel.contents = [language findSymbolsInDocumentContents:self.textStorage.string];
+  
+  [self.goToSymbolPanel orderFrontForProjectWindow:self.window];
+}
+
+- (void)goToSymbolPanelAction:(id)sender
+{
+  NSRange symbolRange = [self.goToSymbolPanel.selectedResult[@"range"] rangeValue];
+  
+//  [self setSelectedRange:symbolRange];
+//  [self scrollRangeToVisible:symbolRange];
+  
+  // jump to the line
+  NSRange lineRange = [self.string rangeOfLineAtOffset:symbolRange.location];
+  NSUInteger glyphIndex = [self.layoutManager glyphIndexForCharacterAtIndex:lineRange.location];
+  NSRect lineRect = [self.layoutManager lineFragmentRectForGlyphAtIndex:glyphIndex effectiveRange:NULL];
+  
+  [DuxScrollViewAnimation animatedScrollPointToCenter:NSMakePoint(0, NSMinY(lineRect) + (NSHeight(lineRect) / 2)) inScrollView:self.enclosingScrollView];
+  
+  [self setSelectedRange:lineRange];
+}
+
 - (IBAction)commentSelection:(id)sender
 {
   // get the selected range

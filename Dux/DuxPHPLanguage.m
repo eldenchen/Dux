@@ -100,4 +100,30 @@ static __weak id keywordIndexString = nil;
   return NO;
 }
 
+- (NSArray *)findSymbolsInDocumentContents:(NSString *)string
+{
+  NSArray *keywords = [[NSArray alloc] initWithObjects:@"class", @"function", @"interface", nil];
+  NSRegularExpression *keywordRegex = [[NSRegularExpression alloc] initWithPattern:[[NSString alloc] initWithFormat:@"\\b((%@\\s+([a-z0-9_]+)))\\b", [keywords componentsJoinedByString:@"\\s+([a-z0-9_]+))|("]] options:NSRegularExpressionCaseInsensitive error:NULL];
+  
+  NSMutableArray *matches = @[].mutableCopy;
+  [keywordRegex enumerateMatchesInString:string options:0 range:NSMakeRange(0, string.length) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
+    NSUInteger m = match.numberOfRanges;
+    for (NSUInteger i = 2; i < m; i++) {
+      BOOL isNameMatch = ((i - 1) % 2) == 0;
+      if (!isNameMatch)
+        continue;
+      
+      NSRange range = [match rangeAtIndex:i];
+      if (range.location == NSNotFound)
+        continue;
+      
+      NSString *name = [string substringWithRange:range];
+      
+      [matches addObject:@{@"range": [NSValue valueWithRange:range], @"name": name}];
+    }
+  }];
+  
+  return matches.copy;
+}
+
 @end

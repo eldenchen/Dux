@@ -11,6 +11,7 @@
 #import <AppKit/AppKit.h>
 #import "NSStringDuxAdditions.h"
 #import "DuxSyntaxHighlighter.h"
+#import "DuxQuickFindPanelController.h"
 
 @class MyTextDocument;
 
@@ -30,11 +31,13 @@
 @property NSUInteger pageGuidePosition;
 
 @property (strong) IBOutlet NSPanel *goToLinePanel;
+@property (strong) DuxQuickFindPanelController *goToSymbolPanel;
 @property (weak) IBOutlet NSSearchField *goToLineSearchField;
 
 - (void)initDuxTextView;
 
 - (IBAction)jumpToLine:(id)sender;
+- (IBAction)goToSymbol:(id)sender;
 - (IBAction)goToLinePanelButtonClicked:(id)sender;
 
 - (IBAction)commentSelection:(id)sender; // will forward to uncommentSelection: if the selection is commented
