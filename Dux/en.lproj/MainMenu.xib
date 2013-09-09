@@ -75,7 +75,7 @@
                                     <action selector="newDocument:" target="-1" id="371"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="New Window" keyEquivalent="T" id="661">
+                            <menuItem title="New Window" keyEquivalent="N" id="661">
                                 <connections>
                                     <action selector="newWindow:" target="-1" id="664"/>
                                 </connections>
@@ -402,8 +402,7 @@ CA
                                     <action selector="jumpToLine:" target="-1" id="572"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Go to Symbol" keyEquivalent="t" id="R7w-f8-CkC">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                            <menuItem title="Go to Symbol" keyEquivalent="T" id="R7w-f8-CkC">
                                 <connections>
                                     <action selector="goToSymbol:" target="-1" id="JxU-Ot-SAK"/>
                                 </connections>
