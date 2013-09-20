@@ -15,6 +15,8 @@
 @property DuxQuickFindPanel *panel;
 @property NSSearchField *searchField;
 @property NSTableView *resultsView;
+@property (nonatomic) NSArray *contents;
+@property (nonatomic) NSArray *oldContents;
 
 @property NSMutableArray *matchingResultIndexes;
 
@@ -92,7 +94,7 @@
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
   if (!self.matchingResultIndexes)
-    return self.contents.count;
+    return self.contents.count + self.oldContents.count;
   
   return self.matchingResultIndexes.count;
 }
@@ -117,7 +119,7 @@
   if (self.searchField.stringValue.length == 0) {
     self.matchingResultIndexes = nil;
     [self.resultsView reloadData];
-    if (self.contents.count > 0)
+    if ((self.contents.count + self.oldContents.count) > 0)
       [self.resultsView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
     
     return;
@@ -139,9 +141,9 @@
   
   // perform the search
   self.matchingResultIndexes = @[].mutableCopy;
-  NSInteger contentsCount = self.contents.count;
+  NSInteger contentsCount = self.contents.count + self.oldContents.count;
   for (NSUInteger index = 0; index < contentsCount; index++) {
-    NSString *name = self.contents[index][@"name"];
+    NSString *name = index < self.contents.count ? self.contents[index][@"name"] : self.oldContents[index - self.contents.count][@"name"];
     
     if ([expression rangeOfFirstMatchInString:name options:0 range:NSMakeRange(0, name.length)].location == NSNotFound)
       continue;
@@ -223,10 +225,36 @@
     row = 0;
   
   if (!self.matchingResultIndexes)
-    return self.contents[row];
+    return row < self.contents.count ? self.contents[row] : self.oldContents[row - self.contents.count];
   
   row = [self.matchingResultIndexes[row] integerValue];
-  return self.contents[row];
+  return row < self.contents.count ? self.contents[row] : self.oldContents[row - self.contents.count];
+}
+
+- (void)beginAddingFindResults
+{
+  NSLog(@"begin");
+  self.oldContents = self.contents;
+  self.contents = @[];
+}
+
+- (void)addFindResult:(NSDictionary *)resultRecord
+{
+  if ([self.oldContents containsObject:resultRecord]) {
+    NSMutableArray *oldContentsMutable = self.oldContents.mutableCopy;
+    [oldContentsMutable removeObject:resultRecord];
+    self.oldContents = oldContentsMutable.copy;
+    NSLog(@"remove one old");
+  }
+  self.contents = [self.contents arrayByAddingObject:resultRecord];
+  NSLog(@"add one new");
+}
+
+- (void)endAddingFindResults
+{
+  self.oldContents = nil;
+  [self reload];
+  NSLog(@"end");
 }
 
 @end

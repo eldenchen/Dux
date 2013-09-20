@@ -28,8 +28,16 @@
 // subclasses must override this to check if they are the correct editor. URL will be nil for unsaved documents, but textContents will always be set
 + (BOOL)isDefaultLanguageForURL:(NSURL *)URL textContents:(NSString *)textContents;
 
-// searches for an array of "symbols". Each result is a dictionary, format: @{@"name": @"helloWorld", @"range": [NSValue valueWithRange:{42, 12}}}
-// default implementation returns nil
-- (NSArray *)findSymbolsInDocumentContents:(NSString *)string;
+/**
+ * Searches for an array of "symbols", possibly on a background thread, and calls the handler (on the main thread) for
+ * each result. If the handler returns NO, then the search is aborted.
+ * 
+ * Calls finishedHandler once seraching has stopped.
+ *
+ * Symbol format: @{@"name": @"helloWorld", @"range": [NSValue valueWithRange:{42, 12}}}
+ * 
+ * Default implementation just calls the finishedHandler immediately.
+ */
+- (void)findSymbolsInDocumentContents:(NSString *)string foundSymbolHandler:(BOOL(^) (NSDictionary *symbol))foundSymbolHandler finishedSearchHandler:(void(^)())finishedHandler;
 
 @end

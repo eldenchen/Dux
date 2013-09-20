@@ -68,9 +68,9 @@ static NSMutableArray *registeredLanguages = nil;
   @throw [NSException exceptionWithName:@"not defined" reason:@"isDefaultLanguageForURL:textContents: must be implemented by a subclass" userInfo:nil];
 }
 
-- (NSArray *)findSymbolsInDocumentContents:(NSString *)string
+- (void)findSymbolsInDocumentContents:(NSString *)string foundSymbolHandler:(BOOL(^) (NSDictionary *symbol))foundSymbolHandler finishedSearchHandler:(void(^)())finishedHandler
 {
-  return nil;
+  finishedHandler();
 }
 
 @end

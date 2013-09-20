@@ -35,20 +35,21 @@
   return NO;
 }
 
-- (NSArray *)findSymbolsInDocumentContents:(NSString *)string
+- (void)findSymbolsInDocumentContents:(NSString *)string foundSymbolHandler:(BOOL(^) (NSDictionary *symbol))foundSymbolHandler finishedSearchHandler:(void(^)())finishedHandler
 {
   NSRegularExpression *keywordRegex = [[NSRegularExpression alloc] initWithPattern:@"(.+?)\\s*\n*\\s*\\{" options:NSRegularExpressionCaseInsensitive error:NULL];
   
-  NSMutableArray *matches = @[].mutableCopy;
   [keywordRegex enumerateMatchesInString:string options:0 range:NSMakeRange(0, string.length) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
     NSRange range = [match rangeAtIndex:1];
   
     NSString *name = [string substringWithRange:range];
     
-    [matches addObject:@{@"range": [NSValue valueWithRange:range], @"name": name}];
+    BOOL continueSearching = foundSymbolHandler(@{@"range": [NSValue valueWithRange:range], @"name": name});
+    if (!continueSearching)
+      *stop = YES;
   }];
   
-  return matches.copy;
+  finishedHandler();
 }
 
 @end

@@ -482,10 +482,6 @@
 				388682AB1480409F00C362EE /* DuxLineNumberString.h */,
 				388682AC1480409F00C362EE /* DuxLineNumberString.m */,
 				38983C721474FEC8004DD914 /* JumpToLinePanel.xib */,
-				3822E45717DC2C6600D1AC1E /* DuxQuickFindPanelController.h */,
-				3822E45817DC2C6600D1AC1E /* DuxQuickFindPanelController.m */,
-				3822E45A17DC34F900D1AC1E /* DuxQuickFindPanel.h */,
-				3822E45B17DC34F900D1AC1E /* DuxQuickFindPanel.m */,
 				38B5BB0C171E5526000C8525 /* NSColor+DuxColors.h */,
 				38B5BB0D171E5526000C8525 /* NSColor+DuxColors.m */,
 				3804A8161478DA00005C587A /* Languages */,
@@ -538,6 +534,17 @@
 				385115061692FADE0066B876 /* DuxRunBundleQuicklyWindowController.xib */,
 			);
 			name = "Run Bundle";
+			sourceTree = "<group>";
+		};
+		3861BBF917ECF5D200088F8C /* Quick Find Panel */ = {
+			isa = PBXGroup;
+			children = (
+				3822E45717DC2C6600D1AC1E /* DuxQuickFindPanelController.h */,
+				3822E45817DC2C6600D1AC1E /* DuxQuickFindPanelController.m */,
+				3822E45A17DC34F900D1AC1E /* DuxQuickFindPanel.h */,
+				3822E45B17DC34F900D1AC1E /* DuxQuickFindPanel.m */,
+			);
+			name = "Quick Find Panel";
 			sourceTree = "<group>";
 		};
 		386EC88C172A22B9000C7430 /* DuxSyntaxHighlighterTests */ = {
@@ -779,6 +786,7 @@
 				38BC921B1487731E00CE73EB /* Preferences */,
 				385115021692FA8E0066B876 /* Run Bundle */,
 				38A72CB11409057E008C26C9 /* Open Quickly */,
+				3861BBF917ECF5D200088F8C /* Quick Find Panel */,
 				3837FAA81475E009002CC459 /* Misc */,
 				38D6058E1403859600D70F81 /* Supporting Files */,
 				38F1060616490F8A00467839 /* DuxMultiFileSearchWindowController.h */,

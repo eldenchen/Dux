@@ -16,6 +16,12 @@
 #import "DuxPreferences.h"
 #import "DuxBundle.h"
 
+@interface DuxTextView ()
+
+@property NSUInteger goToSymbolFindOperationCounter;
+
+@end
+
 @implementation DuxTextView
 
 @synthesize highlighter;
@@ -239,7 +245,38 @@ static NSCharacterSet *newlineCharacterSet;
   }
   
   DuxLanguage *language = self.highlighter.baseLanguage;
-  self.goToSymbolPanel.contents = [language findSymbolsInDocumentContents:self.textStorage.string];
+  
+  self.goToSymbolFindOperationCounter++;
+  NSUInteger goToSymbolOperation = self.goToSymbolFindOperationCounter;
+  __block BOOL haveBegun = NO;
+  
+  [language findSymbolsInDocumentContents:self.textStorage.string foundSymbolHandler:^BOOL(NSDictionary *symbol) {
+    if (self.goToSymbolFindOperationCounter != goToSymbolOperation) {
+      if (!haveBegun) {
+        [self.goToSymbolPanel beginAddingFindResults];
+        haveBegun = YES;
+      }
+      return NO;
+    }
+    
+    if (!haveBegun) {
+      [self.goToSymbolPanel beginAddingFindResults];
+      haveBegun = YES;
+    }
+    
+    [self.goToSymbolPanel addFindResult:symbol];
+    return YES;
+  } finishedSearchHandler:^{
+    if (self.goToSymbolFindOperationCounter != goToSymbolOperation)
+      return;
+    
+    if (!haveBegun) {
+      [self.goToSymbolPanel beginAddingFindResults];
+      haveBegun = YES;
+    }
+    
+    [self.goToSymbolPanel endAddingFindResults];
+  }];
   
   [self.goToSymbolPanel orderFrontForProjectWindow:self.window];
 }
