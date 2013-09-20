@@ -23,6 +23,7 @@
 		3824F0851452E75700F00B96 /* DuxHTMLBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3824F0841452E75700F00B96 /* DuxHTMLBaseElement.m */; };
 		3829B272168A74BB0034C0A1 /* DuxProjectWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3829B271168A74BB0034C0A1 /* DuxProjectWindowController.m */; };
 		3829D938145A9F7D00188ECF /* DuxHTMLTagElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3829D937145A9F7D00188ECF /* DuxHTMLTagElement.m */; };
+		382F146617EBCA440095BC59 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 382F146517EBCA440095BC59 /* Images.xcassets */; };
 		38313276168FB8E400E334E8 /* DuxClickAndHoldPopUpButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 38313275168FB8E400E334E8 /* DuxClickAndHoldPopUpButton.m */; };
 		3837FAB21475E058002CC459 /* NSStringDuxAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3837FAB11475E058002CC459 /* NSStringDuxAdditions.m */; };
 		38383A06146FB25C008CD049 /* DuxHTMLTagAttributeElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38383A05146FB25C008CD049 /* DuxHTMLTagAttributeElement.m */; };
@@ -122,7 +123,6 @@
 		38CD8FD4147FA26D00062D34 /* DuxJavaScriptKeywordElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FD3147FA26D00062D34 /* DuxJavaScriptKeywordElement.m */; };
 		38CD8FD7147FA27A00062D34 /* DuxJavaScriptSingleLineCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FD6147FA27A00062D34 /* DuxJavaScriptSingleLineCommentElement.m */; };
 		38CD8FDA147FA28700062D34 /* DuxJavaScriptBlockCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CD8FD9147FA28700062D34 /* DuxJavaScriptBlockCommentElement.m */; };
-		38CFE15C1403C96900CA7044 /* appicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 38CFE15B1403C96900CA7044 /* appicon.icns */; };
 		38CFE15E1403CBCD00CA7044 /* docicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 38CFE15D1403CBCD00CA7044 /* docicon.icns */; };
 		38CFEEC31473AEE700F81E6F /* DuxPHPLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CFEEC21473AEE700F81E6F /* DuxPHPLanguage.m */; };
 		38CFEEC61473AEF500F81E6F /* DuxPHPBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38CFEEC51473AEF500F81E6F /* DuxPHPBaseElement.m */; };
@@ -202,6 +202,7 @@
 		3829B271168A74BB0034C0A1 /* DuxProjectWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DuxProjectWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		3829D936145A9F7D00188ECF /* DuxHTMLTagElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLTagElement.h; sourceTree = "<group>"; };
 		3829D937145A9F7D00188ECF /* DuxHTMLTagElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxHTMLTagElement.m; sourceTree = "<group>"; };
+		382F146517EBCA440095BC59 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		38313274168FB8E400E334E8 /* DuxClickAndHoldPopUpButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxClickAndHoldPopUpButton.h; sourceTree = "<group>"; };
 		38313275168FB8E400E334E8 /* DuxClickAndHoldPopUpButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxClickAndHoldPopUpButton.m; sourceTree = "<group>"; };
 		3837FAB01475E058002CC459 /* NSStringDuxAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStringDuxAdditions.h; sourceTree = "<group>"; };
@@ -329,7 +330,6 @@
 		38CD8FD6147FA27A00062D34 /* DuxJavaScriptSingleLineCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DuxJavaScriptSingleLineCommentElement.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		38CD8FD8147FA28600062D34 /* DuxJavaScriptBlockCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DuxJavaScriptBlockCommentElement.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		38CD8FD9147FA28700062D34 /* DuxJavaScriptBlockCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DuxJavaScriptBlockCommentElement.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		38CFE15B1403C96900CA7044 /* appicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = appicon.icns; path = ../Artwork/appicon.icns; sourceTree = "<group>"; };
 		38CFE15D1403CBCD00CA7044 /* docicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = docicon.icns; path = ../Artwork/docicon.icns; sourceTree = "<group>"; };
 		38CFEEC11473AEE700F81E6F /* DuxPHPLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPLanguage.h; sourceTree = "<group>"; };
 		38CFEEC21473AEE700F81E6F /* DuxPHPLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DuxPHPLanguage.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -788,6 +788,7 @@
 				389ACC4C172265A100E01DB3 /* DuxNavigatorFilesViewController.m */,
 				C97713151724C90B00AC1757 /* DuxNavigatorFileCell.h */,
 				C97713161724C90B00AC1757 /* DuxNavigatorFileCell.m */,
+				382F146517EBCA440095BC59 /* Images.xcassets */,
 			);
 			path = Dux;
 			sourceTree = "<group>";
@@ -801,7 +802,6 @@
 				38D605931403859600D70F81 /* main.m */,
 				38D605951403859600D70F81 /* Dux-Prefix.pch */,
 				38D605961403859600D70F81 /* Credits.rtf */,
-				38CFE15B1403C96900CA7044 /* appicon.icns */,
 				38CFE15D1403CBCD00CA7044 /* docicon.icns */,
 				38DF856B147EFE620004B358 /* Dux.entitlements */,
 			);
@@ -957,10 +957,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				38D605921403859600D70F81 /* InfoPlist.strings in Resources */,
+				382F146617EBCA440095BC59 /* Images.xcassets in Resources */,
 				38D605981403859600D70F81 /* Credits.rtf in Resources */,
 				38D6059E1403859700D70F81 /* MyTextDocument.xib in Resources */,
 				38D605A11403859700D70F81 /* MainMenu.xib in Resources */,
-				38CFE15C1403C96900CA7044 /* appicon.icns in Resources */,
 				38CFE15E1403CBCD00CA7044 /* docicon.icns in Resources */,
 				38734F521406133200992D33 /* OpenQuickly.xib in Resources */,
 				38983C731474FEC8004DD914 /* JumpToLinePanel.xib in Resources */,
@@ -1300,6 +1300,7 @@
 		38D605A51403859700D70F81 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Dux/Dux.entitlements;
 				CODE_SIGN_IDENTITY = "";
@@ -1318,6 +1319,7 @@
 		38D605A61403859700D70F81 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Dux/Dux.entitlements;
 				CODE_SIGN_IDENTITY = "";
