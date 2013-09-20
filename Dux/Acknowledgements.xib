@@ -48,7 +48,7 @@
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="1006">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSTextField" id="848633220">
@@ -56,6 +56,7 @@
 							<int key="NSvFlags">268</int>
 							<string key="NSFrame">{{18, 454}, {897, 51}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="798429230"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<string key="NSAntiCompressionPriority">{250, 750}</string>
@@ -93,7 +94,6 @@ b3JtYXRpb24sIHZpc2l0IGh0dHBzOi8vZ2l0aHViLmNvbS9hZG9iZS9Tb3VyY2UtQ29kZS1Qcm8vA</s
 								</object>
 							</object>
 							<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
-							<bool key="NSControlAutosetMaxLayoutWidth">YES</bool>
 							<double key="NSPreferredMaxLayoutWidth">893</double>
 							<int key="NSTextFieldAlignmentRectInsetsVersion">1</int>
 						</object>
@@ -110,6 +110,7 @@ b3JtYXRpb24sIHZpc2l0IGh0dHBzOi8vZ2l0aHViLmNvbS9hZG9iZS9Tb3VyY2UtQ29kZS1Qcm8vA</s
 											<int key="NSvFlags">2322</int>
 											<string key="NSFrameSize">{891, 418}</string>
 											<reference key="NSSuperview" ref="208446582"/>
+											<reference key="NSWindow"/>
 											<reference key="NSNextKeyView" ref="262531826"/>
 											<string key="NSReuseIdentifierKey">_NS:13</string>
 											<object class="NSTextContainer" key="NSTextContainer" id="916865174">
@@ -175,6 +176,7 @@ b3JtYXRpb24sIHZpc2l0IGh0dHBzOi8vZ2l0aHViLmNvbS9hZG9iZS9Tb3VyY2UtQ29kZS1Qcm8vA</s
 									</array>
 									<string key="NSFrame">{{1, 1}, {891, 418}}</string>
 									<reference key="NSSuperview" ref="798429230"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="1058717181"/>
 									<string key="NSReuseIdentifierKey">_NS:11</string>
 									<reference key="NSDocView" ref="1058717181"/>
@@ -205,6 +207,7 @@ b3JtYXRpb24sIHZpc2l0IGh0dHBzOi8vZ2l0aHViLmNvbS9hZG9iZS9Tb3VyY2UtQ29kZS1Qcm8vA</s
 									<int key="NSvFlags">256</int>
 									<string key="NSFrame">{{876, 1}, {16, 418}}</string>
 									<reference key="NSSuperview" ref="798429230"/>
+									<reference key="NSWindow"/>
 									<string key="NSReuseIdentifierKey">_NS:83</string>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 									<reference key="NSTarget" ref="798429230"/>
@@ -217,6 +220,7 @@ b3JtYXRpb24sIHZpc2l0IGh0dHBzOi8vZ2l0aHViLmNvbS9hZG9iZS9Tb3VyY2UtQ29kZS1Qcm8vA</s
 									<int key="NSvFlags">-2147483392</int>
 									<string key="NSFrame">{{-100, -100}, {87, 18}}</string>
 									<reference key="NSSuperview" ref="798429230"/>
+									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="208446582"/>
 									<string key="NSReuseIdentifierKey">_NS:33</string>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -229,6 +233,7 @@ b3JtYXRpb24sIHZpc2l0IGh0dHBzOi8vZ2l0aHViLmNvbS9hZG9iZS9Tb3VyY2UtQ29kZS1Qcm8vA</s
 							</array>
 							<string key="NSFrame">{{20, 20}, {893, 420}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="208446582"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<int key="NSsFlags">133138</int>
@@ -241,6 +246,8 @@ b3JtYXRpb24sIHZpc2l0IGh0dHBzOi8vZ2l0aHViLmNvbS9hZG9iZS9Tb3VyY2UtQ29kZS1Qcm8vA</s
 						</object>
 					</array>
 					<string key="NSFrameSize">{933, 525}</string>
+					<reference key="NSSuperview"/>
+					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="848633220"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
@@ -543,7 +550,58 @@ b3JtYXRpb24sIHZpc2l0IGh0dHBzOi8vZ2l0aHViLmNvbS9hZG9iZS9Tb3VyY2UtQ29kZS1Qcm8vA</s
 			<nil key="sourceID"/>
 			<int key="maxID">32</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">DuxAcknowledgementsController</string>
+					<string key="superclassName">NSWindowController</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">textView</string>
+						<string key="NS.object.0">NSTextView</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">textView</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">textView</string>
+							<string key="candidateClassName">NSTextView</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/DuxAcknowledgementsController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSLayoutConstraint</string>
+					<string key="superclassName">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NSLayoutConstraint.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSTextView</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="orderFrontSharingServicePicker:">id</string>
+						<string key="toggleQuickLookPreviewPanel:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="orderFrontSharingServicePicker:">
+							<string key="name">orderFrontSharingServicePicker:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="toggleQuickLookPreviewPanel:">
+							<string key="name">toggleQuickLookPreviewPanel:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/NSTextView.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<bool key="IBDocument.previouslyAttemptedUpgradeToXcode5">YES</bool>
