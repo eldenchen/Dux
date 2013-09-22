@@ -233,7 +233,6 @@
 
 - (void)beginAddingFindResults
 {
-  NSLog(@"begin");
   self.oldContents = self.contents;
   self.contents = @[];
 }
@@ -244,10 +243,8 @@
     NSMutableArray *oldContentsMutable = self.oldContents.mutableCopy;
     [oldContentsMutable removeObject:resultRecord];
     self.oldContents = oldContentsMutable.copy;
-    NSLog(@"remove one old");
   }
   self.contents = [self.contents arrayByAddingObject:resultRecord];
-  NSLog(@"add one new");
 }
 
 - (void)endAddingFindResults

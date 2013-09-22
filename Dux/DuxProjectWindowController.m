@@ -75,7 +75,6 @@ static NSMutableArray *projects = nil;
 {
   [super windowDidLoad];
   
-  self.noEditorLogoView.alphaValue = 0.20;
   self.noEditorTextView.alphaValue = 0.65;
   
   [self.window setMovableByWindowBackground:YES];
@@ -568,10 +567,12 @@ static NSMutableArray *projects = nil;
 
 - (IBAction)showNavigator:(id)sender
 {
-  if ([self.editorWindowSplitView isSubviewCollapsed:self.navigatorView]) {
+  if ([self.editorWindowSplitView isSubviewCollapsed:self.navigatorView] || self.navigatorView.frame.size.width < 150) {
     NSInteger width = [[NSUserDefaults standardUserDefaults] integerForKey:@"DuxProjectNavigatorLastNonCollapsedWidth"];
     if (width < [self.editorWindowSplitView minPossiblePositionOfDividerAtIndex:0])
       width = [self.editorWindowSplitView minPossiblePositionOfDividerAtIndex:0];
+    if (width < 150)
+      width = 150;
     
     [self.editorWindowSplitView setPosition:width ofDividerAtIndex:0];
   } else {
