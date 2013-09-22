@@ -329,9 +329,9 @@ static NSArray *filesExcludeList;
       
       // find the row
       NSInteger rowIndex = 0;
-      id rowItem = nil;
+      NSURL *rowItem = nil;
       while ((rowItem = [self.filesView itemAtRow:rowIndex])) {
-        if ([rowItem isEqual:nextUrl]) {
+        if ([rowItem.path isEqual:nextUrl.path]) {
           break;
         }
         rowIndex++;
