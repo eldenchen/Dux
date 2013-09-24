@@ -45,39 +45,39 @@
                 <rect key="frame" x="0.0" y="0.0" width="1020" height="700"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <splitView autosaveName="DuxProjectWindowSplitView" dividerStyle="thin" vertical="YES" id="100232">
+                    <splitView autosaveName="DuxProjectWindowSplitView" vertical="YES" id="100232">
                         <rect key="frame" x="-1" y="0.0" width="1021" height="700"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <customView id="100230">
-                                <rect key="frame" x="0.0" y="0.0" width="205" height="700"/>
+                                <rect key="frame" x="0.0" y="0.0" width="203" height="700"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <tabView drawsBackground="NO" type="noTabsNoBorder" initialItem="100234" id="100233">
-                                        <rect key="frame" x="0.0" y="1" width="205" height="699"/>
+                                        <rect key="frame" x="0.0" y="1" width="203" height="699"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <font key="font" metaFont="system"/>
                                         <tabViewItems>
                                             <tabViewItem label="Tab" identifier="1" id="100234">
                                                 <view key="view" id="100237">
-                                                    <rect key="frame" x="0.0" y="0.0" width="205" height="699"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="203" height="699"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <scrollView focusRingType="none" borderType="none" autohidesScrollers="YES" horizontalLineScroll="20" horizontalPageScroll="10" verticalLineScroll="20" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="100247">
-                                                            <rect key="frame" x="0.0" y="0.0" width="205" height="679"/>
+                                                            <rect key="frame" x="0.0" y="24" width="203" height="675"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                            <clipView key="contentView" id="HhV-e8-bjM">
-                                                                <rect key="frame" x="0.0" y="0.0" width="205" height="679"/>
+                                                            <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="HhV-e8-bjM">
+                                                                <rect key="frame" x="0.0" y="0.0" width="203" height="675"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <subviews>
                                                                     <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnResizing="NO" autosaveColumns="NO" rowHeight="20" indentationPerLevel="14" outlineTableColumn="100252" id="100248">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="205" height="679"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="203" height="675"/>
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                         <size key="intercellSpacing" width="3" height="0.0"/>
-                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                                         <tableColumns>
-                                                                            <tableColumn editable="NO" width="202" minWidth="16" maxWidth="1000" id="100252">
+                                                                            <tableColumn editable="NO" width="200" minWidth="16" maxWidth="1000" id="100252">
                                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                                                     <font key="font" metaFont="smallSystem"/>
                                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -100,7 +100,7 @@
                                                                         </connections>
                                                                     </outlineView>
                                                                 </subviews>
-                                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="deviceWhite"/>
                                                             </clipView>
                                                             <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" id="100249">
                                                                 <rect key="frame" x="0.0" y="653" width="203" height="16"/>
@@ -111,62 +111,63 @@
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                             </scroller>
                                                         </scrollView>
-                                                        <imageView id="100276">
-                                                            <rect key="frame" x="0.0" y="677" width="210" height="22"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="PaneGradientBar" id="100277"/>
-                                                        </imageView>
+                                                        <customView id="iab-dy-fDx">
+                                                            <rect key="frame" x="46" y="0.0" width="111" height="22"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <subviews>
+                                                                <button id="100284">
+                                                                    <rect key="frame" x="74" y="3" width="17" height="15"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="NSQuickLookTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="100285">
+                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                        <font key="font" metaFont="system"/>
+                                                                    </buttonCell>
+                                                                </button>
+                                                                <button id="100282">
+                                                                    <rect key="frame" x="47" y="5" width="13" height="10"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="NSListViewTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="100283">
+                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                        <font key="font" metaFont="system"/>
+                                                                    </buttonCell>
+                                                                </button>
+                                                                <button id="100280">
+                                                                    <rect key="frame" x="20" y="5" width="13" height="10"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="NSPathTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="100281">
+                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                        <font key="font" metaFont="system"/>
+                                                                    </buttonCell>
+                                                                </button>
+                                                            </subviews>
+                                                        </customView>
                                                     </subviews>
                                                 </view>
                                             </tabViewItem>
                                             <tabViewItem label="View" identifier="2" id="100235">
                                                 <view key="view" id="100236">
-                                                    <rect key="frame" x="0.0" y="0.0" width="205" height="699"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="203" height="699"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 </view>
                                             </tabViewItem>
                                         </tabViewItems>
                                     </tabView>
-                                    <button id="100280">
-                                        <rect key="frame" x="67" y="684" width="13" height="10"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="NSPathTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="100281">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                    </button>
-                                    <button id="100282">
-                                        <rect key="frame" x="94" y="684" width="13" height="10"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="NSListViewTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="100283">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                    </button>
-                                    <button id="100284">
-                                        <rect key="frame" x="121" y="682" width="17" height="15"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="NSQuickLookTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="100285">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                    </button>
                                 </subviews>
                             </customView>
                             <customView id="100229">
-                                <rect key="frame" x="206" y="0.0" width="815" height="700"/>
+                                <rect key="frame" x="212" y="0.0" width="809" height="700"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <customView id="100195">
-                                        <rect key="frame" x="0.0" y="0.0" width="815" height="700"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="809" height="700"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </customView>
                                     <customView id="100223">
-                                        <rect key="frame" x="0.0" y="0.0" width="815" height="700"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="809" height="700"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="750" id="100199">
-                                                <rect key="frame" x="364" y="341" width="86" height="19"/>
+                                                <rect key="frame" x="361" y="341" width="86" height="19"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="No Editor" drawsBackground="YES" id="100200">
                                                     <font key="font" metaFont="systemBold" size="16"/>
@@ -231,7 +232,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" imageScaling="proportionallyDown" inset="2" pullsDown="YES" arrowPosition="noArrow" autoenablesItems="NO" altersStateOfSelectedItem="NO" selectedItem="100179" id="100177">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" autoenablesItems="NO" id="100178">
                             <items>
                                 <menuItem image="NSListViewTemplate" hidden="YES" id="100179"/>
@@ -249,7 +250,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" imageScaling="proportionallyDown" inset="2" pullsDown="YES" arrowPosition="noArrow" autoenablesItems="NO" altersStateOfSelectedItem="NO" selectedItem="100206" id="100202">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" autoenablesItems="NO" id="100203">
                             <items>
                                 <menuItem image="NSGoLeftTemplate" hidden="YES" id="100206"/>
@@ -267,7 +268,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <popUpButtonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" lineBreakMode="truncatingTail" refusesFirstResponder="YES" imageScaling="proportionallyDown" inset="2" pullsDown="YES" arrowPosition="noArrow" autoenablesItems="NO" altersStateOfSelectedItem="NO" selectedItem="100211" id="100209">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" autoenablesItems="NO" id="100210">
                             <items>
                                 <menuItem image="NSGoRightTemplate" hidden="YES" id="100211"/>
@@ -333,6 +334,5 @@
         <image name="NSListViewTemplate" width="11" height="10"/>
         <image name="NSPathTemplate" width="13" height="10"/>
         <image name="NSQuickLookTemplate" width="21" height="16"/>
-        <image name="PaneGradientBar" width="10" height="22"/>
     </resources>
 </document>
