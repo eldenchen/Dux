@@ -35,7 +35,7 @@ static NSArray *filesExcludeList;
   if (!(self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
     return nil;
   
-  [self initCache];
+  [self flushCache];
   
   return self;
 }
@@ -45,12 +45,12 @@ static NSArray *filesExcludeList;
   if (!(self = [super initWithCoder:aDecoder]))
     return nil;
   
-  [self initCache];
+  [self flushCache];
   
   return self;
 }
 
-- (void)initCache
+- (void)flushCache
 {
   self.urlIsDirectoryCache = @{}.mutableCopy;
   self.urlChildUrlsCache = @{}.mutableCopy;
@@ -305,6 +305,46 @@ static NSArray *filesExcludeList;
   NSURL *urlForClickedRow = [self.filesView itemAtRow:clickedRow];
 
   [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[urlForClickedRow]];
+}
+
+- (IBAction)newFile:(id)sender
+{
+  // find the currently selected row
+  NSInteger clickedRow = [self.filesView clickedRow];
+  NSURL *urlForClickedRow = [self.filesView itemAtRow:clickedRow];
+  
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  
+  // figure out the parent dir (if selected row is a directory, make it a child. otherwise a sibling)
+  BOOL clickedRowIsDir;
+  BOOL clickedRowExists = [fileManager fileExistsAtPath:urlForClickedRow.path isDirectory:&clickedRowIsDir];
+  if (!clickedRowExists) {
+    NSBeep();
+    return;
+  }
+  NSURL *parentDir = clickedRowIsDir ? urlForClickedRow : urlForClickedRow.URLByDeletingLastPathComponent;
+  
+  // show save panel
+  NSSavePanel *savePanel = [NSSavePanel savePanel];
+  savePanel.directoryURL = parentDir;
+  [savePanel beginSheetModalForWindow:self.filesView.window completionHandler:^(NSInteger result) {
+    if (result == NSFileHandlingPanelCancelButton)
+      return;
+    
+    // create the file
+    [fileManager createFileAtPath:savePanel.URL.path contents:[NSData data] attributes:nil];
+    
+    // reload file navigator, and select the new file
+    [self flushCache];
+    [self.filesView reloadData];
+    [self revealFileInNavigator:savePanel.URL];
+    
+    // open the new file
+    if ([self.delegate respondsToSelector:@selector(duxNavigatorDidCreateFile:)]) {
+      [self.delegate duxNavigatorDidCreateFile:savePanel.URL];
+    }
+    
+  }];
 }
 
 - (void)revealFileInNavigator:(NSURL *)fileURL

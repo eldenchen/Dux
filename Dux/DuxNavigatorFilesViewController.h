@@ -27,4 +27,5 @@
 @optional
 
 - (void)duxNavigatorDidSelectFile:(NSURL *)url;
+- (void)duxNavigatorDidCreateFile:(NSURL *)url;
 @end

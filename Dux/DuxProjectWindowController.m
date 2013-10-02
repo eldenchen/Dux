@@ -615,4 +615,9 @@ static NSMutableArray *projects = nil;
   [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:url display:YES completionHandler:NULL];
 }
 
+- (void)duxNavigatorDidCreateFile:(NSURL *)url
+{
+  [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:url display:YES completionHandler:NULL];
+}
+
 @end

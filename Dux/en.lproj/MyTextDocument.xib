@@ -316,8 +316,11 @@
                 <menuItem title="New Folder" id="100288">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
-                <menuItem title="New File" id="100289">
+                <menuItem title="New File..." id="100289">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="newFile:" target="100256" id="Np4-b9-M7O"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Refresh" id="100290">
                     <modifierMask key="keyEquivalentModifierMask"/>
