@@ -97,6 +97,7 @@
                                                                         <connections>
                                                                             <outlet property="dataSource" destination="100256" id="100258"/>
                                                                             <outlet property="delegate" destination="100256" id="100259"/>
+                                                                            <outlet property="menu" destination="100265" id="jzC-Gw-voC"/>
                                                                         </connections>
                                                                     </outlineView>
                                                                 </subviews>

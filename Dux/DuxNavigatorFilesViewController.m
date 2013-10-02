@@ -301,28 +301,40 @@ static NSArray *filesExcludeList;
 
 - (IBAction)revealFileInFinder:(id)sender
 {
+  NSURL *urlForClickedRow;
+  
   NSInteger clickedRow = [self.filesView clickedRow];
-  NSURL *urlForClickedRow = [self.filesView itemAtRow:clickedRow];
+  if (clickedRow == -1) {
+    urlForClickedRow = self.rootURL;
+  } else {
+    urlForClickedRow = [self.filesView itemAtRow:clickedRow];
+  }
 
   [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[urlForClickedRow]];
 }
 
 - (IBAction)newFile:(id)sender
 {
-  // find the currently selected row
-  NSInteger clickedRow = [self.filesView clickedRow];
-  NSURL *urlForClickedRow = [self.filesView itemAtRow:clickedRow];
-  
   NSFileManager *fileManager = [NSFileManager defaultManager];
   
-  // figure out the parent dir (if selected row is a directory, make it a child. otherwise a sibling)
-  BOOL clickedRowIsDir;
-  BOOL clickedRowExists = [fileManager fileExistsAtPath:urlForClickedRow.path isDirectory:&clickedRowIsDir];
-  if (!clickedRowExists) {
-    NSBeep();
-    return;
+  // find the target row
+  NSURL *parentDir;
+  NSInteger clickedRow = [self.filesView clickedRow];
+  if (clickedRow == -1) {
+    parentDir = self.rootURL;
+  } else {
+    NSURL *urlForClickedRow = [self.filesView itemAtRow:clickedRow];
+    
+    
+    // figure out the parent dir (if selected row is a directory, make it a child. otherwise a sibling)
+    BOOL clickedRowIsDir;
+    BOOL clickedRowExists = [fileManager fileExistsAtPath:urlForClickedRow.path isDirectory:&clickedRowIsDir];
+    if (!clickedRowExists) {
+      NSBeep();
+      return;
+    }
+    parentDir = clickedRowIsDir ? urlForClickedRow : urlForClickedRow.URLByDeletingLastPathComponent;
   }
-  NSURL *parentDir = clickedRowIsDir ? urlForClickedRow : urlForClickedRow.URLByDeletingLastPathComponent;
   
   // show save panel
   NSSavePanel *savePanel = [NSSavePanel savePanel];
@@ -349,20 +361,26 @@ static NSArray *filesExcludeList;
 
 - (IBAction)newFolder:(id)sender
 {
-  // find the currently selected row
-  NSInteger clickedRow = [self.filesView clickedRow];
-  NSURL *urlForClickedRow = [self.filesView itemAtRow:clickedRow];
-  
   NSFileManager *fileManager = [NSFileManager defaultManager];
   
-  // figure out the parent dir (if selected row is a directory, make it a child. otherwise a sibling)
-  BOOL clickedRowIsDir;
-  BOOL clickedRowExists = [fileManager fileExistsAtPath:urlForClickedRow.path isDirectory:&clickedRowIsDir];
-  if (!clickedRowExists) {
-    NSBeep();
-    return;
+  // find the target row
+  NSURL *parentDir;
+  NSInteger clickedRow = [self.filesView clickedRow];
+  if (clickedRow == -1) {
+    parentDir = self.rootURL;
+  } else {
+    NSURL *urlForClickedRow = [self.filesView itemAtRow:clickedRow];
+    
+    
+    // figure out the parent dir (if selected row is a directory, make it a child. otherwise a sibling)
+    BOOL clickedRowIsDir;
+    BOOL clickedRowExists = [fileManager fileExistsAtPath:urlForClickedRow.path isDirectory:&clickedRowIsDir];
+    if (!clickedRowExists) {
+      NSBeep();
+      return;
+    }
+    parentDir = clickedRowIsDir ? urlForClickedRow : urlForClickedRow.URLByDeletingLastPathComponent;
   }
-  NSURL *parentDir = clickedRowIsDir ? urlForClickedRow : urlForClickedRow.URLByDeletingLastPathComponent;
   
   // show save panel
   NSSavePanel *savePanel = [NSSavePanel savePanel];
