@@ -313,16 +313,20 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="100287"/>
-                <menuItem title="New Folder" id="100288">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                </menuItem>
                 <menuItem title="New File..." id="100289">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="newFile:" target="100256" id="Np4-b9-M7O"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Refresh" id="100290">
+                <menuItem title="New Folder..." id="100288">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="newFolder:" target="100256" id="euQ-1D-36r"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="7Hk-GY-0eD"/>
+                <menuItem title="Reload List" id="100290">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="refreshFilesList:" target="100256" id="nuU-jo-oeG"/>

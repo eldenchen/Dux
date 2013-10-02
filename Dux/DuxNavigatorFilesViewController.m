@@ -347,6 +347,40 @@ static NSArray *filesExcludeList;
   }];
 }
 
+- (IBAction)newFolder:(id)sender
+{
+  // find the currently selected row
+  NSInteger clickedRow = [self.filesView clickedRow];
+  NSURL *urlForClickedRow = [self.filesView itemAtRow:clickedRow];
+  
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  
+  // figure out the parent dir (if selected row is a directory, make it a child. otherwise a sibling)
+  BOOL clickedRowIsDir;
+  BOOL clickedRowExists = [fileManager fileExistsAtPath:urlForClickedRow.path isDirectory:&clickedRowIsDir];
+  if (!clickedRowExists) {
+    NSBeep();
+    return;
+  }
+  NSURL *parentDir = clickedRowIsDir ? urlForClickedRow : urlForClickedRow.URLByDeletingLastPathComponent;
+  
+  // show save panel
+  NSSavePanel *savePanel = [NSSavePanel savePanel];
+  savePanel.directoryURL = parentDir;
+  [savePanel beginSheetModalForWindow:self.filesView.window completionHandler:^(NSInteger result) {
+    if (result == NSFileHandlingPanelCancelButton)
+      return;
+    
+    // create the file
+    [fileManager createDirectoryAtPath:savePanel.URL.path withIntermediateDirectories:NO attributes:nil error:NULL];
+    
+    // reload file navigator, and select the new file
+    [self flushCache];
+    [self.filesView reloadData];
+    [self revealFileInNavigator:savePanel.URL];
+  }];
+}
+
 - (void)revealFileInNavigator:(NSURL *)fileURL
 {
   // walk down the tree starting at rootURL, untli we get to fileURL
