@@ -324,6 +324,9 @@
                 </menuItem>
                 <menuItem title="Refresh" id="100290">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="refreshFilesList:" target="100256" id="nuU-jo-oeG"/>
+                    </connections>
                 </menuItem>
             </items>
             <connections>

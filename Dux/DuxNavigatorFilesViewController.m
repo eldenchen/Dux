@@ -400,4 +400,10 @@ static NSArray *filesExcludeList;
   }
 }
 
+- (IBAction)refreshFilesList:(id)sender
+{
+  [self flushCache];
+  [self.filesView reloadData];
+}
+
 @end
