@@ -33,9 +33,9 @@
 
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
 {
-  if ([DuxPreferences editorDarkMode]) {
+//  if ([DuxPreferences editorDarkMode]) {
     aStyle |= NSTexturedBackgroundWindowMask;
-  }
+//  }
   
   if (self = [super initWithContentRect:contentRect styleMask:aStyle backing:bufferingType defer:flag]) {
     
@@ -64,9 +64,9 @@
 {
   [super awakeFromNib];
   
-  if ([DuxPreferences editorDarkMode]) {
+//  if ([DuxPreferences editorDarkMode]) {
     [self.toolbar setShowsBaselineSeparator:NO];
-  }
+//  }
 }
 
 
@@ -86,12 +86,11 @@
   
   
   // are we in dark mode?
-  if (![DuxPreferences editorDarkMode])
-    return;
+//  if (![DuxPreferences editorDarkMode])
+//    return;
   
   // grab gfx context
   CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
-  
   
   
 	// Build clipping path : intersection of frame clip (bezier path with rounded corners) and rect argument
@@ -108,18 +107,22 @@
   
   
   // define gradient
-  CGFloat colors [] = {
+  CGFloat darkColors [] = {
     0.596, 0.643, 0.710, 0.000,
     0.596, 0.643, 0.710, 0.400
   };
+  CGFloat lightColors [] = {
+    0.90, 0.92, 0.95, 0.0,
+    0.90, 0.92, 0.95, 1.0
+  };
   
   CGColorSpaceRef baseSpace = CGColorSpaceCreateDeviceRGB();
-  CGGradientRef gradient = CGGradientCreateWithColorComponents(baseSpace, colors, NULL, 2);
+  CGGradientRef gradient = CGGradientCreateWithColorComponents(baseSpace, [DuxPreferences editorDarkMode] ? darkColors : lightColors, NULL, 2);
   CGColorSpaceRelease(baseSpace), baseSpace = NULL;
   
   
   
-if ([DuxPreferences editorDarkMode]) {
+//if ([DuxPreferences editorDarkMode]) {
   // white-out the window title
   CGContextMoveToPoint(context, 1, windowRect.size.height - 3);
   CGContextAddLineToPoint(context, windowRect.size.width - 1, windowRect.size.height - 3);
@@ -127,7 +130,7 @@ if ([DuxPreferences editorDarkMode]) {
   CGContextAddLineToPoint(context, 1, windowRect.size.height - 20);
   CGContextSetFillColorWithColor(context, self.window.backgroundColor.CGColor);
   CGContextFillPath(context);
-}
+//}
   
   
   
@@ -165,15 +168,10 @@ if ([DuxPreferences editorDarkMode]) {
   
   
   // draw title (we wiped it out earlier)
-if ([DuxPreferences editorDarkMode]) {
   NSRect titleRect = [self _titlebarTitleRect];
   
-  NSDictionary *attrs = @{NSFontAttributeName: [NSFont titleBarFontOfSize:0], NSForegroundColorAttributeName: [NSColor blackColor]};
-  [self.title drawInRect:NSMakeRect(titleRect.origin.x, titleRect.origin.y + 1, titleRect.size.width, titleRect.size.height) withAttributes:attrs];
-  
-  attrs = @{NSFontAttributeName: [NSFont titleBarFontOfSize:0], NSForegroundColorAttributeName: [NSColor lightGrayColor]};
+  NSDictionary *attrs = @{NSFontAttributeName: [NSFont titleBarFontOfSize:0], NSForegroundColorAttributeName: [DuxPreferences editorDarkMode] ? [NSColor lightGrayColor] : [NSColor blackColor]};
   [self.title drawInRect:titleRect withAttributes:attrs];
-}
 }
 
 @end
