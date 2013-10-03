@@ -307,11 +307,17 @@
                         <action selector="revealFileInFinder:" target="100256" id="100286"/>
                     </connections>
                 </menuItem>
-                <menuItem title="Rename..." id="100267">
+                <menuItem title="Rename / Move..." id="100267">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="moveFile:" target="100256" id="biK-7W-gY9"/>
+                    </connections>
                 </menuItem>
-                <menuItem title="Delete" id="100268">
+                <menuItem title="Move to Trash" id="100268">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="moveFileToTrash:" target="100256" id="9BC-hl-xo8"/>
+                    </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="100287"/>
                 <menuItem title="New File..." id="100289">
@@ -327,7 +333,7 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="7Hk-GY-0eD"/>
-                <menuItem title="Reload List" id="100290">
+                <menuItem title="Reload Files" id="100290">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="refreshFilesList:" target="100256" id="nuU-jo-oeG"/>

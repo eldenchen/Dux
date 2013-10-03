@@ -338,6 +338,7 @@ static NSArray *filesExcludeList;
   
   // show save panel
   NSSavePanel *savePanel = [NSSavePanel savePanel];
+  savePanel.showsHiddenFiles = YES;
   savePanel.directoryURL = parentDir;
   [savePanel beginSheetModalForWindow:self.filesView.window completionHandler:^(NSInteger result) {
     if (result == NSFileHandlingPanelCancelButton)
@@ -357,6 +358,57 @@ static NSArray *filesExcludeList;
     }
     
   }];
+}
+
+- (IBAction)moveFile:(id)sender
+{
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  
+  // find the target row
+  NSInteger clickedRow = [self.filesView clickedRow];
+  if (clickedRow == -1) {
+    NSBeep();
+    return;
+  }
+  NSURL *urlForClickedRow = [self.filesView itemAtRow:clickedRow];
+  
+  // show save panel
+  NSSavePanel *savePanel = [NSSavePanel savePanel];
+  savePanel.showsHiddenFiles = YES;
+  savePanel.directoryURL = urlForClickedRow.URLByDeletingLastPathComponent;
+  savePanel.nameFieldStringValue = urlForClickedRow.lastPathComponent;
+  [savePanel beginSheetModalForWindow:self.filesView.window completionHandler:^(NSInteger result) {
+    if (result == NSFileHandlingPanelCancelButton)
+      return;
+    
+    // create the file
+    [fileManager moveItemAtPath:urlForClickedRow.path toPath:savePanel.URL.path error:NULL];
+    
+    // reload file navigator, and select the new file
+    [self flushCache];
+    [self.filesView reloadData];
+    [self revealFileInNavigator:savePanel.URL];
+  }];
+}
+
+- (IBAction)moveFileToTrash:(id)sender
+{
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  
+  // find the target row
+  NSInteger clickedRow = [self.filesView clickedRow];
+  if (clickedRow == -1) {
+    NSBeep();
+    return;
+  }
+  NSURL *urlForClickedRow = [self.filesView itemAtRow:clickedRow];
+  
+  // move to trash
+  [fileManager trashItemAtURL:urlForClickedRow resultingItemURL:NULL error:NULL];
+  
+  // reload file navigator, and select the new file
+  [self flushCache];
+  [self.filesView reloadData];
 }
 
 - (IBAction)newFolder:(id)sender
@@ -384,6 +436,7 @@ static NSArray *filesExcludeList;
   
   // show save panel
   NSSavePanel *savePanel = [NSSavePanel savePanel];
+  savePanel.showsHiddenFiles = YES;
   savePanel.directoryURL = parentDir;
   [savePanel beginSheetModalForWindow:self.filesView.window completionHandler:^(NSInteger result) {
     if (result == NSFileHandlingPanelCancelButton)
