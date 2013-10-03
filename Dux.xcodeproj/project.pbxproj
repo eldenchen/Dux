@@ -916,7 +916,6 @@
 				38D6057F1403859600D70F81 /* Sources */,
 				38D605801403859600D70F81 /* Frameworks */,
 				38D605811403859600D70F81 /* Resources */,
-				3826B8F5147993B7009FD11B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -992,19 +991,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3826B8F5147993B7009FD11B /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /usr/bin/ruby;
-			shellScript = "#!/usr/bin/ruby\n# xcode-git-cfbundleversion.rb\n# Update CFBundleVersion in Info.plist file with short Git revision string\n# http://github.com/guicocoa/xcode-git-cfbundleversion/\n#\n# This is based on\n# http://github.com/digdog/xcode-git-cfbundleversion/\n# http://github.com/jsallis/xcode-git-versioner\n# http://github.com/juretta/iphone-project-tools/tree/v1.0.3\n\nraise \"Must be run from Xcode\" unless ENV['XCODE_VERSION_ACTUAL']\n\nGIT = \"/usr/bin/git\"\nPRODUCT_PLIST = File.join(ENV['BUILT_PRODUCTS_DIR'], ENV['INFOPLIST_PATH'])\nREVISION = `#{GIT} log --pretty=format:'' | wc -l`.scan(/\\d/).to_s\n\nif File.file?(PRODUCT_PLIST) and REVISION\n  \n  # update product plist\n  `/usr/libexec/PlistBuddy -c \\\"Set :CFBundleVersion #{REVISION}\\\" \\\"#{PRODUCT_PLIST}\\\"`\n  \n  # log\n  puts \"updated CFBundleVersion to #{REVISION}\"\n  \nend";
-		};
 		386EC886172A22B9000C7430 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
