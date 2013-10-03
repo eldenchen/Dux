@@ -12,6 +12,7 @@
 #import "NSStringDuxAdditions.h"
 #import "DuxSyntaxHighlighter.h"
 #import "DuxQuickFindPanelController.h"
+#import "DuxTextViewBundleResponder.h"
 
 @class MyTextDocument;
 

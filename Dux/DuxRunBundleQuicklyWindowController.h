@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "DuxTextViewBundleResponder.h"
 
 @interface DuxRunBundleQuicklyWindowController : NSWindowController
 

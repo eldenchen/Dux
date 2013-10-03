@@ -203,6 +203,7 @@
 		3829D936145A9F7D00188ECF /* DuxHTMLTagElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLTagElement.h; sourceTree = "<group>"; };
 		3829D937145A9F7D00188ECF /* DuxHTMLTagElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxHTMLTagElement.m; sourceTree = "<group>"; };
 		382F146517EBCA440095BC59 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		382FC14617FCD921005E0F5C /* DuxTextViewBundleResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxTextViewBundleResponder.h; sourceTree = "<group>"; };
 		38313274168FB8E400E334E8 /* DuxClickAndHoldPopUpButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxClickAndHoldPopUpButton.h; sourceTree = "<group>"; };
 		38313275168FB8E400E334E8 /* DuxClickAndHoldPopUpButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxClickAndHoldPopUpButton.m; sourceTree = "<group>"; };
 		3837FAB01475E058002CC459 /* NSStringDuxAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStringDuxAdditions.h; sourceTree = "<group>"; };
@@ -773,6 +774,7 @@
 				38D6059C1403859700D70F81 /* MyTextDocument.xib */,
 				3829B270168A74BB0034C0A1 /* DuxProjectWindowController.h */,
 				3829B271168A74BB0034C0A1 /* DuxProjectWindowController.m */,
+				382FC14617FCD921005E0F5C /* DuxTextViewBundleResponder.h */,
 				386ADEF5168DA6F800C961DA /* DuxProjectWindow.h */,
 				386ADEF6168DA6F800C961DA /* DuxProjectWindow.m */,
 				38D6059F1403859700D70F81 /* MainMenu.xib */,
