@@ -91,6 +91,8 @@
 		389B017B172B2513003ADE63 /* DuxCSSAtRuleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 389B017A172B2512003ADE63 /* DuxCSSAtRuleElement.m */; };
 		389B017C172B2513003ADE63 /* DuxCSSAtRuleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 389B017A172B2512003ADE63 /* DuxCSSAtRuleElement.m */; };
 		389C8EC4148B0E530029B942 /* DuxStringLineEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C8EC3148B0E530029B942 /* DuxStringLineEnumerator.m */; };
+		38ACB57117FE2DFE0087C97E /* AboutPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38ACB57017FE2DFE0087C97E /* AboutPanel.xib */; };
+		38ACB57317FE32F90087C97E /* about-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 38ACB57217FE32F90087C97E /* about-logo.png */; };
 		38B5BB0E171E5526000C8525 /* NSColor+DuxColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B5BB0D171E5526000C8525 /* NSColor+DuxColors.m */; };
 		38BB441D147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BB441C147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m */; };
 		38BC9216148764B700CE73EB /* DuxHTMLCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC9215148764B700CE73EB /* DuxHTMLCommentElement.m */; };
@@ -268,6 +270,8 @@
 		389B017A172B2512003ADE63 /* DuxCSSAtRuleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSAtRuleElement.m; sourceTree = "<group>"; };
 		389C8EC2148B0E530029B942 /* DuxStringLineEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxStringLineEnumerator.h; sourceTree = "<group>"; };
 		389C8EC3148B0E530029B942 /* DuxStringLineEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxStringLineEnumerator.m; sourceTree = "<group>"; };
+		38ACB57017FE2DFE0087C97E /* AboutPanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutPanel.xib; sourceTree = "<group>"; };
+		38ACB57217FE32F90087C97E /* about-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "about-logo.png"; path = "Artwork/about-logo.png"; sourceTree = SOURCE_ROOT; };
 		38B5BB0C171E5526000C8525 /* NSColor+DuxColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+DuxColors.h"; sourceTree = "<group>"; };
 		38B5BB0D171E5526000C8525 /* NSColor+DuxColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+DuxColors.m"; sourceTree = "<group>"; };
 		38BB441B147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxOpenQuicklyTableViewCell.h; sourceTree = "<group>"; };
@@ -799,6 +803,8 @@
 				C97713151724C90B00AC1757 /* DuxNavigatorFileCell.h */,
 				C97713161724C90B00AC1757 /* DuxNavigatorFileCell.m */,
 				382F146517EBCA440095BC59 /* Images.xcassets */,
+				38ACB57017FE2DFE0087C97E /* AboutPanel.xib */,
+				38ACB57217FE32F90087C97E /* about-logo.png */,
 			);
 			path = Dux;
 			sourceTree = "<group>";
@@ -973,6 +979,7 @@
 				38D605921403859600D70F81 /* InfoPlist.strings in Resources */,
 				382F146617EBCA440095BC59 /* Images.xcassets in Resources */,
 				38D605981403859600D70F81 /* Credits.rtf in Resources */,
+				38ACB57317FE32F90087C97E /* about-logo.png in Resources */,
 				38D6059E1403859700D70F81 /* MyTextDocument.xib in Resources */,
 				38D605A11403859700D70F81 /* MainMenu.xib in Resources */,
 				38CFE15E1403CBCD00CA7044 /* docicon.icns in Resources */,
@@ -980,6 +987,7 @@
 				38983C731474FEC8004DD914 /* JumpToLinePanel.xib in Resources */,
 				38BC921D1487733B00CE73EB /* PreferencesWindow.xib in Resources */,
 				38F1060A16490F8A00467839 /* DuxMultiFileSearchWindowController.xib in Resources */,
+				38ACB57117FE2DFE0087C97E /* AboutPanel.xib in Resources */,
 				385115081692FADE0066B876 /* DuxRunBundleQuicklyWindowController.xib in Resources */,
 				38D4B48E17209E6800B2EDEC /* Acknowledgements.xib in Resources */,
 				38D4B4931720A28D00B2EDEC /* Fonts in Resources */,
