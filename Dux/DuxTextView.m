@@ -708,7 +708,10 @@ static NSCharacterSet *newlineCharacterSet;
   
   if ([self handleOpeningClosingCharactersInEvent:theEvent])
     return;
-  
+
+  if ([self handleReturnKeyEvent:theEvent])
+    return;
+
   // handle other key
   switch ([[theEvent charactersIgnoringModifiers] characterAtIndex:0]) {
     case NSLeftArrowFunctionKey:
@@ -826,6 +829,34 @@ static NSCharacterSet *newlineCharacterSet;
     }
   }
   
+  return NO;
+}
+
+- (BOOL)handleReturnKeyEvent:(NSEvent *)event
+{
+  if ([event keyCode] == 36) {
+    if (self.selectedRange.length > 0) {
+      return NO;
+    }
+    NSUInteger location = self.selectedRange.location;
+    if (location == 0) {
+      return NO;
+    }
+    if ([self.string characterAtIndex:location - 1] == '{' && [self.string characterAtIndex:location] == '}') {
+      [self insertNewline:nil];
+      NSUInteger savedLocation = self.selectedRange.location;
+      [self insertNewline:nil];
+      [self setSelectedRange:NSMakeRange(savedLocation, 0)];
+      if ([DuxPreferences indentWithSpaces]) {
+        for (int i = 0 ; i < [DuxPreferences tabWidth] ; i++) {
+          [self insertText:@" "];
+        }
+      } else {
+        [self insertTab:nil];
+      }
+      return YES;
+    }
+  }
   return NO;
 }
 
