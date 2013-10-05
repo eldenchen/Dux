@@ -768,7 +768,7 @@ static NSCharacterSet *newlineCharacterSet;
 
 - (BOOL)handleOpeningClosingCharactersInEvent:(NSEvent *)event
 {
-  unichar ch = [[event charactersIgnoringModifiers] characterAtIndex:0];
+  unichar ch = [[event characters] characterAtIndex:0];
   
   char *found = NULL;
   static char *openingChars = "{[(\"'";
