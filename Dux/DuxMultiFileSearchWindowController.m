@@ -13,6 +13,7 @@
 
 @property (strong) NSArray *searchPaths; // list of every subpath in available in the open quickly panel
 @property (strong) NSArray *searchResultPaths;
+@property (strong) NSOperationQueue *updateSearchPathsQueue;
 @property (strong) NSOperationQueue *updateResultsQueue;
 
 @property (strong) NSString *lastSearchString;
@@ -32,7 +33,8 @@
   self.searchResultPaths = [NSArray array];
   self.directoryNamesToSkip = [NSArray arrayWithObjects:@".svn", @"tmp", nil];
   
-  // load search path from user defaults
+  self.updateSearchPathsQueue = [[NSOperationQueue alloc] init];
+  self.updateSearchPathsQueue.maxConcurrentOperationCount = 1;
   
   self.updateResultsQueue = [[NSOperationQueue alloc] init];
   self.updateResultsQueue.maxConcurrentOperationCount = 1;
@@ -63,6 +65,7 @@
   self.searchPaths = [NSArray array];
   
   [self updateSearchPaths];
+  [self performSearch:self];
 }
 
 - (void)windowWillClose:(NSNotification *)notification
@@ -72,11 +75,6 @@
 
 - (IBAction)performSearch:(id)sender
 {
-  // do we have any search paths?
-  if (self.searchPaths.count == 0) {
-    return;
-  }
-  
   // empty search string?
   NSString *searchString = self.searchField.stringValue;
   if (searchString.length == 0) {
@@ -94,13 +92,21 @@
   // clear selection
   [self.resultsTableView deselectAll:self];
   
-  // cancel the operation queue
+  // abort any active search
   [self.updateResultsQueue cancelAllOperations];
   [self.updateResultsQueue waitUntilAllOperationsAreFinished];
   
-  NSArray *operationSearchPaths = [self.searchPaths copy];
+  // load search paths
+  __block NSArray *operationSearchPaths;
   DuxMultiFileSearchWindowController *blockSelf = self; // avoid retain cycle warnings
+  [self.updateResultsQueue addOperationWithBlock:^{
+    [blockSelf.updateSearchPathsQueue waitUntilAllOperationsAreFinished];
+    dispatch_sync(dispatch_get_main_queue(), ^{
+      operationSearchPaths = [blockSelf.searchPaths copy];
+    });
+  }];
   
+  // load search paths
   __block NSBlockOperation *updateResultsBlock = [NSBlockOperation blockOperationWithBlock:^{
     NSMutableArray *mutableSearchResults = [NSMutableArray array];
     NSDate *lastUIUpdate = [NSDate date]; // when this hits 1/30th of a second ago, we update the GUI
@@ -233,7 +239,7 @@
   // enumerate all the files in the path
   NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtURL:[NSURL fileURLWithPath:self.searchPath.stringByStandardizingPath] includingPropertiesForKeys:[NSArray arrayWithObject:NSURLIsDirectoryKey] options:0 errorHandler:nil];
   NSSet *excludeFilesWithExtension = [NSSet setWithArray:[DuxPreferences openQuicklyExcludesFilesWithExtension]];
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+  [self.updateSearchPathsQueue addOperationWithBlock:^{
     dispatch_async(dispatch_get_main_queue(), ^{
       [self.progressIndicator setIndeterminate:YES];
       [self.progressIndicator startAnimation:self];
@@ -265,12 +271,12 @@
     }
     
     // finish up
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_sync(dispatch_get_main_queue(), ^{
       self.searchPaths = [scratchSearchPaths copy];
       self.progressIndicator.alphaValue = 0;
       [self.progressIndicator stopAnimation:self];
     });
-  });
+  }];
 }
 
 - (void)openResult:(id)url
