@@ -23,6 +23,8 @@
 
 @implementation MyAppDelegate
 
+@synthesize aboutWindow;
+
 + (void)initialize
 {
   [DuxPreferences registerDefaults];
@@ -120,6 +122,24 @@
 - (IBAction)showAcknowledgements:(id)sender
 {
   [DuxAcknowledgementsController showAcknowledgementsWindow];
+}
+
+- (IBAction)orderFrontStandardAboutPanel:(id)sender
+{
+  if (!self.aboutWindow) {
+    [NSBundle loadNibNamed:@"AboutPanel" owner:self];
+    
+    self.aboutWindow.backgroundColor = [NSColor whiteColor];
+    self.aboutWindowVersionField.stringValue = [NSString stringWithFormat:@"v%@ (%@)", [[[NSBundle mainBundle] infoDictionary] valueForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] valueForKey:@"CFBundleVersion"]];
+    [self.aboutWindowCreditsTextView replaceCharactersInRange:NSMakeRange(0, self.aboutWindowCreditsTextView.string.length) withRTF:[NSData dataWithContentsOfURL:[[NSBundle mainBundle] URLForResource:@"Credits" withExtension:@"rtf"]]];
+  }
+  
+  [self.aboutWindow makeKeyAndOrderFront:self];
+}
+
+- (IBAction)showDuxWebsite:(id)sender
+{
+  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://duxapp.com"]];
 }
 
 @end

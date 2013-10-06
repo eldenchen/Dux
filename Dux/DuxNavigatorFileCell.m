@@ -10,7 +10,7 @@
 
 #define kDefaultIconImageSize   16.0
 #define kImageFrameXOffset      3
-#define kImageFrameYOffset      1
+#define kImageFrameYOffset      2
 #define kTextFrameXOffset       6
 #define kTextFrameYOffset       2
 

@@ -27,7 +27,7 @@
 
 + (void)animatedScrollToPoint:(NSPoint)targetPoint inScrollView:(NSScrollView *)scrollView
 {
-  DuxScrollViewAnimation *animation = [[DuxScrollViewAnimation alloc] initWithDuration:0.4 animationCurve:NSAnimationEaseInOut];
+  DuxScrollViewAnimation *animation = [[DuxScrollViewAnimation alloc] initWithDuration:0.2 animationCurve:NSAnimationEaseInOut];
   
   animation.scrollView = scrollView;
   animation.originPoint = scrollView.documentVisibleRect.origin;

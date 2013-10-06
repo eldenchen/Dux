@@ -100,4 +100,43 @@ static __weak id keywordIndexString = nil;
   return NO;
 }
 
+- (void)findSymbolsInDocumentContents:(NSString *)string foundSymbolHandler:(BOOL(^) (NSDictionary *symbol))foundSymbolHandler finishedSearchHandler:(void(^)())finishedHandler
+{
+  NSArray *keywords = [[NSArray alloc] initWithObjects:@"class", @"function", @"interface", nil];
+  NSRegularExpression *keywordRegex = [[NSRegularExpression alloc] initWithPattern:[[NSString alloc] initWithFormat:@"\\b((%@\\s+([a-z0-9_]+)))\\b", [keywords componentsJoinedByString:@"\\s+([a-z0-9_]+))|("]] options:NSRegularExpressionCaseInsensitive error:NULL];
+  
+  string = string.copy;
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    __block BOOL finishedHandlerCalled = NO;
+    
+    [keywordRegex enumerateMatchesInString:string options:0 range:NSMakeRange(0, string.length) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
+      NSUInteger m = match.numberOfRanges;
+      for (NSUInteger i = 2; i < m; i++) {
+        BOOL isNameMatch = ((i - 1) % 2) == 0;
+        if (!isNameMatch)
+          continue;
+        
+        NSRange range = [match rangeAtIndex:i];
+        if (range.location == NSNotFound)
+          continue;
+        
+        NSString *name = [string substringWithRange:range];
+        
+        __block BOOL continueSearching;
+        dispatch_sync(dispatch_get_main_queue(), ^{
+          continueSearching = foundSymbolHandler(@{@"range": [NSValue valueWithRange:range], @"name": name});
+        });
+        if (!continueSearching) {
+          finishedHandler();
+          finishedHandlerCalled = YES;
+          *stop = YES;
+        }
+      }
+    }];
+    
+    if (!finishedHandlerCalled)
+      finishedHandler();
+  });
+}
+
 @end
