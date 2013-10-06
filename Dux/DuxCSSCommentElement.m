@@ -32,7 +32,7 @@ static NSColor *color;
 
 - (NSUInteger)lengthInString:(NSAttributedString *)string startingAt:(NSUInteger)startingAt nextElement:(DuxLanguageElement *__strong*)nextElement
 {
-  NSUInteger searchStartLocation = startingAt + 2;
+  NSUInteger searchStartLocation = MIN(startingAt + 2, string.length);
   NSRange foundRange = [string.string rangeOfString:nextElementSearchString options:NSLiteralSearch range:NSMakeRange(searchStartLocation, string.string.length - searchStartLocation)];
   
   if (foundRange.location == NSNotFound)
