@@ -739,7 +739,13 @@ static NSCharacterSet *newlineCharacterSet;
         if ([self removeEmptyMarkPairIfFound])
           return;
       }
-      
+
+      if (([theEvent modifierFlags] &  NSCommandKeyMask)
+          && [self.string beginingOfLineAtOffset:self.selectedRange.location] == self.selectedRange.location) {
+        [self deleteBackward:self];
+        return;
+      }
+
       if (!([theEvent modifierFlags] & NSControlKeyMask))
         break;
       
