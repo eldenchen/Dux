@@ -87,6 +87,7 @@
   // save search string
   NSPasteboard *findPasteboard = [NSPasteboard pasteboardWithName:NSFindPboard];
   if ([findPasteboard stringForType:NSPasteboardTypeString] != searchString) {
+    [findPasteboard declareTypes:@[NSPasteboardTypeString] owner:self];
     [findPasteboard setString:searchString forType:NSStringPboardType];
   }
   
