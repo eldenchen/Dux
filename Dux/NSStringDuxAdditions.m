@@ -169,50 +169,26 @@ static NSCharacterSet *nonWhitespaceCharacterSet;
 
 - (NSString *)stringByReplacingNewlinesWithNewline:(DuxNewlineOptions)newlineStyle
 {
-  NSString *newlineSting = [[self class] stringForNewlineStyle:newlineStyle];
+  if (self.length == 0) {
+    return self;
+  }
   
+  NSString *newlineString = [[self class] stringForNewlineStyle:newlineStyle];
   
   NSMutableString *newString = [NSMutableString stringWithCapacity:self.length];
   
-  NSUInteger stringLength = self.length;
-  NSUInteger previousCharacterLocation = 0;
-  NSUInteger characterLocation = 0;
-  DuxNewlineOptions characterNewlineType;
-  while (characterLocation < stringLength) {
-    characterLocation = [self rangeOfCharacterFromSet:newlineCharacterSet options:NSLiteralSearch range:NSMakeRange(characterLocation, (stringLength - characterLocation))].location;
-    
-    if (characterLocation == NSNotFound) {
-      if (previousCharacterLocation != stringLength)
-        [newString appendString:[self substringWithRange:NSMakeRange(previousCharacterLocation, stringLength - previousCharacterLocation)]];
-      break;
-    }
-    
-    if (characterLocation != previousCharacterLocation)
-      [newString appendString:[self substringWithRange:NSMakeRange(previousCharacterLocation, characterLocation - previousCharacterLocation)]];
-    
-    // type of newline?
-    unichar newlineChar = [self characterAtIndex:characterLocation];
-    if (newlineChar == '\n') {
-      characterNewlineType = DuxNewlineUnix;
-    } else {
-      characterNewlineType = DuxNewlineClassicMac;
-    }
-    
-    // if we are at a \r character and the next character is a \n, we have windows newlines and should skip the next character
-    if (characterNewlineType == DuxNewlineClassicMac &&
-        stringLength > (characterLocation + 1) &&
-        [self characterAtIndex:characterLocation + 1] == '\n') {
-      
-      characterNewlineType = DuxNewlineWindows;
-    }
-    
-    [newString appendString:newlineSting];
-    
-    characterLocation++;
-    if (characterNewlineType == DuxNewlineWindows)
-      characterLocation++;
-    
-    previousCharacterLocation = characterLocation;
+  [self enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {
+    [newString appendString:line];
+    [newString appendString:newlineString];
+  }];
+  
+  NSUInteger maxNewlinewLength = MIN(2, self.length);
+  NSRange searchRange = NSMakeRange(self.length - maxNewlinewLength, maxNewlinewLength);
+  
+  NSRange lastNewlineRange = [self rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:NSLiteralSearch|NSBackwardsSearch range:searchRange];
+  
+  if (lastNewlineRange.location == NSNotFound) {
+    [newString deleteCharactersInRange:NSMakeRange(newString.length - newlineString.length, newlineString.length)];
   }
   
   return [newString copy];
