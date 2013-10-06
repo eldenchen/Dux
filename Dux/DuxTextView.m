@@ -16,6 +16,12 @@
 #import "DuxPreferences.h"
 #import "DuxBundle.h"
 
+@interface DuxTextView ()
+
+@property NSUInteger goToSymbolFindOperationCounter;
+
+@end
+
 @implementation DuxTextView
 
 @synthesize highlighter;
@@ -227,6 +233,69 @@ static NSCharacterSet *newlineCharacterSet;
   
   [self setSelectedRange:lineRange];
   [self.goToLinePanel performClose:self];
+}
+
+- (IBAction)goToSymbol:(id)sender
+{
+  if (!self.goToSymbolPanel) {
+    self.goToSymbolPanel = [[DuxQuickFindPanelController alloc] init];
+    self.goToSymbolPanel.title = @"Go to Symbol";
+    self.goToSymbolPanel.target = self;
+    self.goToSymbolPanel.action = @selector(goToSymbolPanelAction:);
+  }
+  
+  DuxLanguage *language = self.highlighter.baseLanguage;
+  
+  self.goToSymbolFindOperationCounter++;
+  NSUInteger goToSymbolOperation = self.goToSymbolFindOperationCounter;
+  __block BOOL haveBegun = NO;
+  
+  [language findSymbolsInDocumentContents:self.textStorage.string foundSymbolHandler:^BOOL(NSDictionary *symbol) {
+    if (self.goToSymbolFindOperationCounter != goToSymbolOperation) {
+      if (!haveBegun) {
+        [self.goToSymbolPanel beginAddingFindResults];
+        haveBegun = YES;
+      }
+      return NO;
+    }
+    
+    if (!haveBegun) {
+      [self.goToSymbolPanel beginAddingFindResults];
+      haveBegun = YES;
+    }
+    
+    [self.goToSymbolPanel addFindResult:symbol];
+    return YES;
+  } finishedSearchHandler:^{
+    if (self.goToSymbolFindOperationCounter != goToSymbolOperation)
+      return;
+    
+    if (!haveBegun) {
+      [self.goToSymbolPanel beginAddingFindResults];
+      haveBegun = YES;
+    }
+    
+    [self.goToSymbolPanel endAddingFindResults];
+  }];
+  
+  [self.goToSymbolPanel orderFrontForProjectWindow:self.window];
+}
+
+- (void)goToSymbolPanelAction:(id)sender
+{
+  NSRange symbolRange = [self.goToSymbolPanel.selectedResult[@"range"] rangeValue];
+  
+//  [self setSelectedRange:symbolRange];
+//  [self scrollRangeToVisible:symbolRange];
+  
+  // jump to the line
+  NSRange lineRange = [self.string rangeOfLineAtOffset:symbolRange.location];
+  NSUInteger glyphIndex = [self.layoutManager glyphIndexForCharacterAtIndex:lineRange.location];
+  NSRect lineRect = [self.layoutManager lineFragmentRectForGlyphAtIndex:glyphIndex effectiveRange:NULL];
+  
+  [DuxScrollViewAnimation animatedScrollPointToCenter:NSMakePoint(0, NSMinY(lineRect) + (NSHeight(lineRect) / 2)) inScrollView:self.enclosingScrollView];
+  
+  [self setSelectedRange:lineRange];
 }
 
 - (IBAction)commentSelection:(id)sender
@@ -639,7 +708,10 @@ static NSCharacterSet *newlineCharacterSet;
   
   if ([self handleOpeningClosingCharactersInEvent:theEvent])
     return;
-  
+
+  if ([self handleReturnKeyEvent:theEvent])
+    return;
+
   // handle other key
   switch ([[theEvent charactersIgnoringModifiers] characterAtIndex:0]) {
     case NSLeftArrowFunctionKey:
@@ -699,7 +771,7 @@ static NSCharacterSet *newlineCharacterSet;
 
 - (BOOL)handleOpeningClosingCharactersInEvent:(NSEvent *)event
 {
-  unichar ch = [[event charactersIgnoringModifiers] characterAtIndex:0];
+  unichar ch = [[event characters] characterAtIndex:0];
   
   char *found = NULL;
   static char *openingChars = "{[(\"'";
@@ -757,6 +829,34 @@ static NSCharacterSet *newlineCharacterSet;
     }
   }
   
+  return NO;
+}
+
+- (BOOL)handleReturnKeyEvent:(NSEvent *)event
+{
+  if ([event keyCode] == 36) {
+    if (self.selectedRange.length > 0) {
+      return NO;
+    }
+    NSUInteger location = self.selectedRange.location;
+    if (location == 0) {
+      return NO;
+    }
+    if ([self.string characterAtIndex:location - 1] == '{' && [self.string characterAtIndex:location] == '}') {
+      [self insertNewline:nil];
+      NSUInteger savedLocation = self.selectedRange.location;
+      [self insertNewline:nil];
+      [self setSelectedRange:NSMakeRange(savedLocation, 0)];
+      if ([DuxPreferences indentWithSpaces]) {
+        for (int i = 0 ; i < [DuxPreferences tabWidth] ; i++) {
+          [self insertText:@" "];
+        }
+      } else {
+        [self insertTab:nil];
+      }
+      return YES;
+    }
+  }
   return NO;
 }
 

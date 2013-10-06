@@ -35,7 +35,7 @@ static NSArray *filesExcludeList;
   if (!(self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
     return nil;
   
-  [self initCache];
+  [self flushCache];
   
   return self;
 }
@@ -45,12 +45,12 @@ static NSArray *filesExcludeList;
   if (!(self = [super initWithCoder:aDecoder]))
     return nil;
   
-  [self initCache];
+  [self flushCache];
   
   return self;
 }
 
-- (void)initCache
+- (void)flushCache
 {
   self.urlIsDirectoryCache = @{}.mutableCopy;
   self.urlChildUrlsCache = @{}.mutableCopy;
@@ -301,10 +301,155 @@ static NSArray *filesExcludeList;
 
 - (IBAction)revealFileInFinder:(id)sender
 {
+  NSURL *urlForClickedRow;
+  
   NSInteger clickedRow = [self.filesView clickedRow];
-  NSURL *urlForClickedRow = [self.filesView itemAtRow:clickedRow];
+  if (clickedRow == -1) {
+    urlForClickedRow = self.rootURL;
+  } else {
+    urlForClickedRow = [self.filesView itemAtRow:clickedRow];
+  }
 
   [[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[urlForClickedRow]];
+}
+
+- (IBAction)newFile:(id)sender
+{
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  
+  // find the target row
+  NSURL *parentDir;
+  NSInteger clickedRow = [self.filesView clickedRow];
+  if (clickedRow == -1) {
+    parentDir = self.rootURL;
+  } else {
+    NSURL *urlForClickedRow = [self.filesView itemAtRow:clickedRow];
+    
+    
+    // figure out the parent dir (if selected row is a directory, make it a child. otherwise a sibling)
+    BOOL clickedRowIsDir;
+    BOOL clickedRowExists = [fileManager fileExistsAtPath:urlForClickedRow.path isDirectory:&clickedRowIsDir];
+    if (!clickedRowExists) {
+      NSBeep();
+      return;
+    }
+    parentDir = clickedRowIsDir ? urlForClickedRow : urlForClickedRow.URLByDeletingLastPathComponent;
+  }
+  
+  // show save panel
+  NSSavePanel *savePanel = [NSSavePanel savePanel];
+  savePanel.showsHiddenFiles = YES;
+  savePanel.directoryURL = parentDir;
+  [savePanel beginSheetModalForWindow:self.filesView.window completionHandler:^(NSInteger result) {
+    if (result == NSFileHandlingPanelCancelButton)
+      return;
+    
+    // create the file
+    [fileManager createFileAtPath:savePanel.URL.path contents:[NSData data] attributes:nil];
+    
+    // reload file navigator, and select the new file
+    [self flushCache];
+    [self.filesView reloadData];
+    [self revealFileInNavigator:savePanel.URL];
+    
+    // open the new file
+    if ([self.delegate respondsToSelector:@selector(duxNavigatorDidCreateFile:)]) {
+      [self.delegate duxNavigatorDidCreateFile:savePanel.URL];
+    }
+    
+  }];
+}
+
+- (IBAction)moveFile:(id)sender
+{
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  
+  // find the target row
+  NSInteger clickedRow = [self.filesView clickedRow];
+  if (clickedRow == -1) {
+    NSBeep();
+    return;
+  }
+  NSURL *urlForClickedRow = [self.filesView itemAtRow:clickedRow];
+  
+  // show save panel
+  NSSavePanel *savePanel = [NSSavePanel savePanel];
+  savePanel.showsHiddenFiles = YES;
+  savePanel.directoryURL = urlForClickedRow.URLByDeletingLastPathComponent;
+  savePanel.nameFieldStringValue = urlForClickedRow.lastPathComponent;
+  [savePanel beginSheetModalForWindow:self.filesView.window completionHandler:^(NSInteger result) {
+    if (result == NSFileHandlingPanelCancelButton)
+      return;
+    
+    // create the file
+    [fileManager moveItemAtPath:urlForClickedRow.path toPath:savePanel.URL.path error:NULL];
+    
+    // reload file navigator, and select the new file
+    [self flushCache];
+    [self.filesView reloadData];
+    [self revealFileInNavigator:savePanel.URL];
+  }];
+}
+
+- (IBAction)moveFileToTrash:(id)sender
+{
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  
+  // find the target row
+  NSInteger clickedRow = [self.filesView clickedRow];
+  if (clickedRow == -1) {
+    NSBeep();
+    return;
+  }
+  NSURL *urlForClickedRow = [self.filesView itemAtRow:clickedRow];
+  
+  // move to trash
+  [fileManager trashItemAtURL:urlForClickedRow resultingItemURL:NULL error:NULL];
+  
+  // reload file navigator, and select the new file
+  [self flushCache];
+  [self.filesView reloadData];
+}
+
+- (IBAction)newFolder:(id)sender
+{
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  
+  // find the target row
+  NSURL *parentDir;
+  NSInteger clickedRow = [self.filesView clickedRow];
+  if (clickedRow == -1) {
+    parentDir = self.rootURL;
+  } else {
+    NSURL *urlForClickedRow = [self.filesView itemAtRow:clickedRow];
+    
+    
+    // figure out the parent dir (if selected row is a directory, make it a child. otherwise a sibling)
+    BOOL clickedRowIsDir;
+    BOOL clickedRowExists = [fileManager fileExistsAtPath:urlForClickedRow.path isDirectory:&clickedRowIsDir];
+    if (!clickedRowExists) {
+      NSBeep();
+      return;
+    }
+    parentDir = clickedRowIsDir ? urlForClickedRow : urlForClickedRow.URLByDeletingLastPathComponent;
+  }
+  
+  // show save panel
+  NSSavePanel *savePanel = [NSSavePanel savePanel];
+  savePanel.showsHiddenFiles = YES;
+  savePanel.directoryURL = parentDir;
+  [savePanel beginSheetModalForWindow:self.filesView.window completionHandler:^(NSInteger result) {
+    if (result == NSFileHandlingPanelCancelButton)
+      return;
+    
+    // create the file
+    [fileManager createDirectoryAtPath:savePanel.URL.path withIntermediateDirectories:NO attributes:nil error:NULL];
+    
+    // reload file navigator, and select the new file
+    [self flushCache];
+    [self.filesView reloadData];
+    [self revealFileInNavigator:savePanel.URL];
+  }];
 }
 
 - (void)revealFileInNavigator:(NSURL *)fileURL
@@ -329,9 +474,9 @@ static NSArray *filesExcludeList;
       
       // find the row
       NSInteger rowIndex = 0;
-      id rowItem = nil;
+      NSURL *rowItem = nil;
       while ((rowItem = [self.filesView itemAtRow:rowIndex])) {
-        if ([rowItem isEqual:nextUrl]) {
+        if ([rowItem.path isEqual:nextUrl.path]) {
           break;
         }
         rowIndex++;
@@ -358,6 +503,12 @@ static NSArray *filesExcludeList;
     // go to the next url
     nextUrl = [nextUrl URLByAppendingPathComponent:[fileURL.pathComponents objectAtIndex:nextUrl.pathComponents.count]];
   }
+}
+
+- (IBAction)refreshFilesList:(id)sender
+{
+  [self flushCache];
+  [self.filesView reloadData];
 }
 
 @end

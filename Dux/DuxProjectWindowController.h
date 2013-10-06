@@ -27,7 +27,6 @@
 
 
 @property (weak) IBOutlet NSView *noEditorView;
-@property (weak) IBOutlet NSImageView *noEditorLogoView;
 @property (weak) IBOutlet NSTextField *noEditorTextView;
 
 @property (weak) IBOutlet NSView *documentView;

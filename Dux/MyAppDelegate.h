@@ -17,6 +17,9 @@
 @interface MyAppDelegate : NSObject
 
 @property (weak) IBOutlet NSMenu *bundlesMenu;
+@property (strong) IBOutlet NSWindow *aboutWindow;
+@property (weak) IBOutlet NSTextField *aboutWindowVersionField;
+@property (unsafe_unretained) IBOutlet NSTextView *aboutWindowCreditsTextView;
 
 @property DuxRunBundleQuicklyWindowController *runBundleQuicklyController;
 
@@ -25,5 +28,8 @@
 - (IBAction)openBundlesFolder:(id)sender;
 - (IBAction)runBundleQuickly:(id)sender;
 - (IBAction)showAcknowledgements:(id)sender;
+
+- (IBAction)orderFrontStandardAboutPanel:(id)sender;
+- (IBAction)showDuxWebsite:(id)sender;
 
 @end
