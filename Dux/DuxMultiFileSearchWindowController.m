@@ -94,7 +94,6 @@
   
   // abort any active search
   [self.updateResultsQueue cancelAllOperations];
-  [self.updateResultsQueue waitUntilAllOperationsAreFinished];
   
   // load search paths
   __block NSArray *operationSearchPaths;
