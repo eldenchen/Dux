@@ -197,7 +197,10 @@ if ([DuxPreferences editorDarkMode]) {
     return;
   
   _duxProjectWindowShowPageGuide = duxProjectWindowShowPageGuide;
-  [self display];
+  
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0), dispatch_get_main_queue(), ^(void){
+    [self display];
+  });
 }
 
 - (void)setDuxProjectWindowPageGuideX:(CGFloat)duxProjectWindowPageGuideX
@@ -206,7 +209,9 @@ if ([DuxPreferences editorDarkMode]) {
     return;
   
   _duxProjectWindowPageGuideX = duxProjectWindowPageGuideX;
-  [self display];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0), dispatch_get_main_queue(), ^(void){
+    [self display];
+  });
 }
 
 @end
