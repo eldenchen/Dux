@@ -208,9 +208,17 @@ if ([DuxPreferences editorDarkMode]) {
   if (fabs(_duxProjectWindowPageGuideX - duxProjectWindowPageGuideX) < 0.1)
     return;
   
+  
   _duxProjectWindowPageGuideX = duxProjectWindowPageGuideX;
+  
+  static BOOL didDraw;
+  didDraw = NO;
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0), dispatch_get_main_queue(), ^(void){
+    if (didDraw)
+      return;
+    
     [self display];
+    didDraw = YES;
   });
 }
 
