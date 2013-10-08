@@ -12,4 +12,7 @@
 
 @interface DuxProjectWindow : NSWindow
 
+@property (nonatomic) BOOL duxProjectWindowShowPageGuide;
+@property (nonatomic) CGFloat duxProjectWindowPageGuideX;
+
 @end

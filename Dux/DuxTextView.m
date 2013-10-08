@@ -15,6 +15,7 @@
 #import "DuxScrollViewAnimation.h"
 #import "DuxPreferences.h"
 #import "DuxBundle.h"
+#import "DuxProjectWindow.h"
 
 @interface DuxTextView ()
 
@@ -1223,16 +1224,27 @@ static NSCharacterSet *newlineCharacterSet;
   
   // page guide
   if (self.showPageGuide) {
-if ([DuxPreferences editorDarkMode]) {
-    [[NSColor colorWithDeviceWhite:1 alpha:0.1] set];
-} else {
-    [[NSColor colorWithDeviceWhite:0.85 alpha:1] set];
-}
-    float position = self.pageGuidePosition * self.spaceWidth;
+    NSColor *guideFillColor = [DuxPreferences editorDarkMode] ? [NSColor colorWithDeviceWhite:1 alpha:0.1] : [NSColor colorWithDeviceWhite:0 alpha:0.02];
+    NSColor *guideLineColor = [DuxPreferences editorDarkMode] ? [NSColor colorWithDeviceWhite:1 alpha:0.2] : [NSColor colorWithDeviceWhite:0 alpha:0.15];
+    
+    float position = floorf(self.pageGuidePosition * self.spaceWidth);
     if (self.showLineNumbers)
       position += 34;
-    position += 0.5;
-    [NSBezierPath strokeLineFromPoint:NSMakePoint(position, NSMinY(documentVisibleRect)) toPoint:NSMakePoint(position, NSMaxY(documentVisibleRect))];
+    
+    if (NSMaxX(documentVisibleRect) > position) {
+      [guideFillColor set];
+      [NSBezierPath fillRect:NSMakeRect(position, NSMinY(documentVisibleRect), NSMaxX(documentVisibleRect) - position, NSMaxY(documentVisibleRect))];
+      [guideLineColor set];
+      [NSBezierPath strokeLineFromPoint:NSMakePoint(position - 0.5, NSMinY(documentVisibleRect)) toPoint:NSMakePoint(position - 0.5, NSMaxY(documentVisibleRect))];
+    }
+    if ([self.window isKindOfClass:[DuxProjectWindow class]]) {
+      ((DuxProjectWindow *)self.window).duxProjectWindowShowPageGuide = YES;
+      ((DuxProjectWindow *)self.window).duxProjectWindowPageGuideX = [self.window.contentView convertPoint:NSMakePoint(position, 0) fromView:self].x;
+    }
+  } else {
+    if ([self.window isKindOfClass:[DuxProjectWindow class]]) {
+      ((DuxProjectWindow *)self.window).duxProjectWindowShowPageGuide = NO;
+    }
   }
   
   // draw highlighted elements

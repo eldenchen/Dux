@@ -83,6 +83,7 @@
   // check if this is a DuxProjectWindow. if it's not, bail out now
   if (![[self window] isKindOfClass:[DuxProjectWindow class]])
     return;
+  DuxProjectWindow *window = (DuxProjectWindow *)[(id)self window];
   
   
   // are we in dark mode?
@@ -94,10 +95,10 @@
   
   
 	// Build clipping path : intersection of frame clip (bezier path with rounded corners) and rect argument
-	NSRect windowRect = [[(id)self window] frame];
+	NSRect windowRect = [window frame];
 	windowRect.origin = NSMakePoint(0, 0);
   
-  NSRect clipRect = NSMakeRect(1, windowRect.size.height - 40, windowRect.size.width - 2, 39);
+  NSRect clipRect = NSMakeRect(1, 0, windowRect.size.width - 2, windowRect.size.height - 1);
   
 	float cornerRadius = [(id)self roundedCornerRadius];
 	[[NSBezierPath bezierPathWithRoundedRect:clipRect xRadius:cornerRadius yRadius:cornerRadius] addClip];
@@ -131,7 +132,6 @@
   CGContextSetFillColorWithColor(context, self.window.backgroundColor.CGColor);
   CGContextFillPath(context);
 //}
-  
   
   
   // draw gradient
@@ -172,6 +172,41 @@ if ([DuxPreferences editorDarkMode]) {
   
   NSDictionary *attrs = @{NSFontAttributeName: [NSFont titleBarFontOfSize:0], NSForegroundColorAttributeName: [DuxPreferences editorDarkMode] ? [NSColor lightGrayColor] : [NSColor blackColor]};
   [self.title drawInRect:titleRect withAttributes:attrs];
+  
+  
+  
+  // draw pageguide
+  if (window.duxProjectWindowShowPageGuide) {
+    NSColor *guideFillColor = [DuxPreferences editorDarkMode] ? [NSColor colorWithDeviceWhite:1 alpha:0.1] : [NSColor colorWithDeviceWhite:0 alpha:0.02];
+    NSColor *guideLineColor = [DuxPreferences editorDarkMode] ? [NSColor colorWithDeviceWhite:1 alpha:0.2] : [NSColor colorWithDeviceWhite:0 alpha:0.15];
+    
+    float position = window.duxProjectWindowPageGuideX;
+    
+    if (window.frame.size.width > position) {
+      [guideFillColor set];
+      [NSBezierPath fillRect:NSMakeRect(position, 0, window.frame.size.width - position, window.frame.size.height)];
+      [guideLineColor set];
+      [NSBezierPath strokeLineFromPoint:NSMakePoint(position - 0.5, 0) toPoint:NSMakePoint(position - 0.5, window.frame.size.height)];
+    }
+  }
+}
+
+- (void)setDuxProjectWindowShowPageGuide:(BOOL)duxProjectWindowShowPageGuide
+{
+  if (_duxProjectWindowShowPageGuide == duxProjectWindowShowPageGuide)
+    return;
+  
+  _duxProjectWindowShowPageGuide = duxProjectWindowShowPageGuide;
+  [self display];
+}
+
+- (void)setDuxProjectWindowPageGuideX:(CGFloat)duxProjectWindowPageGuideX
+{
+  if (fabs(_duxProjectWindowPageGuideX - duxProjectWindowPageGuideX) < 0.1)
+    return;
+  
+  _duxProjectWindowPageGuideX = duxProjectWindowPageGuideX;
+  [self display];
 }
 
 @end

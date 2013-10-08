@@ -12,6 +12,7 @@
 #import "DuxMultiFileSearchWindowController.h"
 #import "DuxClickAndHoldPopUpButton.h"
 #import "DuxBundle.h"
+#import "DuxProjectWindow.h"
 
 @interface DuxProjectWindowController ()
 
@@ -126,6 +127,11 @@ static NSMutableArray *projects = nil;
     [self reloadDocumentHistoryPopUp];
     self.documentPathLabel.stringValue = @"";
     [self.noEditorView setHidden:NO];
+    
+    DuxProjectWindow *window = (DuxProjectWindow *)self.window;
+    if ([window isKindOfClass:[DuxProjectWindow class]]) {
+      window.duxProjectWindowShowPageGuide = NO;
+    }
     return;
   }
   
