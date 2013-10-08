@@ -35,6 +35,8 @@
 @property (strong) DuxQuickFindPanelController *goToSymbolPanel;
 @property (weak) IBOutlet NSSearchField *goToLineSearchField;
 
+@property (readonly) CGFloat spaceWidth;
+
 - (void)initDuxTextView;
 
 - (IBAction)jumpToLine:(id)sender;

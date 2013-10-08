@@ -30,7 +30,7 @@ static NSUserDefaults *userDefaults;
    @"DuxEditorFontSize": [NSNumber numberWithFloat:editorFont.pointSize],
    @"DuxEditorShowLineNumbers": [NSNumber numberWithBool:YES],
    @"DuxEditorPageGuide": [NSNumber numberWithBool:YES],
-   @"DuxEditorPageGuidePosition": [NSNumber numberWithInteger:800],
+   @"DuxEditorPageGuidePosition": [NSNumber numberWithInteger:80],
    @"DuxEditorShowOtherInstancesOfSelectedSymbol": [NSNumber numberWithBool:YES],
    @"DuxEditorTabIndentBehaviour": [NSNumber numberWithInteger:DuxTabIndentInLeadingWhitespace],
    @"DuxEditorIndentWithSpaces": [NSNumber numberWithBool:NO],

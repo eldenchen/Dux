@@ -19,6 +19,7 @@
 @interface DuxTextView ()
 
 @property NSUInteger goToSymbolFindOperationCounter;
+@property CGFloat spaceWidth; // the width of a single " " character in the current font
 
 @end
 
@@ -76,6 +77,7 @@ static NSCharacterSet *newlineCharacterSet;
   }
   
   
+  self.spaceWidth = [@" " sizeWithAttributes:@{NSFontAttributeName: [DuxPreferences editorFont]}].width;
   self.showLineNumbers = [DuxPreferences showLineNumbers];
   self.showPageGuide = [DuxPreferences showPageGuide];
   self.pageGuidePosition = [DuxPreferences pageGuidePosition];
@@ -1226,7 +1228,7 @@ if ([DuxPreferences editorDarkMode]) {
 } else {
     [[NSColor colorWithDeviceWhite:0.85 alpha:1] set];
 }
-    float position = self.pageGuidePosition;
+    float position = self.pageGuidePosition * self.spaceWidth;
     if (self.showLineNumbers)
       position += 34;
     position += 0.5;
@@ -1391,9 +1393,8 @@ if ([DuxPreferences editorDarkMode]) {
   [paragraphStyle setBaseWritingDirection:NSWritingDirectionLeftToRight];
   [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
   
-  float spaceWidth = [@" " sizeWithAttributes:[textStorage attributesAtIndex:0 effectiveRange:NULL]].width;
-  [paragraphStyle setDefaultTabInterval:spaceWidth * [DuxPreferences tabWidth]];
-  float headIndentWidth = spaceWidth * ([DuxPreferences tabWidth] * 2);
+  [paragraphStyle setDefaultTabInterval:self.spaceWidth * [DuxPreferences tabWidth]];
+  float headIndentWidth = self.spaceWidth * ([DuxPreferences tabWidth] * 2);
   
   NSUInteger whitespaceCount;
   NSNumber *oldWhitespaceCount;
@@ -1443,7 +1444,7 @@ if ([DuxPreferences editorDarkMode]) {
         }
         
         [textStorage addAttribute:@"DuxEditorLeadingWhitespaceCount" value:[NSNumber numberWithInteger:whitespaceCount] range:lineRange];
-        [paragraphStyle setHeadIndent:headIndentWidth + (whitespaceCount * spaceWidth)];
+        [paragraphStyle setHeadIndent:headIndentWidth + (whitespaceCount * self.spaceWidth)];
         [textStorage addAttribute:NSParagraphStyleAttributeName value:[paragraphStyle copy] range:lineRange];
       }
     }
@@ -1529,6 +1530,8 @@ if ([DuxPreferences editorDarkMode]) {
     NSRange range = NSMakeRange(0, self.textStorage.length);
     [self.textStorage setAttributes:[NSDictionary dictionary] range:range];
     [self.highlighter updateHighlightingForStorage:self.textStorage range:range];
+    
+    self.spaceWidth = [@" " sizeWithAttributes:@{NSFontAttributeName: [DuxPreferences editorFont]}].width;
   });
 }
 
