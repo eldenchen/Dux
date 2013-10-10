@@ -1224,8 +1224,8 @@ static NSCharacterSet *newlineCharacterSet;
   
   // page guide
   if (self.showPageGuide) {
-    NSColor *guideFillColor = [DuxPreferences editorDarkMode] ? [NSColor colorWithDeviceWhite:1 alpha:0.1] : [NSColor colorWithDeviceWhite:0 alpha:0.02];
-    NSColor *guideLineColor = [DuxPreferences editorDarkMode] ? [NSColor colorWithDeviceWhite:1 alpha:0.2] : [NSColor colorWithDeviceWhite:0 alpha:0.15];
+    NSColor *guideFillColor = [DuxPreferences editorDarkMode] ? [NSColor colorWithDeviceWhite:1 alpha:0.1] : [NSColor colorWithDeviceWhite:0 alpha:0.015];
+    NSColor *guideLineColor = [DuxPreferences editorDarkMode] ? [NSColor colorWithDeviceWhite:1 alpha:0.2] : [NSColor colorWithDeviceWhite:0 alpha:0.1];
     
     float position = floorf(self.pageGuidePosition * self.spaceWidth);
     if (self.showLineNumbers)
@@ -1235,7 +1235,8 @@ static NSCharacterSet *newlineCharacterSet;
       [guideFillColor set];
       [NSBezierPath fillRect:NSMakeRect(position, NSMinY(documentVisibleRect), NSMaxX(documentVisibleRect) - position, NSMaxY(documentVisibleRect))];
       [guideLineColor set];
-      [NSBezierPath strokeLineFromPoint:NSMakePoint(position - 0.5, NSMinY(documentVisibleRect)) toPoint:NSMakePoint(position - 0.5, NSMaxY(documentVisibleRect))];
+      [NSBezierPath setDefaultLineWidth:0.5];
+      [NSBezierPath strokeLineFromPoint:NSMakePoint(position - 0.25, NSMinY(documentVisibleRect)) toPoint:NSMakePoint(position - 0.25, NSMaxY(documentVisibleRect))];
     }
     if ([self.window isKindOfClass:[DuxProjectWindow class]]) {
       ((DuxProjectWindow *)self.window).duxProjectWindowShowPageGuide = YES;
