@@ -13,6 +13,7 @@
 #import "DuxSyntaxHighlighter.h"
 #import "DuxLanguageMenuItem.h"
 #import "DuxFileContentsWatcher.h"
+#import "DuxScrollView.h"
 
 @class DuxProjectWindowController;
 
@@ -23,7 +24,7 @@
 
 @property (nonatomic, strong) NSTextStorage *textStorage;
 @property (nonatomic, strong) DuxTextView *textView;
-@property (nonatomic, strong) NSScrollView *scrollView;
+@property (nonatomic, strong) DuxScrollView *scrollView;
 @property (nonatomic, strong) DuxSyntaxHighlighter *syntaxtHighlighter;
 @property NSStringEncoding stringEncoding;
 @property (nonatomic, strong) DuxFileContentsWatcher *fileContentsWatcher;

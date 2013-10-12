@@ -28,8 +28,6 @@
 @property (weak) DuxSyntaxHighlighter *highlighter;
 @property (strong) NSSet *highlightedElements;
 @property BOOL showLineNumbers;
-@property BOOL showPageGuide;
-@property NSUInteger pageGuidePosition;
 
 @property (strong) IBOutlet NSPanel *goToLinePanel;
 @property (strong) DuxQuickFindPanelController *goToSymbolPanel;
