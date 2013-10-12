@@ -47,7 +47,9 @@ static NSColor *color;
     // because the start/end characters are the same, so we need to make sure we didn't just find the first character
     if (foundRange.location == startingAt) {
       // are the attirbutes for the *previous* character a child of us? in this situation we have actually found the closing quote of "foo $bar"
-      NSArray *previousCharElements = [string attribute:@"DuxLanguageElementStack" atIndex:foundRange.location - 2 effectiveRange:NULL];
+      NSInteger index = foundRange.location - 2;
+      if (index < 0) index = 0;
+      NSArray *previousCharElements = [string attribute:@"DuxLanguageElementStack" atIndex:index effectiveRange:NULL];
       if (!previousCharElements || previousCharElements.count < 2 || [previousCharElements objectAtIndex:previousCharElements.count-2] != self) {
         searchStartLocation++;
         continue;
