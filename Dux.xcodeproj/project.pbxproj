@@ -57,6 +57,8 @@
 		38734F521406133200992D33 /* OpenQuickly.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38734F511406133200992D33 /* OpenQuickly.xib */; };
 		38734F561406135A00992D33 /* MyOpenQuicklyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38734F551406135A00992D33 /* MyOpenQuicklyController.m */; };
 		38734F591406163A00992D33 /* MyAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 38734F581406163A00992D33 /* MyAppDelegate.m */; };
+		387A6C88180B384400AB859D /* DuxScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 387A6C87180B384400AB859D /* DuxScrollView.m */; };
+		387A6C8B180B386000AB859D /* DuxScrollClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 387A6C8A180B386000AB859D /* DuxScrollClipView.m */; };
 		387B21491473D94E00F191F1 /* DuxPHPSingleLineCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 387B21481473D94E00F191F1 /* DuxPHPSingleLineCommentElement.m */; };
 		387B214D1473D95B00F191F1 /* DuxPHPBlockCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 387B214C1473D95B00F191F1 /* DuxPHPBlockCommentElement.m */; };
 		3883058C14DE845B00409F43 /* DuxFontSelectorTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 3883058B14DE845B00409F43 /* DuxFontSelectorTextField.m */; };
@@ -245,6 +247,10 @@
 		38734F551406135A00992D33 /* MyOpenQuicklyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyOpenQuicklyController.m; sourceTree = "<group>"; };
 		38734F571406163A00992D33 /* MyAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAppDelegate.h; sourceTree = "<group>"; };
 		38734F581406163A00992D33 /* MyAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAppDelegate.m; sourceTree = "<group>"; };
+		387A6C86180B384400AB859D /* DuxScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxScrollView.h; sourceTree = "<group>"; };
+		387A6C87180B384400AB859D /* DuxScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxScrollView.m; sourceTree = "<group>"; };
+		387A6C89180B386000AB859D /* DuxScrollClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxScrollClipView.h; sourceTree = "<group>"; };
+		387A6C8A180B386000AB859D /* DuxScrollClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxScrollClipView.m; sourceTree = "<group>"; };
 		387B21471473D94E00F191F1 /* DuxPHPSingleLineCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPSingleLineCommentElement.h; sourceTree = "<group>"; };
 		387B21481473D94E00F191F1 /* DuxPHPSingleLineCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPSingleLineCommentElement.m; sourceTree = "<group>"; };
 		387B214B1473D95B00F191F1 /* DuxPHPBlockCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPBlockCommentElement.h; sourceTree = "<group>"; };
@@ -474,6 +480,10 @@
 			children = (
 				380AED3B14500377005770D7 /* DuxTextView.h */,
 				380AED3C14500377005770D7 /* DuxTextView.m */,
+				387A6C86180B384400AB859D /* DuxScrollView.h */,
+				387A6C87180B384400AB859D /* DuxScrollView.m */,
+				387A6C89180B386000AB859D /* DuxScrollClipView.h */,
+				387A6C8A180B386000AB859D /* DuxScrollClipView.m */,
 				38CD8FA5147F8F0500062D34 /* DuxTextContainer.h */,
 				38CD8FA6147F8F0500062D34 /* DuxTextContainer.m */,
 				3824F07314522FAB00F00B96 /* DuxSyntaxHighlighter.h */,
@@ -1121,6 +1131,7 @@
 				38CD8FD4147FA26D00062D34 /* DuxJavaScriptKeywordElement.m in Sources */,
 				38CD8FD7147FA27A00062D34 /* DuxJavaScriptSingleLineCommentElement.m in Sources */,
 				38CD8FDA147FA28700062D34 /* DuxJavaScriptBlockCommentElement.m in Sources */,
+				387A6C8B180B386000AB859D /* DuxScrollClipView.m in Sources */,
 				388682AD1480409F00C362EE /* DuxLineNumberString.m in Sources */,
 				3822EAAB148623970068330B /* DuxScrollViewAnimation.m in Sources */,
 				38BC9216148764B700CE73EB /* DuxHTMLCommentElement.m in Sources */,
@@ -1137,6 +1148,7 @@
 				38CC7D9A14E265AB00FE1594 /* DuxRubyKeywordElement.m in Sources */,
 				38CC7D9D14E265DD00FE1594 /* DuxRubySingleLineCommentElement.m in Sources */,
 				38CC7DA014E267AC00FE1594 /* DuxRubyRegularExpressionElement.m in Sources */,
+				387A6C88180B384400AB859D /* DuxScrollView.m in Sources */,
 				38E6807815076FDA00ECCC6C /* DuxShellLanguage.m in Sources */,
 				38E6807B1507708F00ECCC6C /* DuxShellBaseElement.m in Sources */,
 				38E6807E1507709E00ECCC6C /* DuxShellKeywordElement.m in Sources */,
