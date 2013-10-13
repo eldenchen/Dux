@@ -45,16 +45,9 @@
       self.textView.textDocument = self;
       self.textView.typingAttributes = @{NSFontAttributeName:[DuxPreferences editorFont]};
       
-      self.scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, 100, 100)];
-      self.scrollView.borderType = NSNoBorder;
-      self.scrollView.hasVerticalScroller = YES;
-      self.scrollView.hasHorizontalScroller = NO;
-      self.scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+      self.scrollView = [[DuxScrollView alloc] initWithFrame:NSMakeRect(0, 0, 100, 100)];
       self.scrollView.documentView = self.textView;
-if ([DuxPreferences editorDarkMode]) {
-      self.scrollView.backgroundColor = [NSColor colorWithCalibratedWhite:0.2 alpha:1];
-}
-      
+
       // load text into view
       self.textView.highlighter = self.syntaxtHighlighter;
       self.activeNewlineStyle = DuxNewlineUnix;

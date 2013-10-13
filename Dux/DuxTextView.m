@@ -32,8 +32,6 @@
 @synthesize textDocument;
 @synthesize highlightedElements;
 @synthesize showLineNumbers;
-@synthesize showPageGuide;
-@synthesize pageGuidePosition;
 
 static NSCharacterSet *newlineCharacterSet;
 
@@ -76,12 +74,9 @@ static NSCharacterSet *newlineCharacterSet;
     // built in selected text attributes are useless in dark mode, and we cannot set the value of some of them, so instead we disable super's selected text attributes and specify our own ones in setSelectedRange:
     self.selectedTextAttributes = @{};
   }
-  
-  
+
   self.spaceWidth = [@" " sizeWithAttributes:@{NSFontAttributeName: [DuxPreferences editorFont]}].width;
   self.showLineNumbers = [DuxPreferences showLineNumbers];
-  self.showPageGuide = [DuxPreferences showPageGuide];
-  self.pageGuidePosition = [DuxPreferences pageGuidePosition];
   
   DuxTextContainer *container = [[DuxTextContainer alloc] init];
   container.leftGutterWidth = self.showLineNumbers ? 34 : 0;
@@ -105,9 +100,7 @@ static NSCharacterSet *newlineCharacterSet;
   [notifCenter addObserver:self selector:@selector(textDidChange:) name:NSTextDidChangeNotification object:self];
   [notifCenter addObserver:self selector:@selector(editorFontDidChange:) name:DuxPreferencesEditorFontDidChangeNotification object:nil];
   [notifCenter addObserver:self selector:@selector(showLineNumbersDidChange:) name:DuxPreferencesShowLineNumbersDidChangeNotification object:nil];
-  [notifCenter addObserver:self selector:@selector(showPageGuideDidChange:) name:DuxPreferencesShowPageGuideDidChangeNotification object:nil];
 	[notifCenter addObserver:self selector:@selector(showOtherInstancesOfSelectedSymbolDidChange:) name:DuxPreferencesShowOtherInstancesOfSelectedSymbolDidChangeNotification object:nil];
-  [notifCenter addObserver:self selector:@selector(pageGuidePositionDidChange:) name:DuxPreferencesPageGuidePositionDidChangeNotification object:nil];
 	[notifCenter addObserver:self selector:@selector(editorTabWidthDidChange:) name:DuxPreferencesTabWidthDidChangeNotification object:nil];
 	[notifCenter addObserver:self selector:@selector(textContainerSizeDidChange:) name:DuxTextContainerSizeDidChangeNotification object:container];
 }
@@ -1214,50 +1207,24 @@ static NSCharacterSet *newlineCharacterSet;
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-	NSRect documentVisibleRect = self.enclosingScrollView.documentVisibleRect;
+
 	NSLayoutManager *layoutManager = self.layoutManager;
 	NSTextContainer *textContainer = self.textContainer;
   
   // background
-  [self.backgroundColor set];
-  NSRectFill(dirtyRect);
-  
-  // page guide
-  if (self.showPageGuide) {
-    NSColor *guideFillColor = [DuxPreferences editorDarkMode] ? [NSColor colorWithDeviceWhite:1 alpha:0.1] : [NSColor colorWithDeviceWhite:0 alpha:0.015];
-    NSColor *guideLineColor = [DuxPreferences editorDarkMode] ? [NSColor colorWithDeviceWhite:1 alpha:0.2] : [NSColor colorWithDeviceWhite:0 alpha:0.1];
+  //[self.backgroundColor set];
+  //NSRectFill(dirtyRect);
     
-    float position = floorf(self.pageGuidePosition * self.spaceWidth);
-    if (self.showLineNumbers)
-      position += 34;
-    
-    if (NSMaxX(documentVisibleRect) > position) {
-      [guideFillColor set];
-      [NSBezierPath fillRect:NSMakeRect(position, NSMinY(documentVisibleRect), NSMaxX(documentVisibleRect) - position, NSMaxY(documentVisibleRect))];
-      [guideLineColor set];
-      [NSBezierPath setDefaultLineWidth:0.5];
-      [NSBezierPath strokeLineFromPoint:NSMakePoint(position - 0.25, NSMinY(documentVisibleRect)) toPoint:NSMakePoint(position - 0.25, NSMaxY(documentVisibleRect))];
-    }
-    if ([self.window isKindOfClass:[DuxProjectWindow class]]) {
-      ((DuxProjectWindow *)self.window).duxProjectWindowShowPageGuide = YES;
-      ((DuxProjectWindow *)self.window).duxProjectWindowPageGuideX = [self.window.contentView convertPoint:NSMakePoint(position, 0) fromView:self].x;
-    }
-  } else {
-    if ([self.window isKindOfClass:[DuxProjectWindow class]]) {
-      ((DuxProjectWindow *)self.window).duxProjectWindowShowPageGuide = NO;
-    }
-  }
-  
   // draw highlighted elements
   NSRange glyphRange;
   NSRectArray glyphRects;
   NSUInteger glyphRectsIndex;
   NSUInteger glyphRectsCount;
-if ([DuxPreferences editorDarkMode]) {
-  [[NSColor colorWithCalibratedRed:0.173 green:0.151 blue:0.369 alpha:1.000] set];
-} else {
-  [[NSColor colorWithCalibratedRed:0.973 green:0.951 blue:0.769 alpha:1.000] set];
-}
+  if ([DuxPreferences editorDarkMode]) {
+    [[NSColor colorWithCalibratedRed:0.173 green:0.151 blue:0.369 alpha:1.000] set];
+  } else {
+    [[NSColor colorWithCalibratedRed:0.973 green:0.951 blue:0.769 alpha:1.000] set];
+  }
   float glyphRectExtraX = (self.showLineNumbers) ? 33.5 : 0;
   for (NSValue *range in self.highlightedElements) {
     glyphRange = [layoutManager glyphRangeForCharacterRange:range.rangeValue actualCharacterRange:NULL];
@@ -1567,23 +1534,9 @@ if ([DuxPreferences editorDarkMode]) {
   [self setNeedsDisplay:YES];
 }
 
-- (void)showPageGuideDidChange:(NSNotification *)notif
-{
-  self.showPageGuide = [DuxPreferences showPageGuide];
-  
-  [self setNeedsDisplay:YES];
-}
-
 - (void)showOtherInstancesOfSelectedSymbolDidChange:(NSNotification *)notif
 {
 	[self updateHighlightedElements];
-}
-
-- (void)pageGuidePositionDidChange:(NSNotification *)notif
-{
-  self.pageGuidePosition = [DuxPreferences pageGuidePosition];
-  
-  [self setNeedsDisplay:YES];
 }
 
 - (void)textContainerSizeDidChange:(NSNotification *)notif
@@ -1601,7 +1554,7 @@ if ([DuxPreferences editorDarkMode]) {
   BOOL accept = [super becomeFirstResponder];
 
   if (accept) {
-    self.backgroundColor = [NSColor duxEditorColor];
+    self.enclosingScrollView.contentView.backgroundColor = [NSColor duxEditorColor];
   }
   
   return accept;
@@ -1612,7 +1565,7 @@ if ([DuxPreferences editorDarkMode]) {
   BOOL accept = [super resignFirstResponder];
   
   if (accept) {
-    self.backgroundColor = [NSColor duxBackgroundEditorColor];
+    self.enclosingScrollView.contentView.backgroundColor = [NSColor duxBackgroundEditorColor];
   }
   
   return accept;
