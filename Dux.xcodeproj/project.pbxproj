@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		376F9C76180B5683007DED82 /* Tomorrow-Night.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 376F9C75180B5683007DED82 /* Tomorrow-Night.tmTheme */; };
 		376F9C79180B5718007DED82 /* DuxTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F9C78180B5718007DED82 /* DuxTheme.m */; };
+		379A00CA180CB3A100280574 /* Tomorrow.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 379A00C9180CB3A100280574 /* Tomorrow.tmTheme */; };
 		3804A81B1478DA3E005C587A /* DuxPlainTextLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3804A81A1478DA3E005C587A /* DuxPlainTextLanguage.m */; };
 		3804A81E1478DA7F005C587A /* DuxPlainTextBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3804A81D1478DA7F005C587A /* DuxPlainTextBaseElement.m */; };
 		380AED3D14500377005770D7 /* DuxTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 380AED3C14500377005770D7 /* DuxTextView.m */; };
@@ -97,7 +98,6 @@
 		389C8EC4148B0E530029B942 /* DuxStringLineEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C8EC3148B0E530029B942 /* DuxStringLineEnumerator.m */; };
 		38ACB57117FE2DFE0087C97E /* AboutPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38ACB57017FE2DFE0087C97E /* AboutPanel.xib */; };
 		38ACB57317FE32F90087C97E /* about-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 38ACB57217FE32F90087C97E /* about-logo.png */; };
-		38B5BB0E171E5526000C8525 /* NSColor+DuxColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B5BB0D171E5526000C8525 /* NSColor+DuxColors.m */; };
 		38BB441D147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BB441C147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m */; };
 		38BC9216148764B700CE73EB /* DuxHTMLCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC9215148764B700CE73EB /* DuxHTMLCommentElement.m */; };
 		38BC921A148766DD00CE73EB /* DuxXMLCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC9219148766DD00CE73EB /* DuxXMLCommentElement.m */; };
@@ -179,6 +179,7 @@
 		376F9C75180B5683007DED82 /* Tomorrow-Night.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Tomorrow-Night.tmTheme"; sourceTree = "<group>"; };
 		376F9C77180B5718007DED82 /* DuxTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxTheme.h; sourceTree = "<group>"; };
 		376F9C78180B5718007DED82 /* DuxTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxTheme.m; sourceTree = "<group>"; };
+		379A00C9180CB3A100280574 /* Tomorrow.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Tomorrow.tmTheme; sourceTree = "<group>"; };
 		3804A8191478DA3E005C587A /* DuxPlainTextLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPlainTextLanguage.h; sourceTree = "<group>"; };
 		3804A81A1478DA3E005C587A /* DuxPlainTextLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPlainTextLanguage.m; sourceTree = "<group>"; };
 		3804A81C1478DA7F005C587A /* DuxPlainTextBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPlainTextBaseElement.h; sourceTree = "<group>"; };
@@ -283,8 +284,6 @@
 		389C8EC3148B0E530029B942 /* DuxStringLineEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxStringLineEnumerator.m; sourceTree = "<group>"; };
 		38ACB57017FE2DFE0087C97E /* AboutPanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutPanel.xib; sourceTree = "<group>"; };
 		38ACB57217FE32F90087C97E /* about-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "about-logo.png"; path = "Artwork/about-logo.png"; sourceTree = SOURCE_ROOT; };
-		38B5BB0C171E5526000C8525 /* NSColor+DuxColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+DuxColors.h"; sourceTree = "<group>"; };
-		38B5BB0D171E5526000C8525 /* NSColor+DuxColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+DuxColors.m"; sourceTree = "<group>"; };
 		38BB441B147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxOpenQuicklyTableViewCell.h; sourceTree = "<group>"; };
 		38BB441C147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxOpenQuicklyTableViewCell.m; sourceTree = "<group>"; };
 		38BC9214148764B700CE73EB /* DuxHTMLCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLCommentElement.h; sourceTree = "<group>"; };
@@ -455,6 +454,7 @@
 		376F9C74180B5683007DED82 /* Themes */ = {
 			isa = PBXGroup;
 			children = (
+				379A00C9180CB3A100280574 /* Tomorrow.tmTheme */,
 				376F9C75180B5683007DED82 /* Tomorrow-Night.tmTheme */,
 			);
 			path = Themes;
@@ -510,8 +510,6 @@
 				388682AB1480409F00C362EE /* DuxLineNumberString.h */,
 				388682AC1480409F00C362EE /* DuxLineNumberString.m */,
 				38983C721474FEC8004DD914 /* JumpToLinePanel.xib */,
-				38B5BB0C171E5526000C8525 /* NSColor+DuxColors.h */,
-				38B5BB0D171E5526000C8525 /* NSColor+DuxColors.m */,
 				3804A8161478DA00005C587A /* Languages */,
 			);
 			name = "Text View";
@@ -1013,6 +1011,7 @@
 				38734F521406133200992D33 /* OpenQuickly.xib in Resources */,
 				38983C731474FEC8004DD914 /* JumpToLinePanel.xib in Resources */,
 				38BC921D1487733B00CE73EB /* PreferencesWindow.xib in Resources */,
+				379A00CA180CB3A100280574 /* Tomorrow.tmTheme in Resources */,
 				38F1060A16490F8A00467839 /* DuxMultiFileSearchWindowController.xib in Resources */,
 				38ACB57117FE2DFE0087C97E /* AboutPanel.xib in Resources */,
 				385115081692FADE0066B876 /* DuxRunBundleQuicklyWindowController.xib in Resources */,
@@ -1185,7 +1184,6 @@
 				38313276168FB8E400E334E8 /* DuxClickAndHoldPopUpButton.m in Sources */,
 				38487A131692A8040055EDAA /* DuxBundle.m in Sources */,
 				385115071692FADE0066B876 /* DuxRunBundleQuicklyWindowController.m in Sources */,
-				38B5BB0E171E5526000C8525 /* NSColor+DuxColors.m in Sources */,
 				38D4B49117209FA300B2EDEC /* DuxAcknowledgementsController.m in Sources */,
 				389ACC4D172265A100E01DB3 /* DuxNavigatorFilesViewController.m in Sources */,
 				C97713171724C90B00AC1757 /* DuxNavigatorFileCell.m in Sources */,

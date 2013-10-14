@@ -10,6 +10,7 @@
 
 #import "DuxLineNumberString.h"
 #import "DuxPreferences.h"
+#import "DuxTheme.h"
 
 static NSDictionary *marginAttributes = nil;
 static NSMutableArray *lineNumberStrings = nil;
@@ -30,12 +31,12 @@ static NSTextStorage *textStorage = nil;
   [paragraphStyle setLineBreakMode:NSLineBreakByTruncatingMiddle];
 if ([DuxPreferences editorDarkMode]) {
   marginAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSFont fontWithName:@"Source Code Pro ExtraLight" size:10], NSFontAttributeName,
-                      [NSColor colorWithCalibratedWhite:1 alpha:0.8], NSForegroundColorAttributeName,
+                      [[DuxTheme currentTheme] foreground], NSForegroundColorAttributeName,
                       paragraphStyle, NSParagraphStyleAttributeName,
                       nil];
 } else {
   marginAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSFont fontWithName:@"Source Code Pro Light" size:10], NSFontAttributeName,
-                      [NSColor colorWithCalibratedWhite:0 alpha:1], NSForegroundColorAttributeName,
+                      [[DuxTheme currentTheme] foreground], NSForegroundColorAttributeName,
                       paragraphStyle, NSParagraphStyleAttributeName,
                       nil];
 }

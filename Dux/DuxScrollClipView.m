@@ -11,6 +11,7 @@
 #import "DuxScrollClipView.h"
 #import "DuxPreferences.h"
 #import "DuxProjectWindow.h"
+#import "DuxTheme.h"
 
 @implementation DuxScrollClipView
 
@@ -50,7 +51,12 @@
   [super drawRect:dirtyRect];
 
   //draw background
-  [self.backgroundColor set];
+  static NSColor *backgroundColor;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    backgroundColor = [[DuxTheme currentTheme] background];
+  });
+  [backgroundColor set];
   NSRectFill(dirtyRect);
 
   // page guide

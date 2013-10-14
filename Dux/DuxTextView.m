@@ -16,6 +16,7 @@
 #import "DuxPreferences.h"
 #import "DuxBundle.h"
 #import "DuxProjectWindow.h"
+#import "DuxTheme.h"
 
 @interface DuxTextView ()
 
@@ -67,13 +68,10 @@ static NSCharacterSet *newlineCharacterSet;
   self.delegate = self;
   
   self.drawsBackground = NO; // disable NSTextView's background so we can draw our own
-  
-  if ([DuxPreferences editorDarkMode]) {
-    self.insertionPointColor = [NSColor colorWithCalibratedWhite:1 alpha:1];
-    
-    // built in selected text attributes are useless in dark mode, and we cannot set the value of some of them, so instead we disable super's selected text attributes and specify our own ones in setSelectedRange:
-    self.selectedTextAttributes = @{};
-  }
+
+  self.insertionPointColor = [[DuxTheme currentTheme] caret];
+  // always manually specify selected text atributes
+  self.selectedTextAttributes = @{};
 
   self.spaceWidth = [@" " sizeWithAttributes:@{NSFontAttributeName: [DuxPreferences editorFont]}].width;
   self.showLineNumbers = [DuxPreferences showLineNumbers];
@@ -506,22 +504,26 @@ static NSCharacterSet *newlineCharacterSet;
 
 - (void)setSelectedRanges:(NSArray *)ranges affinity:(NSSelectionAffinity)affinity stillSelecting:(BOOL)stillSelectingFlag
 {
-  // built in selected text attributes are useless in dark mode, and we cannot set the value of some of them, so instead we disable super's selected text attributes and specify our own ones in setSelectedRange:
-  if ([DuxPreferences editorDarkMode]) {
-    for (NSValue *value in self.selectedRanges) {
-      if (value.rangeValue.length == 0)
-        continue;
-      
-      [self.textStorage removeAttribute:NSBackgroundColorAttributeName range:value.rangeValue];
-    }
+  static NSColor *selectionColor;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    selectionColor = [[DuxTheme currentTheme] selection];
+  });
+
+  // disable super's selected text attributes and specify our own ones in setSelectedRange:
+  for (NSValue *value in self.selectedRanges) {
+    if (value.rangeValue.length == 0)
+      continue;
     
-    // apply new bacgkround colors
-    for (NSValue *value in ranges) {
-      if (value.rangeValue.length == 0)
-        continue;
-      
-      [self.textStorage addAttribute:NSBackgroundColorAttributeName value:[NSColor colorWithCalibratedRed:0.504 green:0.710 blue:1.000 alpha:0.3] range:value.rangeValue];
-    }
+    [self.textStorage removeAttribute:NSBackgroundColorAttributeName range:value.rangeValue];
+  }
+  
+  // apply new bacgkround colors
+  for (NSValue *value in ranges) {
+    if (value.rangeValue.length == 0)
+      continue;
+    
+    [self.textStorage addAttribute:NSBackgroundColorAttributeName value:selectionColor range:value.rangeValue];
   }
   
   [super setSelectedRanges:ranges affinity:affinity stillSelecting:stillSelectingFlag];
@@ -1547,28 +1549,6 @@ static NSCharacterSet *newlineCharacterSet;
 - (NSUndoManager *)undoManager
 {
   return self.window.undoManager;
-}
-
-- (BOOL)becomeFirstResponder
-{
-  BOOL accept = [super becomeFirstResponder];
-
-  if (accept) {
-    self.enclosingScrollView.contentView.backgroundColor = [NSColor duxEditorColor];
-  }
-  
-  return accept;
-}
-
-- (BOOL)resignFirstResponder
-{
-  BOOL accept = [super resignFirstResponder];
-  
-  if (accept) {
-    self.enclosingScrollView.contentView.backgroundColor = [NSColor duxBackgroundEditorColor];
-  }
-  
-  return accept;
 }
 
 @end

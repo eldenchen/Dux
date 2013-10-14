@@ -48,6 +48,9 @@ static DuxTheme *currentTheme;
   for (int i = 1 ; i < root.count ; i++) {
     NSDictionary *item = root[i];
     NSColor *foregroundColor = [DuxTheme colorWithHexString:item[@"settings"][@"foreground"]];
+    if (!foregroundColor) {
+      continue;
+    }
     NSString *scope = item[@"scope"];
     scope = [scope stringByReplacingOccurrencesOfString:@"," withString:@""];
     NSArray *keys = [scope componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
@@ -92,6 +95,9 @@ static DuxTheme *currentTheme;
 
 + (NSColor *)colorWithHexString:(NSString *)string
 {
+  if (!string) {
+    return nil;
+  }
   string = [string stringByReplacingOccurrencesOfString:@"#" withString:@""];
   uint32_t hex;
   [[NSScanner scannerWithString:string] scanHexInt:&hex];

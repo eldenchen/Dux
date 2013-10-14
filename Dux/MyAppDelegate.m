@@ -35,14 +35,13 @@
 {
   if (!(self = [super init]))
     return nil;
-  
+  [DuxTheme loadThemeNamed:@"Tomorrow"];
   return self;
 }
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification
 {
   [DuxBundle loadBundles];
-  [DuxTheme loadTheme];
 }
 
 - (IBAction)showPreferences:(id)sender
