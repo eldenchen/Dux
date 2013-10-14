@@ -14,6 +14,7 @@
 #import "DuxPreferencesWindowController.h"
 #import "DuxProjectWindowController.h"
 #import "DuxBundle.h"
+#import "DuxTheme.h"
 #import "DuxRunBundleQuicklyWindowController.h"
 #import "DuxAcknowledgementsController.h"
 
@@ -41,6 +42,7 @@
 - (void)applicationDidBecomeActive:(NSNotification *)notification
 {
   [DuxBundle loadBundles];
+  [DuxTheme loadTheme];
 }
 
 - (IBAction)showPreferences:(id)sender

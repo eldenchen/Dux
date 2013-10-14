@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		376F9C76180B5683007DED82 /* Tomorrow-Night.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 376F9C75180B5683007DED82 /* Tomorrow-Night.tmTheme */; };
+		376F9C79180B5718007DED82 /* DuxTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F9C78180B5718007DED82 /* DuxTheme.m */; };
 		3804A81B1478DA3E005C587A /* DuxPlainTextLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3804A81A1478DA3E005C587A /* DuxPlainTextLanguage.m */; };
 		3804A81E1478DA7F005C587A /* DuxPlainTextBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3804A81D1478DA7F005C587A /* DuxPlainTextBaseElement.m */; };
 		380AED3D14500377005770D7 /* DuxTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 380AED3C14500377005770D7 /* DuxTextView.m */; };
@@ -174,6 +176,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		376F9C75180B5683007DED82 /* Tomorrow-Night.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Tomorrow-Night.tmTheme"; sourceTree = "<group>"; };
+		376F9C77180B5718007DED82 /* DuxTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxTheme.h; sourceTree = "<group>"; };
+		376F9C78180B5718007DED82 /* DuxTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxTheme.m; sourceTree = "<group>"; };
 		3804A8191478DA3E005C587A /* DuxPlainTextLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPlainTextLanguage.h; sourceTree = "<group>"; };
 		3804A81A1478DA3E005C587A /* DuxPlainTextLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPlainTextLanguage.m; sourceTree = "<group>"; };
 		3804A81C1478DA7F005C587A /* DuxPlainTextBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPlainTextBaseElement.h; sourceTree = "<group>"; };
@@ -447,6 +452,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		376F9C74180B5683007DED82 /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				376F9C75180B5683007DED82 /* Tomorrow-Night.tmTheme */,
+			);
+			path = Themes;
+			sourceTree = SOURCE_ROOT;
+		};
 		3804A8161478DA00005C587A /* Languages */ = {
 			isa = PBXGroup;
 			children = (
@@ -780,6 +793,7 @@
 		38D6058D1403859600D70F81 /* Dux */ = {
 			isa = PBXGroup;
 			children = (
+				376F9C74180B5683007DED82 /* Themes */,
 				C9F4E9411725543100E7AEC8 /* Assets */,
 				38734F571406163A00992D33 /* MyAppDelegate.h */,
 				38734F581406163A00992D33 /* MyAppDelegate.m */,
@@ -815,6 +829,8 @@
 				382F146517EBCA440095BC59 /* Images.xcassets */,
 				38ACB57017FE2DFE0087C97E /* AboutPanel.xib */,
 				38ACB57217FE32F90087C97E /* about-logo.png */,
+				376F9C77180B5718007DED82 /* DuxTheme.h */,
+				376F9C78180B5718007DED82 /* DuxTheme.m */,
 			);
 			path = Dux;
 			sourceTree = "<group>";
@@ -992,6 +1008,7 @@
 				38ACB57317FE32F90087C97E /* about-logo.png in Resources */,
 				38D6059E1403859700D70F81 /* MyTextDocument.xib in Resources */,
 				38D605A11403859700D70F81 /* MainMenu.xib in Resources */,
+				376F9C76180B5683007DED82 /* Tomorrow-Night.tmTheme in Resources */,
 				38CFE15E1403CBCD00CA7044 /* docicon.icns in Resources */,
 				38734F521406133200992D33 /* OpenQuickly.xib in Resources */,
 				38983C731474FEC8004DD914 /* JumpToLinePanel.xib in Resources */,
@@ -1070,6 +1087,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				376F9C79180B5718007DED82 /* DuxTheme.m in Sources */,
 				38D605941403859600D70F81 /* main.m in Sources */,
 				38D6059B1403859600D70F81 /* MyTextDocument.m in Sources */,
 				38734F561406135A00992D33 /* MyOpenQuicklyController.m in Sources */,
@@ -1334,8 +1352,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Dux/Dux.entitlements;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1355,8 +1373,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = Dux/Dux.entitlements;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Dux/Dux-Prefix.pch";
