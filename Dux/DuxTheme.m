@@ -10,10 +10,9 @@
 
 #import "DuxTheme.h"
 
-/*#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
- */
+// See http://manual.macromates.com/en/language_grammars.html for more informations about the file format.
 
-//see http://manual.macromates.com/en/language_grammars.html for more info on the file format.
+#define kThemeExtension @"tmTheme"
 
 static DuxTheme *currentTheme;
 
@@ -63,27 +62,32 @@ static DuxTheme *currentTheme;
   return currentTheme;
 }
 
-+ (void)loadTheme
++ (void)loadThemeNamed:(NSString *)name
 {
-  NSString *path = [[NSBundle mainBundle] pathForResource:@"Tomorrow-Night" ofType:@"tmTheme"];
+  NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:kThemeExtension];
   NSDictionary *dic = [[NSDictionary alloc] initWithContentsOfFile:path];
-
   currentTheme = [[DuxTheme alloc] initWithDictionary:dic];
-
-  NSLog(@"%@", [currentTheme colorForKey:@"comment.single"]);
 }
 
 - (NSColor *)colorForKey:(NSString *)key
 {
-  //"comment.singleline"
   id col = [self.colors objectForKey:key];
-  if (!col) {
-    NSArray *keys = [key componentsSeparatedByString:@"."];
-    for (int i = 0 ; i < keys.count ; i++) {
-      //
+  if (col) {
+    return col;
+  } else {
+    NSMutableArray *keys = [[NSMutableArray alloc] initWithArray:[key componentsSeparatedByString:@"."] copyItems:NO];
+    NSUInteger count = keys.count - 1;
+    for (int i = 0 ; i < count ; i++) {
+      [keys removeLastObject];
+      NSString *newKey = [keys componentsJoinedByString:@"."];
+      id color = [self.colors objectForKey:newKey];
+      if (color) {
+        return color;
+      }
     }
   }
-  return col;
+  // default text color if none was found
+  return self.foreground;
 }
 
 + (NSColor *)colorWithHexString:(NSString *)string
@@ -96,7 +100,9 @@ static DuxTheme *currentTheme;
 
 + (NSColor *)colorWithHexValue:(uint32_t)value
 {
-  return [NSColor colorWithCalibratedRed:((float)((value & 0xFF0000) >> 16))/255.0 green:((float)((value & 0xFF00) >> 8))/255.0 blue:((float)(value & 0xFF))/255.0 alpha:1.0];
+  return [NSColor colorWithCalibratedRed:((float)((value & 0xFF0000) >> 16))/255.0
+                                   green:((float)((value & 0xFF00) >> 8))/255.0
+                                    blue:((float)(value & 0xFF))/255.0 alpha:1.0];
 }
 
 @end

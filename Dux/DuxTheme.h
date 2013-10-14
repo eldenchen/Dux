@@ -26,6 +26,6 @@
 
 + (DuxTheme *)currentTheme;
 
-+ (void)loadTheme;
++ (void)loadThemeNamed:(NSString *)name;
 
 @end
