@@ -515,7 +515,11 @@ static NSCharacterSet *newlineCharacterSet;
     if (value.rangeValue.length == 0)
       continue;
     
-    [self.textStorage removeAttribute:NSBackgroundColorAttributeName range:value.rangeValue];
+    NSRange range = value.rangeValue;
+    range.location =  MIN(range.location, self.textStorage.length);
+    range.length = MIN(range.length, self.textStorage.length - range.location);
+    
+    [self.textStorage removeAttribute:NSBackgroundColorAttributeName range:range];
   }
   
   // apply new bacgkround colors
@@ -523,7 +527,11 @@ static NSCharacterSet *newlineCharacterSet;
     if (value.rangeValue.length == 0)
       continue;
     
-    [self.textStorage addAttribute:NSBackgroundColorAttributeName value:selectionColor range:value.rangeValue];
+    NSRange range = value.rangeValue;
+    range.location =  MIN(range.location, self.textStorage.length);
+    range.length = MIN(range.length, self.textStorage.length - range.location);
+    
+    [self.textStorage addAttribute:NSBackgroundColorAttributeName value:selectionColor range:range];
   }
   
   [super setSelectedRanges:ranges affinity:affinity stillSelecting:stillSelectingFlag];
