@@ -35,7 +35,7 @@
 {
   if (!(self = [super init]))
     return nil;
-  [DuxTheme loadThemeNamed:@"Tomorrow"];
+  [DuxTheme loadThemeNamed:@"Default"];
   return self;
 }
 

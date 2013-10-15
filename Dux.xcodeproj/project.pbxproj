@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		376F9C76180B5683007DED82 /* Tomorrow-Night.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 376F9C75180B5683007DED82 /* Tomorrow-Night.tmTheme */; };
+		373A9D45180D65E800B874AB /* Default.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 373A9D44180D65E800B874AB /* Default.tmTheme */; };
+		373A9D47180D674B00B874AB /* Dark.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 373A9D46180D674B00B874AB /* Dark.tmTheme */; };
 		376F9C79180B5718007DED82 /* DuxTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F9C78180B5718007DED82 /* DuxTheme.m */; };
-		379A00CA180CB3A100280574 /* Tomorrow.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 379A00C9180CB3A100280574 /* Tomorrow.tmTheme */; };
 		3804A81B1478DA3E005C587A /* DuxPlainTextLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3804A81A1478DA3E005C587A /* DuxPlainTextLanguage.m */; };
 		3804A81E1478DA7F005C587A /* DuxPlainTextBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3804A81D1478DA7F005C587A /* DuxPlainTextBaseElement.m */; };
 		380AED3D14500377005770D7 /* DuxTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 380AED3C14500377005770D7 /* DuxTextView.m */; };
@@ -176,10 +176,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		376F9C75180B5683007DED82 /* Tomorrow-Night.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Tomorrow-Night.tmTheme"; sourceTree = "<group>"; };
+		373A9D44180D65E800B874AB /* Default.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Default.tmTheme; sourceTree = "<group>"; };
+		373A9D46180D674B00B874AB /* Dark.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Dark.tmTheme; sourceTree = "<group>"; };
 		376F9C77180B5718007DED82 /* DuxTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxTheme.h; sourceTree = "<group>"; };
 		376F9C78180B5718007DED82 /* DuxTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxTheme.m; sourceTree = "<group>"; };
-		379A00C9180CB3A100280574 /* Tomorrow.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Tomorrow.tmTheme; sourceTree = "<group>"; };
 		3804A8191478DA3E005C587A /* DuxPlainTextLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPlainTextLanguage.h; sourceTree = "<group>"; };
 		3804A81A1478DA3E005C587A /* DuxPlainTextLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPlainTextLanguage.m; sourceTree = "<group>"; };
 		3804A81C1478DA7F005C587A /* DuxPlainTextBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPlainTextBaseElement.h; sourceTree = "<group>"; };
@@ -454,8 +454,8 @@
 		376F9C74180B5683007DED82 /* Themes */ = {
 			isa = PBXGroup;
 			children = (
-				379A00C9180CB3A100280574 /* Tomorrow.tmTheme */,
-				376F9C75180B5683007DED82 /* Tomorrow-Night.tmTheme */,
+				373A9D46180D674B00B874AB /* Dark.tmTheme */,
+				373A9D44180D65E800B874AB /* Default.tmTheme */,
 			);
 			path = Themes;
 			sourceTree = SOURCE_ROOT;
@@ -1006,16 +1006,16 @@
 				38ACB57317FE32F90087C97E /* about-logo.png in Resources */,
 				38D6059E1403859700D70F81 /* MyTextDocument.xib in Resources */,
 				38D605A11403859700D70F81 /* MainMenu.xib in Resources */,
-				376F9C76180B5683007DED82 /* Tomorrow-Night.tmTheme in Resources */,
 				38CFE15E1403CBCD00CA7044 /* docicon.icns in Resources */,
 				38734F521406133200992D33 /* OpenQuickly.xib in Resources */,
 				38983C731474FEC8004DD914 /* JumpToLinePanel.xib in Resources */,
+				373A9D47180D674B00B874AB /* Dark.tmTheme in Resources */,
 				38BC921D1487733B00CE73EB /* PreferencesWindow.xib in Resources */,
-				379A00CA180CB3A100280574 /* Tomorrow.tmTheme in Resources */,
 				38F1060A16490F8A00467839 /* DuxMultiFileSearchWindowController.xib in Resources */,
 				38ACB57117FE2DFE0087C97E /* AboutPanel.xib in Resources */,
 				385115081692FADE0066B876 /* DuxRunBundleQuicklyWindowController.xib in Resources */,
 				38D4B48E17209E6800B2EDEC /* Acknowledgements.xib in Resources */,
+				373A9D45180D65E800B874AB /* Default.tmTheme in Resources */,
 				38D4B4931720A28D00B2EDEC /* Fonts in Resources */,
 				C9F4E9441725543100E7AEC8 /* PaneGradientBar.png in Resources */,
 				C9F4E9451725543100E7AEC8 /* PaneGradientBar@2x.png in Resources */,
