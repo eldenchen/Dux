@@ -13,6 +13,7 @@
 #import "DuxClickAndHoldPopUpButton.h"
 #import "DuxBundle.h"
 #import "DuxProjectWindow.h"
+#import "DuxTheme.h"
 
 @interface DuxProjectWindowController ()
 
@@ -530,23 +531,13 @@ static NSMutableArray *projects = nil;
   if (notification.object != self.window)
     return;
   
-  self.window.backgroundColor = [NSColor duxEditorColor];
-  
-  if ([self.window.firstResponder isKindOfClass:[DuxTextView class]]) {
-    ((DuxTextView *)self.window.firstResponder).backgroundColor = [NSColor duxEditorColor];
-  }
+  self.window.backgroundColor = [[DuxTheme currentTheme] background];
 }
 
 - (void)windowDidResignMain:(NSNotification *)notification
 {
   if (notification.object != self.window)
     return;
-  
-  self.window.backgroundColor = [NSColor duxBackgroundEditorColor];
-  
-  if ([self.window.firstResponder isKindOfClass:[DuxTextView class]]) {
-    ((DuxTextView *)self.window.firstResponder).backgroundColor = [NSColor duxBackgroundEditorColor];
-  }
 }
 
 - (IBAction)performFindPanelAction:(id)sender

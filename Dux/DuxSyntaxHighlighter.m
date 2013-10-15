@@ -10,6 +10,7 @@
 
 #import "DuxSyntaxHighlighter.h"
 #import "DuxPreferences.h"
+#import "DuxTheme.h"
 
 @implementation DuxSyntaxHighlighter
 
@@ -42,15 +43,10 @@
   paragraphStyle.tabStops = @[];
   paragraphStyle.defaultTabInterval = ([@" " sizeWithAttributes:@{NSFontAttributeName: [DuxPreferences editorFont]}].width) * [DuxPreferences tabWidth];
   
-  if ([DuxPreferences editorDarkMode]) {
-    baseAttributes = @{NSFontAttributeName: [DuxPreferences editorFont],
-                       NSParagraphStyleAttributeName: paragraphStyle.copy,
-                       NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.8 alpha:1]};
-  } else {
-    baseAttributes = @{NSFontAttributeName: [DuxPreferences editorFont],
-                       NSParagraphStyleAttributeName: paragraphStyle.copy};
-  }
-  
+  baseAttributes = @{NSFontAttributeName: [DuxPreferences editorFont],
+                     NSParagraphStyleAttributeName: paragraphStyle.copy,
+                     NSForegroundColorAttributeName: [[DuxTheme currentTheme] foreground]};
+
   return baseAttributes;
 }
 

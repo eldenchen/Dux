@@ -25,11 +25,7 @@ static NSColor *color;
   nextElementCharacterSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."] invertedSet];
   nonHexCharacterSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789ABCDEFabcdef"] invertedSet];
   
-  if ([DuxPreferences editorDarkMode]) {
-    color = [NSColor colorWithDeviceRed:0.71 green:0.84 blue:1.00 alpha:1.0];
-  } else {
-    color = [NSColor colorWithDeviceRed:0.11 green:0.36 blue:0.87 alpha:1.0];
-  }
+  color = [[DuxTheme currentTheme] colorForKey:@"constant.numeric.js"];
 }
 
 - (id)init

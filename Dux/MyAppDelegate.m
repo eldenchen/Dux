@@ -14,6 +14,7 @@
 #import "DuxPreferencesWindowController.h"
 #import "DuxProjectWindowController.h"
 #import "DuxBundle.h"
+#import "DuxTheme.h"
 #import "DuxRunBundleQuicklyWindowController.h"
 #import "DuxAcknowledgementsController.h"
 
@@ -34,7 +35,7 @@
 {
   if (!(self = [super init]))
     return nil;
-  
+  [DuxTheme loadThemeNamed:@"Default"];
   return self;
 }
 

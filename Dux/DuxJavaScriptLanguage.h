@@ -18,6 +18,8 @@
 #import "DuxJavaScriptBlockCommentElement.h"
 #import "DuxJavaScriptRegexElement.h"
 
+#import "DuxTheme.h"
+
 @interface DuxJavaScriptLanguage : DuxLanguage
 
 + (NSIndexSet *)keywordIndexSet;
