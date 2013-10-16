@@ -258,8 +258,11 @@ static NSArray *loadedBundles;
         }
       }
     } else if ([[trigger valueForKey:@"Type"] isEqualToString:@"Tab"]) {
-      [tabTriggers addObject:[trigger valueForKey:@"Word"]];
-      self.menuItem.title = [NSString stringWithFormat:@"%@ (%@⇥)", self.menuItem.title, [trigger valueForKey:@"Word"]];
+      NSString *word = [trigger valueForKey:@"Word"];
+      if (word) {
+        [tabTriggers addObject:word];
+        self.menuItem.title = [NSString stringWithFormat:@"%@ (%@⇥)", self.menuItem.title, word];
+      }
     }
   }
   self.tabTriggers = [tabTriggers copy];
