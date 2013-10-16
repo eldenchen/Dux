@@ -182,5 +182,12 @@ static DuxTheme *currentTheme;
                                     blue:((float)(value & 0xFF))/255.0 alpha:1.0];
 }
 
+- (BOOL)hasDarkBackground
+{
+  // http://stackoverflow.com/questions/2509443/check-if-uicolor-is-dark-or-bright
+  CGFloat colorBrightness = ((self.background.redComponent * 299) + (self.background.greenComponent * 587) + (self.background.blueComponent * 114)) / 1000;
+  
+  return colorBrightness < 0.5;
+}
 
 @end
