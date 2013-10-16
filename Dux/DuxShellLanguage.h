@@ -9,6 +9,7 @@
 //
 
 #import "DuxLanguage.h"
+#import "DuxTheme.h"
 
 @interface DuxShellLanguage : DuxLanguage
 

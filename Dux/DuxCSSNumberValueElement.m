@@ -21,8 +21,8 @@ static NSColor *color;
   [super initialize];
   
   nextElementCharacterSet = [[NSCharacterSet characterSetWithCharactersInString:@".0123456789"] invertedSet];
-  
-  color = [NSColor colorWithCalibratedRed:0.255 green:0.008 blue:0.847 alpha:1.000];
+
+  color = [[DuxTheme currentTheme] colorForKey:@"constant.numeric.css"];
 }
 
 - (id)init

@@ -19,7 +19,8 @@ static NSColor *color;
 {
   if (self == [DuxJSONStringElement class]) {
     nextElementCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"\"\\"];
-    color = [NSColor colorWithCalibratedRed:0.76 green:0.1 blue:0.08 alpha:1];
+
+    color = [[DuxTheme currentTheme] colorForKey:@"string.quoted.double.json"];
   }
 }
 

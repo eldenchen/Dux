@@ -20,6 +20,7 @@
 #import "DuxCSSPropertyNameElement.h"
 #import "DuxCSSPropertyValueElement.h"
 #import "DuxCSSAtRuleElement.h"
+#import "DuxTheme.h"
 
 @interface DuxCSSLanguage : DuxLanguage
 

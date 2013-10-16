@@ -10,6 +10,7 @@
 
 #import "DuxLanguage.h"
 #import "DuxPHPBaseElement.h"
+#import "DuxTheme.h"
 
 @interface DuxPHPLanguage : DuxLanguage
 
