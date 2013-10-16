@@ -31,8 +31,6 @@ static NSArray *filesExcludeList;
 
 @implementation DuxNavigatorFilesViewController
 
-@synthesize scrollView;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
   if (!(self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))

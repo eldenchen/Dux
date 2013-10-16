@@ -14,7 +14,6 @@
 
 @property (strong, nonatomic) NSURL *rootURL;
 
-@property (weak) IBOutlet NSScrollView *scrollView;
 @property (weak) IBOutlet NSOutlineView *filesView;
 
 @property (assign) IBOutlet id <DuxNavigatorFilesViewControllerDelegate> delegate;
