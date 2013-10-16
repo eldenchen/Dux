@@ -11,17 +11,18 @@
 #import "DuxScrollView.h"
 #import "DuxPreferences.h"
 #import "DuxScrollClipView.h"
+#import "DuxTheme.h"
 
 @implementation DuxScrollView
 
 - (id)initWithFrame:(NSRect)frame
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-      self.contentView = [[DuxScrollClipView alloc] initWithFrame:frame];
-      [self initScrollView];
-    }
-    return self;
+  self = [super initWithFrame:frame];
+  if (self) {
+    self.contentView = [[DuxScrollClipView alloc] initWithFrame:frame];
+    [self initScrollView];
+  }
+  return self;
 }
 
 - (void)initScrollView
@@ -30,6 +31,7 @@
   self.hasVerticalScroller = YES;
   self.hasHorizontalScroller = NO;
   self.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+  self.scrollerKnobStyle = [[DuxTheme currentTheme] scrollerKnobStyle];
 }
 
 @end

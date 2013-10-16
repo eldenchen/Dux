@@ -21,8 +21,8 @@ static NSColor *color;
   [super initialize];
   
   nextElementCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"'\\"];
-  
-  color = [NSColor colorWithCalibratedRed:0.76 green:0.1 blue:0.08 alpha:1];
+
+  color = [[DuxTheme currentTheme] colorForKey:@"string.quoted.single.php"];
 }
 
 - (id)init

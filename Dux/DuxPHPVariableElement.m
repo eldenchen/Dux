@@ -24,7 +24,7 @@ static NSColor *color;
   nextElementCharacterSet = [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwrxyzABCDEFGHIJKLMNOPQRSTUVWRXYZ0123456789_"] invertedSet];
   checkForOpenBraceRangeCharacterSet = [[NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwrxyzABCDEFGHIJKLMNOPQRSTUVWRXYZ0123456789_ "] invertedSet];
   
-  color = [NSColor colorWithCalibratedRed:0.216 green:0.349 blue:0.365 alpha:1];
+  color = [[DuxTheme currentTheme] colorForKey:@"variable.php"];
 }
 
 - (id)init

@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSMutableDictionary *colors;
 
 - (NSColor *)colorForKey:(NSString *)key;
+- (NSInteger)scrollerKnobStyle;
 
 + (DuxTheme *)currentTheme;
 
