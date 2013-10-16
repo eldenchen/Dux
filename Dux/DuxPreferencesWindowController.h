@@ -41,6 +41,7 @@
 - (IBAction)setTabWidth:(id)sender;
 - (IBAction)setIndentWidth:(id)sender;
 - (IBAction)setShowOtherInstancesOfSelectedSymbol:(id)sender;
+- (IBAction)openThemesDir:(id)sender;
 
 // colors section
 @property (weak) IBOutlet NSMatrix *darkModeRadioMatrix;

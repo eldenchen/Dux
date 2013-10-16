@@ -287,6 +287,32 @@
         <customView id="199" userLabel="Colors Section">
             <rect key="frame" x="0.0" y="0.0" width="480" height="209"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" id="e5V-AN-fOF">
+                    <rect key="frame" x="265" y="13" width="201" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Open Themes Directory..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aee-lO-bck">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="openThemesDir:" target="-2" id="02M-XZ-cXG"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" setsMaxLayoutWidthAtFirstLayout="YES" id="M55-FZ-lvK">
+                    <rect key="frame" x="18" y="104" width="444" height="85"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" id="S9L-yD-Rwb">
+                        <font key="font" metaFont="fixedUser" size="11"/>
+                        <string key="title">To change colours, save "Foobar.tmTheme" to the Themes Directory, and then execute the following command before relaunching Dux:
+
+    defaults write com.dubapp.dux DuxEditorTheme Foobar
+</string>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
         </customView>
     </objects>
     <resources>

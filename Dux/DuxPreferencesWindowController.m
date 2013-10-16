@@ -10,6 +10,7 @@
 
 #import "DuxPreferencesWindowController.h"
 #import "DuxPreferences.h"
+#import "DuxTheme.h"
 
 @interface DuxPreferencesWindowController ()
 
@@ -162,6 +163,11 @@
 - (IBAction)setShowOtherInstancesOfSelectedSymbol:(id)sender
 {
 	[DuxPreferences setShowOtherInstancesOfSelectedSymbol:self.showOtherInstancesOfSelectedSymbolButton.state == NSOnState];
+}
+
+- (IBAction)openThemesDir:(id)sender
+{
+  [[NSWorkspace sharedWorkspace] openURL:[DuxTheme themesURL]];
 }
 
 @end

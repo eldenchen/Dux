@@ -29,4 +29,6 @@
 
 + (void)loadThemeNamed:(NSString *)name;
 
++ (NSURL *)themesURL;
+
 @end

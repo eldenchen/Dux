@@ -40,6 +40,7 @@ static NSUserDefaults *userDefaults;
    @"NSSplitView Subview Frames DuxProjectWindowSplitView": @[@"0.000000, 0.000000, 0.000000, 1556.000000, NO", @"1.000000, 0.000000, 1280.000000, 1556.000000, NO"],
    @"DuxProjectNavigatorLastNonCollapsedWidth": @350,
    @"DuxEditorDarkMode": [NSNumber numberWithBool:NO],
+   @"DuxEditorTheme": @"Default"
   }];
 }
 
@@ -167,6 +168,11 @@ static NSUserDefaults *userDefaults;
 //{
 //  [userDefaults setBool:darkMode forKey:@"DuxEditorDarkMode"];
 //}
+
++ (NSString *)themeName
+{
+  return [userDefaults stringForKey:@"DuxEditorTheme"];
+}
 
 @end
 

@@ -35,7 +35,7 @@
 {
   if (!(self = [super init]))
     return nil;
-  [DuxTheme loadThemeNamed:@"Default"];
+  [DuxTheme loadThemeNamed:[DuxPreferences themeName]];
   return self;
 }
 
