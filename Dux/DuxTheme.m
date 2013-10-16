@@ -93,6 +93,21 @@ static DuxTheme *currentTheme;
   return self.foreground;
 }
 
+- (NSInteger)scrollerKnobStyle
+{
+  static NSInteger style;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    // compute scrollbar style depending on theme background
+    CGFloat comp[4];
+    NSColor *backgroundColor = self.background;
+    [backgroundColor getComponents:comp];
+    CGFloat brightness = 255 * (comp[0] * 299 + comp[1] * 587 + comp[2] * 114) / 1000;
+    style = brightness < 128 ? NSScrollerKnobStyleLight : NSScrollerKnobStyleDark;
+  });
+  return style;
+}
+
 + (NSColor *)colorWithHexString:(NSString *)string
 {
   if (!string) {
@@ -110,5 +125,6 @@ static DuxTheme *currentTheme;
                                    green:((float)((value & 0xFF00) >> 8))/255.0
                                     blue:((float)(value & 0xFF))/255.0 alpha:1.0];
 }
+
 
 @end

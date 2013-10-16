@@ -8,6 +8,7 @@
 
 #import "DuxNavigatorFilesViewController.h"
 #import "DuxNavigatorFileCell.h"
+#import "DuxTheme.h"
 
 #define COLUMNID_NAME			@"NameColumn" // Name for the file cell
 #define kIconImageSize  16.0
@@ -30,11 +31,13 @@ static NSArray *filesExcludeList;
 
 @implementation DuxNavigatorFilesViewController
 
+@synthesize scrollView;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
   if (!(self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
     return nil;
-  
+
   [self flushCache];
   
   return self;
@@ -69,6 +72,7 @@ static NSArray *filesExcludeList;
 - (void)awakeFromNib
 {
   [self initOutlineCells];
+  self.filesView.enclosingScrollView.scrollerKnobStyle = [[DuxTheme currentTheme] scrollerKnobStyle];
 }
 
 - (void)initOutlineCells
