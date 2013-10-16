@@ -29,17 +29,17 @@ static NSTextStorage *textStorage = nil;
   NSMutableParagraphStyle *paragraphStyle = [[[NSParagraphStyle alloc] init] mutableCopy];
   [paragraphStyle setAlignment:NSRightTextAlignment];
   [paragraphStyle setLineBreakMode:NSLineBreakByTruncatingMiddle];
-if ([DuxPreferences editorDarkMode]) {
-  marginAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSFont fontWithName:@"Source Code Pro ExtraLight" size:10], NSFontAttributeName,
-                      [[DuxTheme currentTheme] foreground], NSForegroundColorAttributeName,
-                      paragraphStyle, NSParagraphStyleAttributeName,
-                      nil];
-} else {
+//if ([DuxPreferences editorDarkMode]) {
+//  marginAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSFont fontWithName:@"Source Code Pro ExtraLight" size:10], NSFontAttributeName,
+//                      [[DuxTheme currentTheme] foreground], NSForegroundColorAttributeName,
+//                      paragraphStyle, NSParagraphStyleAttributeName,
+//                      nil];
+//} else {
   marginAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSFont fontWithName:@"Source Code Pro Light" size:10], NSFontAttributeName,
                       [[DuxTheme currentTheme] foreground], NSForegroundColorAttributeName,
                       paragraphStyle, NSParagraphStyleAttributeName,
                       nil];
-}
+//}
   lineNumberStrings = [[NSMutableArray alloc] initWithCapacity:10000];
   
   layoutManager = [[NSLayoutManager alloc] init];

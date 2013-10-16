@@ -158,15 +158,15 @@ static NSUserDefaults *userDefaults;
   return [userDefaults arrayForKey:@"OpenQuicklyExcludesFilesWithExtension"];
 }
 
-+ (BOOL)editorDarkMode
-{
-  return [userDefaults boolForKey:@"DuxEditorDarkMode"];
-}
+//+ (BOOL)editorDarkMode
+//{
+//  return [userDefaults boolForKey:@"DuxEditorDarkMode"];
+//}
 
-+ (void)setEditorDarkMode:(BOOL)darkMode
-{
-  [userDefaults setBool:darkMode forKey:@"DuxEditorDarkMode"];
-}
+//+ (void)setEditorDarkMode:(BOOL)darkMode
+//{
+//  [userDefaults setBool:darkMode forKey:@"DuxEditorDarkMode"];
+//}
 
 @end
 

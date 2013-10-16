@@ -80,14 +80,14 @@ static NSMutableArray *projects = nil;
   self.noEditorTextView.alphaValue = 0.65;
   
   [self.window setMovableByWindowBackground:YES];
-  if ([DuxPreferences editorDarkMode]) {
-    self.window.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:1];
-    self.noEditorTextView.textColor = [NSColor whiteColor];
-    self.noEditorTextView.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:0.2];
-    self.documentPathLabel.textColor = [NSColor lightGrayColor];
-  } else {
+//  if ([DuxPreferences editorDarkMode]) {
+//    self.window.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:1];
+//    self.noEditorTextView.textColor = [NSColor whiteColor];
+//    self.noEditorTextView.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:0.2];
+//    self.documentPathLabel.textColor = [NSColor lightGrayColor];
+//  } else {
     self.window.backgroundColor = [NSColor colorWithCalibratedRed:0.886 green:0.902 blue:0.929 alpha:1.000];
-  }
+//  }
   
   if (self.document) {
     [self.noEditorView setHidden:YES];

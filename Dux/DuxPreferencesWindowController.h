@@ -45,6 +45,4 @@
 // colors section
 @property (weak) IBOutlet NSMatrix *darkModeRadioMatrix;
 
-- (IBAction)setDarkMode:(id)sender;
-
 @end

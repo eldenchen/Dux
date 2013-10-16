@@ -12,6 +12,7 @@
 #import "MyTextDocument.h"
 #import "DuxProjectWindowController.h"
 #import "DuxPreferences.h"
+#import "DuxTheme.h"
 
 #import <objc/runtime.h>
 
@@ -33,12 +34,7 @@
 
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)aStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)flag
 {
-//  if ([DuxPreferences editorDarkMode]) {
-    aStyle |= NSTexturedBackgroundWindowMask;
-//  }
-  
   if (self = [super initWithContentRect:contentRect styleMask:aStyle backing:bufferingType defer:flag]) {
-    
     // modify NSThemeFrame to do our custom drawing
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -54,7 +50,6 @@
       Method themeFrameDrawRectOriginal = class_getInstanceMethod(themeFrameClass, @selector(drawRectOriginal:));
       method_exchangeImplementations(themeFrameDrawRect, themeFrameDrawRectOriginal);
     });
-    
   }
   
   return self;
@@ -65,7 +60,7 @@
   [super awakeFromNib];
   
 //  if ([DuxPreferences editorDarkMode]) {
-    [self.toolbar setShowsBaselineSeparator:NO];
+//    [self.toolbar setShowsBaselineSeparator:NO];
 //  }
 }
 
@@ -91,7 +86,7 @@
 //    return;
   
   // grab gfx context
-  CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
+//  CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
   
   
 	// Build clipping path : intersection of frame clip (bezier path with rounded corners) and rect argument
@@ -107,78 +102,76 @@
 
   
   
-  // define gradient
-  CGFloat darkColors [] = {
-    0.596, 0.643, 0.710, 0.000,
-    0.596, 0.643, 0.710, 0.400
-  };
-  CGFloat lightColors [] = {
-    0.90, 0.92, 0.95, 0.0,
-    0.90, 0.92, 0.95, 1.0
-  };
-  
-  CGColorSpaceRef baseSpace = CGColorSpaceCreateDeviceRGB();
-  CGGradientRef gradient = CGGradientCreateWithColorComponents(baseSpace, [DuxPreferences editorDarkMode] ? darkColors : lightColors, NULL, 2);
-  CGColorSpaceRelease(baseSpace), baseSpace = NULL;
-  
-  
-  
+//  // define gradient
+//  CGFloat darkColors [] = {
+//    0.65, 0.65, 0.65, 0.000,
+//    0.65, 0.65, 0.65, 0.400
+//  };
+//  CGFloat lightColors [] = {
+//    0.92, 0.92, 0.92, 0.0,
+//    0.92, 0.92, 0.92, 1.0
+//  };
+//  
+//  CGColorSpaceRef baseSpace = CGColorSpaceCreateDeviceRGB();
+//  CGGradientRef gradient = CGGradientCreateWithColorComponents(baseSpace, [DuxPreferences editorDarkMode] ? darkColors : lightColors, NULL, 2);
+//  CGColorSpaceRelease(baseSpace), baseSpace = NULL;
+//  
+//  
+//  
+//  // white-out the window title
+//  CGContextMoveToPoint(context, 1, windowRect.size.height - 3);
+//  CGContextAddLineToPoint(context, windowRect.size.width - 1, windowRect.size.height - 3);
+//  CGContextAddLineToPoint(context, windowRect.size.width - 1, windowRect.size.height - 20);
+//  CGContextAddLineToPoint(context, 1, windowRect.size.height - 20);
+//  CGContextSetFillColorWithColor(context, self.window.backgroundColor.CGColor);
+//  CGContextFillPath(context);
+//  
+//  
+//  // draw gradient
+//  CGPoint startPoint = CGPointMake(CGRectGetMidX(rect), self.frame.size.height - 40);
+//  CGPoint endPoint = CGPointMake(CGRectGetMidX(rect), self.frame.size.height);
+//  
 //if ([DuxPreferences editorDarkMode]) {
-  // white-out the window title
-  CGContextMoveToPoint(context, 1, windowRect.size.height - 3);
-  CGContextAddLineToPoint(context, windowRect.size.width - 1, windowRect.size.height - 3);
-  CGContextAddLineToPoint(context, windowRect.size.width - 1, windowRect.size.height - 20);
-  CGContextAddLineToPoint(context, 1, windowRect.size.height - 20);
-  CGContextSetFillColorWithColor(context, self.window.backgroundColor.CGColor);
-  CGContextFillPath(context);
+//  CGContextSetBlendMode(context, kCGBlendModeScreen);
+//} else {
+//  CGContextSetBlendMode(context, kCGBlendModeMultiply);
 //}
-  
-  
-  // draw gradient
-  CGPoint startPoint = CGPointMake(CGRectGetMidX(rect), self.frame.size.height - 40);
-  CGPoint endPoint = CGPointMake(CGRectGetMidX(rect), self.frame.size.height);
-  
-if ([DuxPreferences editorDarkMode]) {
-  CGContextSetBlendMode(context, kCGBlendModeScreen);
-} else {
-  CGContextSetBlendMode(context, kCGBlendModeMultiply);
-}
-  CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
-  
-  // release gradient
-  CGGradientRelease(gradient), gradient = NULL;
-  
-  
-  
-  
-  // draw a light horizontal line near the top of the window (3D bevel)
-  CGContextSetBlendMode(context, kCGBlendModeNormal);
-if ([DuxPreferences editorDarkMode]) {
-  CGContextSetStrokeColorWithColor(context, [NSColor colorWithCalibratedWhite:1 alpha:0.24].CGColor);
-} else {
-  CGContextSetStrokeColorWithColor(context, [NSColor colorWithCalibratedWhite:1 alpha:0.34].CGColor);
-}
-  CGContextSetLineWidth(context, 1.0);
-  
-  CGContextMoveToPoint(context, 0, windowRect.size.height - 1.5);
-  CGContextAddLineToPoint(context, windowRect.size.width, windowRect.size.height - 1.5);
-  
-  CGContextStrokePath(context);
-  
-  
-  
-  // draw title (we wiped it out earlier)
-  NSRect titleRect = [self _titlebarTitleRect];
-  
-  NSDictionary *attrs = @{NSFontAttributeName: [NSFont titleBarFontOfSize:0], NSForegroundColorAttributeName: [DuxPreferences editorDarkMode] ? [NSColor lightGrayColor] : [NSColor blackColor]};
-  [self.title drawInRect:titleRect withAttributes:attrs];
-  
-  
-  
+//  CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
+//  
+//  // release gradient
+//  CGGradientRelease(gradient), gradient = NULL;
+//  
+//  
+//  
+//  
+//  // draw a light horizontal line near the top of the window (3D bevel)
+//  CGContextSetBlendMode(context, kCGBlendModeNormal);
+//if ([DuxPreferences editorDarkMode]) {
+//  CGContextSetStrokeColorWithColor(context, [NSColor colorWithCalibratedWhite:1 alpha:0.24].CGColor);
+//} else {
+//  CGContextSetStrokeColorWithColor(context, [NSColor colorWithCalibratedWhite:1 alpha:0.34].CGColor);
+//}
+//  CGContextSetLineWidth(context, 1.0);
+//  
+//  CGContextMoveToPoint(context, 0, windowRect.size.height - 1.5);
+//  CGContextAddLineToPoint(context, windowRect.size.width, windowRect.size.height - 1.5);
+//  
+//  CGContextStrokePath(context);
+//  
+//  
+//  
+//  // draw title (we wiped it out earlier)
+//  NSRect titleRect = [self _titlebarTitleRect];
+//  
+//  NSDictionary *attrs = @{NSFontAttributeName: [NSFont titleBarFontOfSize:0], NSForegroundColorAttributeName: [DuxPreferences editorDarkMode] ? [NSColor lightGrayColor] : [NSColor blackColor]};
+//  [self.title drawInRect:titleRect withAttributes:attrs];
+//  
+//  
+//  
   // draw pageguide
   if (window.duxProjectWindowShowPageGuide) {
-    NSColor *guideFillColor = [DuxPreferences editorDarkMode] ? [NSColor colorWithDeviceWhite:1 alpha:0.1] : [NSColor colorWithDeviceWhite:0 alpha:0.015];
-    NSColor *guideLineColor = [DuxPreferences editorDarkMode] ? [NSColor colorWithDeviceWhite:1 alpha:0.2] : [NSColor colorWithDeviceWhite:0 alpha:0.1];
+    NSColor *guideFillColor = [[DuxTheme currentTheme].foreground colorWithAlphaComponent:0.015];
+    NSColor *guideLineColor = [[DuxTheme currentTheme].foreground colorWithAlphaComponent:0.1];
     
     float position = window.duxProjectWindowPageGuideX;
     

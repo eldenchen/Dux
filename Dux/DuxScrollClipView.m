@@ -38,9 +38,10 @@
   self.pageGuidePosition = [DuxPreferences pageGuidePosition];
   self.spaceWidth = [@" " sizeWithAttributes:@{NSFontAttributeName: [DuxPreferences editorFont]}].width;
 
-  self.guideFillColor = [DuxPreferences editorDarkMode] ? [NSColor colorWithDeviceWhite:1 alpha:0.1] : [NSColor colorWithDeviceWhite:0 alpha:0.015];
-  self.guideLineColor = [DuxPreferences editorDarkMode] ? [NSColor colorWithDeviceWhite:1 alpha:0.2] : [NSColor colorWithDeviceWhite:0 alpha:0.1];
-
+  self.guideFillColor = [[DuxTheme currentTheme].foreground colorWithAlphaComponent:0.015];
+  self.guideLineColor = [[DuxTheme currentTheme].foreground colorWithAlphaComponent:0.1];
+  
+  
   NSNotificationCenter *notifCenter = [NSNotificationCenter defaultCenter];
   [notifCenter addObserver:self selector:@selector(showPageGuideDidChange:) name:DuxPreferencesShowPageGuideDidChangeNotification object:nil];
   [notifCenter addObserver:self selector:@selector(pageGuidePositionDidChange:) name:DuxPreferencesPageGuidePositionDidChangeNotification object:nil];
