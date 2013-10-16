@@ -306,7 +306,7 @@
                         <font key="font" metaFont="fixedUser" size="11"/>
                         <string key="title">To change colours, save "Foobar.tmTheme" to the Themes Directory, and then execute the following command before relaunching Dux:
 
-    defaults write com.dubapp.dux DuxEditorTheme Foobar
+    defaults write com.duxapp.dux DuxEditorTheme Foobar
 </string>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
