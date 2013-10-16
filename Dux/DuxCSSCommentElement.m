@@ -21,8 +21,7 @@ static NSColor *color;
   [super initialize];
   
   nextElementSearchString = @"*/";
-  
-  color = [NSColor colorWithCalibratedRed:0.075 green:0.529 blue:0.000 alpha:1];
+  color = [[DuxTheme currentTheme] colorForKey:@"comment.css"];
 }
 
 - (id)init
