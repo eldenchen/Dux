@@ -40,6 +40,7 @@ static NSUserDefaults *userDefaults;
    @"NSSplitView Subview Frames DuxProjectWindowSplitView": @[@"0.000000, 0.000000, 0.000000, 1556.000000, NO", @"1.000000, 0.000000, 1280.000000, 1556.000000, NO"],
    @"DuxProjectNavigatorLastNonCollapsedWidth": @350,
    @"DuxEditorDarkMode": [NSNumber numberWithBool:NO],
+   @"DuxEditorTheme": @"Default"
   }];
 }
 
@@ -158,14 +159,19 @@ static NSUserDefaults *userDefaults;
   return [userDefaults arrayForKey:@"OpenQuicklyExcludesFilesWithExtension"];
 }
 
-+ (BOOL)editorDarkMode
-{
-  return [userDefaults boolForKey:@"DuxEditorDarkMode"];
-}
+//+ (BOOL)editorDarkMode
+//{
+//  return [userDefaults boolForKey:@"DuxEditorDarkMode"];
+//}
 
-+ (void)setEditorDarkMode:(BOOL)darkMode
+//+ (void)setEditorDarkMode:(BOOL)darkMode
+//{
+//  [userDefaults setBool:darkMode forKey:@"DuxEditorDarkMode"];
+//}
+
++ (NSString *)themeName
 {
-  [userDefaults setBool:darkMode forKey:@"DuxEditorDarkMode"];
+  return [userDefaults stringForKey:@"DuxEditorTheme"];
 }
 
 @end

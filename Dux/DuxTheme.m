@@ -67,9 +67,65 @@ static DuxTheme *currentTheme;
 
 + (void)loadThemeNamed:(NSString *)name
 {
-  NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:kThemeExtension];
-  NSDictionary *dic = [[NSDictionary alloc] initWithContentsOfFile:path];
+  // search for theme file
+  NSString *themePath = nil;
+  
+  for (NSDictionary *theme in [[self class] allThemes]) {
+    if ([theme[@"name"] isEqualToString:name])
+      themePath = [theme[@"url"] path];
+  }
+  
+  // not found? load default theme instead
+  if (!themePath) {
+    themePath = [[NSBundle mainBundle] pathForResource:@"Default" ofType:kThemeExtension];
+  }
+
+  
+  // load theme
+  NSDictionary *dic = [[NSDictionary alloc] initWithContentsOfFile:themePath];
   currentTheme = [[DuxTheme alloc] initWithDictionary:dic];
+}
+
++ (NSArray *)allThemes
+{
+  NSMutableArray *themes = @[].mutableCopy;
+  
+  NSFileManager *fileManager = [[NSFileManager alloc] init];
+  NSURL *themesDir = [[self class] themesURL];
+  
+  NSDirectoryEnumerator *themesDirEnumerator = [fileManager enumeratorAtURL:[themesDir URLByResolvingSymlinksInPath] includingPropertiesForKeys:@[NSURLIsPackageKey] options:NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsHiddenFiles errorHandler:NULL];
+  for (NSURL *childURL in themesDirEnumerator) {
+    if (![childURL.pathExtension isEqualToString:kThemeExtension]) {
+      continue;
+    }
+    
+    NSString *name = childURL.path;
+    name = [name substringFromIndex:themesDir.path.length + 1];
+    name = [name stringByDeletingPathExtension];
+    
+    [themes addObject:@{@"name": name, @"url": childURL}];
+  }
+  
+  return themes.copy;
+}
+
++ (NSURL *)themesURL
+{
+  static NSURL *themesURL = nil;
+  if (themesURL) {
+    return themesURL;
+  }
+  
+  NSURL *appSupportDir = [[NSFileManager defaultManager] URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:NULL];
+  
+  themesURL = [appSupportDir URLByAppendingPathComponent:@"Dux/Themes" isDirectory:YES];
+  
+  BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:themesURL.path];
+  if (!exists) {
+    [[NSFileManager defaultManager] createDirectoryAtURL:themesURL withIntermediateDirectories:YES attributes:nil error:NULL];
+  }
+  
+  return themesURL;
 }
 
 - (NSColor *)colorForKey:(NSString *)key
@@ -126,5 +182,12 @@ static DuxTheme *currentTheme;
                                     blue:((float)(value & 0xFF))/255.0 alpha:1.0];
 }
 
+- (BOOL)hasDarkBackground
+{
+  // http://stackoverflow.com/questions/2509443/check-if-uicolor-is-dark-or-bright
+  CGFloat colorBrightness = ((self.background.redComponent * 299) + (self.background.greenComponent * 587) + (self.background.blueComponent * 114)) / 1000;
+  
+  return colorBrightness < 0.5;
+}
 
 @end

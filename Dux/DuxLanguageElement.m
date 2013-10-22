@@ -25,11 +25,11 @@ static NSColor *color = nil;
   
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    if ([DuxPreferences editorDarkMode]) {
-      color = [NSColor colorWithCalibratedWhite:0.8 alpha:1];
-    } else {
+//    if ([DuxPreferences editorDarkMode]) {
+//      color = [NSColor colorWithCalibratedWhite:0.8 alpha:1];
+//    } else {
       color = [NSColor blackColor];
-    }
+//    }
   });
 }
 

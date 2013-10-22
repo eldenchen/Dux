@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong) NSString *name;
 
+@property (readonly) BOOL hasDarkBackground;
 @property (nonatomic, strong) NSColor *background;
 @property (nonatomic, strong) NSColor *foreground;
 @property (nonatomic, strong) NSColor *caret;
@@ -28,5 +29,7 @@
 + (DuxTheme *)currentTheme;
 
 + (void)loadThemeNamed:(NSString *)name;
+
++ (NSURL *)themesURL;
 
 @end

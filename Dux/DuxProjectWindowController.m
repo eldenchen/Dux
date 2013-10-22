@@ -80,14 +80,14 @@ static NSMutableArray *projects = nil;
   self.noEditorTextView.alphaValue = 0.65;
   
   [self.window setMovableByWindowBackground:YES];
-  if ([DuxPreferences editorDarkMode]) {
-    self.window.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:1];
-    self.noEditorTextView.textColor = [NSColor whiteColor];
-    self.noEditorTextView.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:0.2];
-    self.documentPathLabel.textColor = [NSColor lightGrayColor];
-  } else {
+//  if ([DuxPreferences editorDarkMode]) {
+//    self.window.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:1];
+//    self.noEditorTextView.textColor = [NSColor whiteColor];
+//    self.noEditorTextView.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:0.2];
+//    self.documentPathLabel.textColor = [NSColor lightGrayColor];
+//  } else {
     self.window.backgroundColor = [NSColor colorWithCalibratedRed:0.886 green:0.902 blue:0.929 alpha:1.000];
-  }
+//  }
   
   if (self.document) {
     [self.noEditorView setHidden:YES];
@@ -99,7 +99,9 @@ static NSMutableArray *projects = nil;
   
   // seems to be a bug in IB that prevents custom views from being properly connected to their toolbar item
   self.historyToolbarItem.view = self.historyToolbarItemView;
+  
   self.pathToolbarItem.view = self.pathToolbarItemView;
+  self.pathToolbarItem.maxSize = NSMakeSize(FLT_MAX, self.pathToolbarItem.maxSize.height); // NSToolbar Documentation: "As of OS X v10.5, if you call setView: on an NSToolbarItem object without also calling setMinSize: or setMaxSize:, the toolbar item sets its minimum and maximum size equal to the view’s frame."
   
   [self reloadDocumentHistoryPopUp];
 }

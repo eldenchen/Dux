@@ -158,6 +158,9 @@ static NSArray *filesExcludeList;
 
 - (void)outlineView:(NSOutlineView *)olv willDisplayCell:(NSCell*)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
+  NSTextFieldCell *textCell = [tableColumn dataCell];
+  textCell.textColor = [[DuxTheme currentTheme] foreground];
+  
   if ([self outlineView:olv isItemExpandable:item])
   {
     [(DuxNavigatorFileCell *)cell setImage:folderImage];

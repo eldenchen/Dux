@@ -515,7 +515,11 @@ static NSCharacterSet *newlineCharacterSet;
     if (value.rangeValue.length == 0)
       continue;
     
-    [self.textStorage removeAttribute:NSBackgroundColorAttributeName range:value.rangeValue];
+    NSRange range = value.rangeValue;
+    range.location =  MIN(range.location, self.textStorage.length);
+    range.length = MIN(range.length, self.textStorage.length - range.location);
+    
+    [self.textStorage removeAttribute:NSBackgroundColorAttributeName range:range];
   }
   
   // apply new bacgkround colors
@@ -523,7 +527,11 @@ static NSCharacterSet *newlineCharacterSet;
     if (value.rangeValue.length == 0)
       continue;
     
-    [self.textStorage addAttribute:NSBackgroundColorAttributeName value:selectionColor range:value.rangeValue];
+    NSRange range = value.rangeValue;
+    range.location =  MIN(range.location, self.textStorage.length);
+    range.length = MIN(range.length, self.textStorage.length - range.location);
+    
+    [self.textStorage addAttribute:NSBackgroundColorAttributeName value:selectionColor range:range];
   }
   
   [super setSelectedRanges:ranges affinity:affinity stillSelecting:stillSelectingFlag];
@@ -603,14 +611,14 @@ static NSCharacterSet *newlineCharacterSet;
 - (void)insertText:(id)insertString
 {
   // built in selected text attributes are useless in dark mode, and we cannot set the value of some of them, so instead we disable super's selected text attributes and specify our own ones in setSelectedRange:
-  if ([DuxPreferences editorDarkMode]) {
-    for (NSValue *value in self.selectedRanges) {
-      if (value.rangeValue.length == 0)
-        continue;
-      
-      [self.textStorage removeAttribute:NSBackgroundColorAttributeName range:value.rangeValue];
-    }
-  }
+//  if ([DuxPreferences editorDarkMode]) {
+//    for (NSValue *value in self.selectedRanges) {
+//      if (value.rangeValue.length == 0)
+//        continue;
+//      
+//      [self.textStorage removeAttribute:NSBackgroundColorAttributeName range:value.rangeValue];
+//    }
+//  }
   
   [super insertText:insertString];
 }
@@ -1222,11 +1230,11 @@ static NSCharacterSet *newlineCharacterSet;
   NSRectArray glyphRects;
   NSUInteger glyphRectsIndex;
   NSUInteger glyphRectsCount;
-  if ([DuxPreferences editorDarkMode]) {
-    [[NSColor colorWithCalibratedRed:0.173 green:0.151 blue:0.369 alpha:1.000] set];
-  } else {
+//  if ([DuxPreferences editorDarkMode]) {
+//    [[NSColor colorWithCalibratedRed:0.173 green:0.151 blue:0.369 alpha:1.000] set];
+//  } else {
     [[NSColor colorWithCalibratedRed:0.973 green:0.951 blue:0.769 alpha:1.000] set];
-  }
+//  }
   float glyphRectExtraX = (self.showLineNumbers) ? 33.5 : 0;
   for (NSValue *range in self.highlightedElements) {
     glyphRange = [layoutManager glyphRangeForCharacterRange:range.rangeValue actualCharacterRange:NULL];
