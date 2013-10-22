@@ -187,7 +187,7 @@ static NSCharacterSet *nonWhitespaceCharacterSet;
   
   NSRange lastNewlineRange = [self rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:NSLiteralSearch|NSBackwardsSearch range:searchRange];
   
-  if (lastNewlineRange.location == NSNotFound) {
+  if (lastNewlineRange.location != self.length - lastNewlineRange.length) {
     [newString deleteCharactersInRange:NSMakeRange(newString.length - newlineString.length, newlineString.length)];
   }
   
