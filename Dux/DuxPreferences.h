@@ -44,6 +44,8 @@ typedef NSUInteger DuxTabIndentBehaviour;
 + (NSUInteger)indentWidth;
 + (void)setIndentWidth:(NSUInteger)newValue;
 
++ (BOOL)navigatorFilesViewFoldersAtTop;
+
 + (NSArray *)openQuicklyExcludesFilesWithExtension;
 
 //+ (BOOL)editorDarkMode;

@@ -40,7 +40,8 @@ static NSUserDefaults *userDefaults;
    @"NSSplitView Subview Frames DuxProjectWindowSplitView": @[@"0.000000, 0.000000, 0.000000, 1556.000000, NO", @"1.000000, 0.000000, 1280.000000, 1556.000000, NO"],
    @"DuxProjectNavigatorLastNonCollapsedWidth": @350,
    @"DuxEditorDarkMode": [NSNumber numberWithBool:NO],
-   @"DuxEditorTheme": @"Default"
+   @"DuxEditorTheme": @"Default",
+   @"DuxNavigatorFilesViewFoldersAtTop": [NSNumber numberWithBool:NO]
   }];
 }
 
@@ -172,6 +173,11 @@ static NSUserDefaults *userDefaults;
 + (NSString *)themeName
 {
   return [userDefaults stringForKey:@"DuxEditorTheme"];
+}
+
++ (BOOL)navigatorFilesViewFoldersAtTop
+{
+  return [userDefaults boolForKey:@"DuxNavigatorFilesViewFoldersAtTop"];
 }
 
 @end

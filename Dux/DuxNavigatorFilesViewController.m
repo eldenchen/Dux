@@ -9,6 +9,7 @@
 #import "DuxNavigatorFilesViewController.h"
 #import "DuxNavigatorFileCell.h"
 #import "DuxTheme.h"
+#import "DuxPreferences.h"
 
 #define COLUMNID_NAME			@"NameColumn" // Name for the file cell
 #define kIconImageSize  16.0
@@ -516,10 +517,18 @@ static NSArray *filesExcludeList;
 
 - (NSArray *)sortedFiles:(NSMutableArray *)urls
 {
+  // alphabetic sort
   NSArray *sorted;
   sorted = [urls sortedArrayUsingComparator:^NSComparisonResult(NSURL *a, NSURL *b) {
     return [a.lastPathComponent compare:b.lastPathComponent options:NSNumericSearch | NSCaseInsensitiveSearch];
   }];
+  
+  // check if folders on top is disabled
+  if (![DuxPreferences navigatorFilesViewFoldersAtTop]) {
+    return sorted;
+  }
+  
+  // sort folders on top
   NSMutableArray *folders = [[NSMutableArray alloc] init];
   NSMutableArray *files = [[NSMutableArray alloc] init];
   NSFileManager *fileManager = [NSFileManager defaultManager];
