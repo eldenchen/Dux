@@ -31,15 +31,13 @@ static NSArray *filesExcludeList;
 
 @implementation DuxNavigatorFilesViewController
 
-@synthesize scrollView;
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
   if (!(self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
     return nil;
 
   [self flushCache];
-  
+
   return self;
 }
 
@@ -222,10 +220,8 @@ static NSArray *filesExcludeList;
     
     [mutableChildUrls removeObjectsInArray:[childUrls objectsAtIndexes:matchingPathsSet]];
     
-    childUrls = [mutableChildUrls sortedArrayUsingComparator:^NSComparisonResult(NSURL *a, NSURL *b) {
-      return [a.lastPathComponent compare:b.lastPathComponent options:NSNumericSearch];
-    }];
-    
+    childUrls = [self sortedFiles:mutableChildUrls];
+
     isDone = YES;
     
     // add to cache and update display
@@ -358,7 +354,7 @@ static NSArray *filesExcludeList;
     [self flushCache];
     [self.filesView reloadData];
     [self revealFileInNavigator:savePanel.URL];
-    
+
     // open the new file
     if ([self.delegate respondsToSelector:@selector(duxNavigatorDidCreateFile:)]) {
       [self.delegate duxNavigatorDidCreateFile:savePanel.URL];
@@ -516,6 +512,30 @@ static NSArray *filesExcludeList;
 {
   [self flushCache];
   [self.filesView reloadData];
+}
+
+- (NSArray *)sortedFiles:(NSMutableArray *)urls
+{
+  NSArray *sorted;
+  sorted = [urls sortedArrayUsingComparator:^NSComparisonResult(NSURL *a, NSURL *b) {
+    return [a.lastPathComponent compare:b.lastPathComponent options:NSNumericSearch | NSCaseInsensitiveSearch];
+  }];
+  NSMutableArray *folders = [[NSMutableArray alloc] init];
+  NSMutableArray *files = [[NSMutableArray alloc] init];
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  for (NSURL *url in sorted) {
+    BOOL isDir;
+    if ([fileManager fileExistsAtPath:url.path isDirectory:&isDir]) {
+      if (isDir) {
+        [folders addObject:url];
+      } else {
+        [files addObject:url];
+      }
+    }
+  }
+  [folders addObjectsFromArray:files];
+  sorted = [NSArray arrayWithArray:folders];
+  return sorted;
 }
 
 @end
