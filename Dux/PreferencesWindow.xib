@@ -11,7 +11,7 @@
                 <outlet property="editorSectionView" destination="130" id="189"/>
                 <outlet property="fontTextField" destination="142" id="190"/>
                 <outlet property="indentStylePopUpButton" destination="139" id="191"/>
-                <outlet property="indentWidthTextField" destination="137" id="192"/>
+                <outlet property="indentWidthTextField" destination="133" id="kbT-QL-fAa"/>
                 <outlet property="pageGuidePositionTextField" destination="144" id="193"/>
                 <outlet property="showLineNumbersButton" destination="148" id="194"/>
                 <outlet property="showOtherInstancesOfSelectedSymbolButton" destination="146" id="195"/>
