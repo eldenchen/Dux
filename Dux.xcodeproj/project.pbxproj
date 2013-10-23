@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		373A9D45180D65E800B874AB /* Default.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 373A9D44180D65E800B874AB /* Default.tmTheme */; };
 		373A9D47180D674B00B874AB /* Dark.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 373A9D46180D674B00B874AB /* Dark.tmTheme */; };
+		3754085418187175006B27C8 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3754085318187175006B27C8 /* CoreServices.framework */; };
 		376F9C79180B5718007DED82 /* DuxTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F9C78180B5718007DED82 /* DuxTheme.m */; };
 		3804A81B1478DA3E005C587A /* DuxPlainTextLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3804A81A1478DA3E005C587A /* DuxPlainTextLanguage.m */; };
 		3804A81E1478DA7F005C587A /* DuxPlainTextBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3804A81D1478DA7F005C587A /* DuxPlainTextBaseElement.m */; };
@@ -178,6 +179,7 @@
 /* Begin PBXFileReference section */
 		373A9D44180D65E800B874AB /* Default.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Default.tmTheme; sourceTree = "<group>"; };
 		373A9D46180D674B00B874AB /* Dark.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Dark.tmTheme; sourceTree = "<group>"; };
+		3754085318187175006B27C8 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		376F9C77180B5718007DED82 /* DuxTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxTheme.h; sourceTree = "<group>"; };
 		376F9C78180B5718007DED82 /* DuxTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxTheme.m; sourceTree = "<group>"; };
 		3804A8191478DA3E005C587A /* DuxPlainTextLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPlainTextLanguage.h; sourceTree = "<group>"; };
@@ -443,6 +445,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3754085418187175006B27C8 /* CoreServices.framework in Frameworks */,
 				38D605D714039A0600D70F81 /* CoreFoundation.framework in Frameworks */,
 				38D605881403859600D70F81 /* Cocoa.framework in Frameworks */,
 			);
@@ -770,6 +773,7 @@
 		38D605861403859600D70F81 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3754085318187175006B27C8 /* CoreServices.framework */,
 				38D605871403859600D70F81 /* Cocoa.framework */,
 				386EC889172A22B9000C7430 /* SenTestingKit.framework */,
 				38D605891403859600D70F81 /* Other Frameworks */,

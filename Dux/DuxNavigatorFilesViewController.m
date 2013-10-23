@@ -4,7 +4,11 @@
 //
 //  Created by Abhi Beckert on 2013-4-20.
 //
+//  This is free and unencumbered software released into the public domain.
+//  For more information, please refer to <http://unlicense.org/>
 //
+
+#include <CoreServices/CoreServices.h>
 
 #import "DuxNavigatorFilesViewController.h"
 #import "DuxNavigatorFileCell.h"
@@ -13,12 +17,22 @@
 
 #define COLUMNID_NAME			@"NameColumn" // Name for the file cell
 #define kIconImageSize  16.0
+#define kRefreshDelay 0.6
 
 static NSArray *filesExcludeList;
+static NSString *DuxFSEventNotification = @"DuxFSEventNotification";
+
+void fs_event_cb(ConstFSEventStreamRef stream,
+                 void *userData,
+                 size_t numEvents,
+                 void *eventPaths,
+                 const FSEventStreamEventFlags eventFlags[],
+                 const FSEventStreamEventId eventIds[]);
 
 @interface DuxNavigatorFilesViewController ()
 {
   NSImage						*folderImage;
+  FSEventStreamRef fsStream;
 }
 
 @property NSMutableSet *cachedUrls;
@@ -37,7 +51,7 @@ static NSArray *filesExcludeList;
   if (!(self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
     return nil;
 
-  [self flushCache];
+  [self initialize];
 
   return self;
 }
@@ -46,10 +60,22 @@ static NSArray *filesExcludeList;
 {
   if (!(self = [super initWithCoder:aDecoder]))
     return nil;
-  
-  [self flushCache];
-  
+
+  [self initialize];
+
   return self;
+}
+
+- (void)initialize
+{
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fileSystemDidChange:) name:DuxFSEventNotification object:nil];
+  [self flushCache];
+}
+
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [self stopFileSystemWatcher];
 }
 
 - (void)flushCache
@@ -176,7 +202,22 @@ static NSArray *filesExcludeList;
 {
   if ([rootURL isEqual:_rootURL])
     return;
-  
+
+  [self stopFileSystemWatcher];
+
+  CFStringRef path = (__bridge CFStringRef)(rootURL.path);
+  CFArrayRef pathsToWatch = CFArrayCreate(kCFAllocatorDefault, (const void **)&path, 1, NULL);
+  fsStream = FSEventStreamCreate(kCFAllocatorDefault,
+                                 fs_event_cb,
+                                 NULL,
+                                 pathsToWatch,
+                                 kFSEventStreamEventIdSinceNow,
+                                 kRefreshDelay,
+                                 kFSEventStreamCreateFlagWatchRoot);
+  FSEventStreamScheduleWithRunLoop(fsStream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+  FSEventStreamStart(fsStream);
+  CFRelease(pathsToWatch);
+
   [self.cacheQueue setSuspended:YES];
   [self.cacheQueue cancelAllOperations];
   
@@ -547,4 +588,30 @@ static NSArray *filesExcludeList;
   return sorted;
 }
 
+- (void)fileSystemDidChange:(id)sender
+{
+  [self flushCache];
+  [self.filesView reloadData];
+}
+
+- (void)stopFileSystemWatcher
+{
+  if (fsStream) {
+    FSEventStreamStop(fsStream);
+    FSEventStreamUnscheduleFromRunLoop(fsStream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+  }
+}
+
 @end
+
+void fs_event_cb(ConstFSEventStreamRef stream,
+                 void *userData,
+                 size_t numEvents,
+                 void *eventPaths,
+                 const FSEventStreamEventFlags eventFlags[],
+                 const FSEventStreamEventId eventIds[])
+{
+  [[NSNotificationCenter defaultCenter] postNotificationName:DuxFSEventNotification object:nil];
+}
+
+
