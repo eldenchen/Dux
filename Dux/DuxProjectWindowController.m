@@ -619,4 +619,9 @@ static NSMutableArray *projects = nil;
   [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:url display:YES completionHandler:NULL];
 }
 
+- (IBAction)refreshFilesList:(id)sender
+{
+  [self.navigatorFilesViewController refreshFilesList:sender];
+}
+
 @end

@@ -550,6 +550,12 @@ void fs_event_cb(ConstFSEventStreamRef stream,
   }
 }
 
+- (IBAction)refreshFilesList:(id)sender
+{
+  [self flushCache];
+  [self.filesView reloadData];
+}
+
 - (NSArray *)sortedFiles:(NSMutableArray *)urls
 {
   // alphabetic sort

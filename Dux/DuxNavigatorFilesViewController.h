@@ -21,6 +21,8 @@
 
 - (void)revealFileInNavigator:(NSURL *)fileURL;
 
+- (IBAction)refreshFilesList:(id)sender;
+
 @end
 
 @protocol DuxNavigatorFilesViewControllerDelegate <NSObject>
