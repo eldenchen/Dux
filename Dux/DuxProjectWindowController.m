@@ -494,7 +494,7 @@ static NSMutableArray *projects = nil;
   if (item.action == @selector(performDuxBundle:)) {
     DuxBundle *bundle = [DuxBundle bundleForSender:item];
     
-    if (![@[DuxBundleInputTypeNone, DuxBundleInputTypeAlert, DuxBundleInputTypeDocumentContents] containsObject:bundle.inputType])
+    if (![@[DuxBundleInputTypeNone, DuxBundleInputTypeAlert, DuxBundleInputTypeDocumentContents, DuxBundleInputTypeSelection] containsObject:bundle.inputType])
       return NO;
     
     if (self.document && [@[DuxBundleOutputTypeInsertSnippet, DuxBundleOutputTypeReplaceDocument, DuxBundleOutputTypeInsertText, DuxBundleInputTypeDocumentContents] containsObject:bundle.outputType])
@@ -519,6 +519,10 @@ static NSMutableArray *projects = nil;
     [[(MyTextDocument *)self.document textView] insertSnippet:output];
   }
   if ([DuxBundleOutputTypeInsertText isEqualToString:bundle.outputType]) {
+    // if there's no selection and the input type is selection, select all before inserting text output
+    if ([bundle.inputType isEqualToString:(NSString *)DuxBundleInputTypeSelection] && [(MyTextDocument *)self.document textView].selectedRange.length == 0)
+      [[(MyTextDocument *)self.document textView] selectAll:self];
+    
     [[(MyTextDocument *)self.document textView] insertText:output];
   }
   if ([DuxBundleOutputTypeReplaceDocument isEqualToString:bundle.outputType]) {

@@ -14,6 +14,7 @@ const NSString *DuxBundleTypeScript = @"Script";
 const NSString *DuxBundleTypeSnippet = @"Snippet";
 const NSString *DuxBundleInputTypeNone = @"None";
 const NSString *DuxBundleInputTypeAlert = @"Alert";
+const NSString *DuxBundleInputTypeSelection = @"Selection";
 const NSString *DuxBundleInputTypeDocumentContents = @"DocumentContents";
 const NSString *DuxBundleOutputTypeNone = @"None";
 const NSString *DuxBundleOutputTypeInsertText = @"InsertText";
@@ -379,8 +380,12 @@ static NSArray *loadedBundles;
     input = accessory.stringValue;
   } else if ([self.inputType isEqual:DuxBundleInputTypeDocumentContents]) {
     input = editorView.textStorage.string;
+  } else if ([self.inputType isEqual:DuxBundleInputTypeSelection]) {
+    input = editorView.textStorage.string;
+    if (editorView.selectedRange.length > 0)
+      input = [input substringWithRange:editorView.selectedRange];
   }
-  
+
   NSString *output;
   if ([self.type isEqualToString:(NSString *)DuxBundleTypeScript]) {
     NSTask *task = [[NSTask alloc] init];
