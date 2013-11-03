@@ -535,6 +535,14 @@ static NSCharacterSet *newlineCharacterSet;
   }
   
   [super setSelectedRanges:ranges affinity:affinity stillSelecting:stillSelectingFlag];
+  
+  // make sure our typing attributes have no background color
+  if (self.typingAttributes[NSBackgroundColorAttributeName]) {
+    NSMutableDictionary *typingAtts = self.typingAttributes.mutableCopy;
+    [typingAtts removeObjectForKey:NSBackgroundColorAttributeName];
+    self.typingAttributes = typingAtts.copy;
+  }
+
 }
 
 - (NSArray *)completionsForPartialWordRange:(NSRange)charRange indexOfSelectedItem:(NSInteger *)index
@@ -562,6 +570,15 @@ static NSCharacterSet *newlineCharacterSet;
   }];
   
   return [completions sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES]]];
+}
+
+- (void)insertCompletion:(NSString *)word forPartialWordRange:(NSRange)partialWordRange movement:(NSInteger)movement isFinal:(BOOL)isFinal
+{
+  [super insertCompletion:word forPartialWordRange:partialWordRange movement:movement isFinal:isFinal];
+  
+  if (isFinal) {
+    [self.textStorage removeAttribute:NSBackgroundColorAttributeName range:NSMakeRange(partialWordRange.location, word.length)];
+  }
 }
 
 - (NSUInteger)countSpacesInLeadingWhitespace:(NSString *)lineString
@@ -610,15 +627,20 @@ static NSCharacterSet *newlineCharacterSet;
 
 - (void)insertText:(id)insertString
 {
-  // built in selected text attributes are useless in dark mode, and we cannot set the value of some of them, so instead we disable super's selected text attributes and specify our own ones in setSelectedRange:
-//  if ([DuxPreferences editorDarkMode]) {
-//    for (NSValue *value in self.selectedRanges) {
-//      if (value.rangeValue.length == 0)
-//        continue;
-//      
-//      [self.textStorage removeAttribute:NSBackgroundColorAttributeName range:value.rangeValue];
-//    }
-//  }
+  // if any text is selected, remove background color (selected text range)
+  for (NSValue *value in self.selectedRanges) {
+    if (value.rangeValue.length == 0)
+      continue;
+    
+    [self.textStorage removeAttribute:NSBackgroundColorAttributeName range:value.rangeValue];
+  }
+  
+  // make sure our typing attributes have no background color
+  if (self.typingAttributes[NSBackgroundColorAttributeName]) {
+    NSMutableDictionary *typingAtts = self.typingAttributes.mutableCopy;
+    [typingAtts removeObjectForKey:NSBackgroundColorAttributeName];
+    self.typingAttributes = typingAtts.copy;
+  }
   
   [super insertText:insertString];
 }
