@@ -388,23 +388,30 @@ static NSArray *loadedBundles;
 
   NSString *output;
   if ([self.type isEqualToString:(NSString *)DuxBundleTypeScript]) {
-    NSTask *task = [[NSTask alloc] init];
-    if (input)
-      task.arguments = @[input];
-    task.launchPath = self.scriptURL.path;
-    task.standardOutput = [NSPipe pipe];
-    task.currentDirectoryPath = workingDirectoryURL.path;
-    
-    
-    NSMutableDictionary *env = [NSProcessInfo processInfo].environment.mutableCopy;
-    [env setObject:currentFile ? currentFile.path : @"" forKey:@"DuxCurrentFile"];
-    task.environment = env.copy;
-    
-    [task launch];
-    [task waitUntilExit];
-    
-    NSData *standardOutput = [[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile];
-    output = [[NSString alloc] initWithData:standardOutput encoding:NSUTF8StringEncoding];
+    if ([self.scriptURL.pathExtension isEqualToString:@"coscript"]) { // Cocoa Script
+      COScript *coScript = [[COScript alloc] init];
+      [coScript executeString:[NSString stringWithContentsOfURL:self.scriptURL usedEncoding:nil error:NULL]];
+      
+      output = [coScript callFunctionNamed:@"run" withArguments:@[input, editorView]];
+    } else { // UNIX script (all other scripting languages)
+      NSTask *task = [[NSTask alloc] init];
+      if (input)
+        task.arguments = @[input];
+      task.launchPath = self.scriptURL.path;
+      task.standardOutput = [NSPipe pipe];
+      task.currentDirectoryPath = workingDirectoryURL.path;
+      
+      
+      NSMutableDictionary *env = [NSProcessInfo processInfo].environment.mutableCopy;
+      [env setObject:currentFile ? currentFile.path : @"" forKey:@"DuxCurrentFile"];
+      task.environment = env.copy;
+      
+      [task launch];
+      [task waitUntilExit];
+      
+      NSData *standardOutput = [[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile];
+      output = [[NSString alloc] initWithData:standardOutput encoding:NSUTF8StringEncoding];
+    }
   } else if ([self.type isEqualToString:(NSString *)DuxBundleTypeSnippet]) {
     output = [NSString stringWithContentsOfURL:self.snippetURL usedEncoding:NULL error:NULL];
   } else {

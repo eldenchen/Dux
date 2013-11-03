@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CocoaScript/COScript.h>
 
 @class DuxTextView;
 

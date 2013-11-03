@@ -1581,4 +1581,9 @@ static NSCharacterSet *newlineCharacterSet;
   return self.window.undoManager;
 }
 
+- (NSString *)newlineString
+{
+  return [NSString stringForNewlineStyle:self.textDocument.activeNewlineStyle];
+}
+
 @end

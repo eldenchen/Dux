@@ -69,4 +69,6 @@
 
 - (NSUInteger)countSpacesInLeadingWhitespace:(NSString *)lineString;
 
+- (NSString *)newlineString; // @"\n" or @"\r" or @"\r\n" depending on the active newline style for this document
+
 @end
