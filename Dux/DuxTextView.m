@@ -1581,6 +1581,14 @@ static NSCharacterSet *newlineCharacterSet;
   return self.window.undoManager;
 }
 
+- (NSString *)selectedText
+{
+  if (self.selectedRange.length == 0)
+    return @"";
+  
+  return [self.string substringWithRange:self.selectedRange];
+}
+
 - (NSString *)newlineString
 {
   return [NSString stringForNewlineStyle:self.textDocument.activeNewlineStyle];

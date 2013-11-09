@@ -10,6 +10,7 @@
 #import "MyAppDelegate.h"
 #import "DuxTextView.h"
 
+const NSString *DuxBundleTypeCoScript = @"CoScript";
 const NSString *DuxBundleTypeScript = @"Script";
 const NSString *DuxBundleTypeSnippet = @"Snippet";
 const NSString *DuxBundleInputTypeNone = @"None";
@@ -138,9 +139,8 @@ static NSArray *loadedBundles;
     
     NSDirectoryEnumerator *bundlesDirEnumerator = [fileManager enumeratorAtURL:[bundlesDir URLByResolvingSymlinksInPath] includingPropertiesForKeys:@[NSURLIsPackageKey] options:NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsHiddenFiles errorHandler:NULL];
     for (NSURL *bundleURL in bundlesDirEnumerator) {
-      if (![bundleURL.pathExtension isEqualToString:@"duxbundle"]) {
+      if (![@[@"coscript", @"duxbundle"] containsObject:bundleURL.pathExtension])
         continue;
-      }
       
       DuxBundle *bundle = nil;
       for (DuxBundle *previouslyLoadedBundle in previouslyLoadedBundles) {
@@ -188,11 +188,11 @@ static NSArray *loadedBundles;
 
 - (void)load
 {
+  // unload if already loaded
   if (self.lastLoadHash != 0)
     [self unload];
   
-  NSDictionary *infoDictionary = [[NSBundle bundleWithURL:self.URL] infoDictionary];
-  
+  // load display name
   self.displayName = [[self.URL lastPathComponent] stringByDeletingPathExtension];
   NSURL *bundlesURL = [[self class] bundlesURL];
   if (![self.URL.path.stringByDeletingLastPathComponent isEqualToString:bundlesURL.path]) {
@@ -203,6 +203,31 @@ static NSArray *loadedBundles;
     }
   }
   
+  // load as coscript?
+  if ([self.URL.pathExtension isEqualToString:@"coscript"]) {
+    self.type = (NSString *)DuxBundleTypeCoScript;
+    self.scriptURL = self.URL;
+    self.snippetURL = nil;
+    self.inputType = (NSString *)DuxBundleInputTypeNone;
+    self.outputType = (NSString *)DuxBundleOutputTypeNone;
+    self.inputPrompt = nil;
+    
+    self.menuItem = [[NSMenuItem alloc] init];
+    self.menuItem.title = [[self.URL lastPathComponent] stringByDeletingPathExtension];
+    self.menuItem.action = @selector(performDuxBundle:);
+    self.menuItem.representedObject = self;
+
+    self.tabTriggers = @[];
+    
+    [self insertBundleMenuItem]; // inserts the menu item into the correct (alphabetically sorted) location
+    
+    self.lastLoadHash = [[self class] calculateLoadHashForURL:self.URL];
+    
+    return;
+  }
+  
+  // load as bundle
+  NSDictionary *infoDictionary = [[NSBundle bundleWithURL:self.URL] infoDictionary];
   self.type = [infoDictionary valueForKey:@"Type"];
   
   if ([self.type isEqualToString:(NSString *)DuxBundleTypeScript]) {
@@ -286,6 +311,25 @@ static NSArray *loadedBundles;
   // init a hash of this load operation
   NSUInteger prime = 31;
   NSUInteger loadHash = 1;
+  
+  NSNumber *isDirectory = nil;
+  [URL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:NULL];
+  if (!isDirectory.boolValue) {
+    NSString *fileName;
+    NSNumber *fileSize;
+    NSDate *fileModified;
+    [URL getResourceValue:&fileName forKey:NSURLNameKey error:NULL];
+    [URL getResourceValue:&fileSize forKey:NSURLFileSizeKey error:NULL];
+    [URL getResourceValue:&fileModified forKey:NSURLContentModificationDateKey error:NULL];
+    
+    // update hash
+    loadHash = prime * loadHash + URL.hash;
+    loadHash = prime * loadHash + fileName.hash;
+    loadHash = prime * loadHash + fileSize.hash;
+    loadHash = prime * loadHash + fileModified.hash;
+    
+    return loadHash;
+  }
   
   // iterate through all files, loading each one
   NSDirectoryEnumerator *dirEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:URL includingPropertiesForKeys:nil options:0 errorHandler:NULL];
@@ -387,31 +431,36 @@ static NSArray *loadedBundles;
   }
 
   NSString *output;
-  if ([self.type isEqualToString:(NSString *)DuxBundleTypeScript]) {
-    if ([self.scriptURL.pathExtension isEqualToString:@"coscript"]) { // Cocoa Script
-      COScript *coScript = [[COScript alloc] init];
+  if ([self.type isEqualToString:(NSString *)DuxBundleTypeCoScript]) { // Cocoa Script
+    COScript *coScript = [[COScript alloc] init];
+    coScript.errorController = self;
+    
+    @try {
       [coScript executeString:[NSString stringWithContentsOfURL:self.scriptURL usedEncoding:nil error:NULL]];
-      
-      output = [coScript callFunctionNamed:@"run" withArguments:@[input, editorView]];
-    } else { // UNIX script (all other scripting languages)
-      NSTask *task = [[NSTask alloc] init];
-      if (input)
-        task.arguments = @[input];
-      task.launchPath = self.scriptURL.path;
-      task.standardOutput = [NSPipe pipe];
-      task.currentDirectoryPath = workingDirectoryURL.path;
-      
-      
-      NSMutableDictionary *env = [NSProcessInfo processInfo].environment.mutableCopy;
-      [env setObject:currentFile ? currentFile.path : @"" forKey:@"DuxCurrentFile"];
-      task.environment = env.copy;
-      
-      [task launch];
-      [task waitUntilExit];
-      
-      NSData *standardOutput = [[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile];
-      output = [[NSString alloc] initWithData:standardOutput encoding:NSUTF8StringEncoding];
+      [coScript callFunctionNamed:@"run" withArguments:@[editorView]];
     }
+    @catch (NSException *exception) {
+      NSAlert *alert = [NSAlert alertWithMessageText:@"Exception Running Script" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"%@\n%@\n%@", exception.name, exception.reason, exception.userInfo];
+      [alert runModal];
+    }
+  } else if ([self.type isEqualToString:(NSString *)DuxBundleTypeScript]) { // UNIX script
+    NSTask *task = [[NSTask alloc] init];
+    if (input)
+      task.arguments = @[input];
+    task.launchPath = self.scriptURL.path;
+    task.standardOutput = [NSPipe pipe];
+    task.currentDirectoryPath = workingDirectoryURL.path;
+    
+    
+    NSMutableDictionary *env = [NSProcessInfo processInfo].environment.mutableCopy;
+    [env setObject:currentFile ? currentFile.path : @"" forKey:@"DuxCurrentFile"];
+    task.environment = env.copy;
+    
+    [task launch];
+    [task waitUntilExit];
+    
+    NSData *standardOutput = [[(NSPipe *)task.standardOutput fileHandleForReading] readDataToEndOfFile];
+    output = [[NSString alloc] initWithData:standardOutput encoding:NSUTF8StringEncoding];
   } else if ([self.type isEqualToString:(NSString *)DuxBundleTypeSnippet]) {
     output = [NSString stringWithContentsOfURL:self.snippetURL usedEncoding:NULL error:NULL];
   } else {
@@ -426,6 +475,13 @@ static NSArray *loadedBundles;
   }
   
   return output;
+}
+
+// TODO: this never seems to get called. Bug in coscript?
+- (void)coscript:(id)coscript hadError:(NSString*)error onLineNumber:(NSInteger)lineNumber atSourceURL:(id)url;
+{
+  NSAlert *alert = [NSAlert alertWithMessageText:@"Script Error" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"Line: %lu\nError: %@", lineNumber, error];
+  [alert runModal];
 }
 
 @end
