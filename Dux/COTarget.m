@@ -8,10 +8,6 @@
 
 #import "COTarget.h"
 
-@interface COTarget ()
-
-@end
-
 @implementation COTarget
 
 + (instancetype)targetWithAction:(MOJavaScriptObject *)action
