@@ -32,22 +32,25 @@
  if ([okButtonTarget hasBeenHit]) {
  break
  }
+ 
+ [NSThread sleepForTimeInterval:0.05]
  }
  [NSApp endModalSession:session];
  [window orderOut:nil]
 */
 
 #import <Foundation/Foundation.h>
+#import "MOJavaScriptObject.h"
+#import <CocoaScript/COScript.h>
 
 @interface COTarget : NSObject
-{
-  BOOL _hasBeenHit;
-}
+
+@property MOJavaScriptObject *action;
+
++ (instancetype)targetWithAction:(MOJavaScriptObject *)action;
+
+- (instancetype)initWithAction:(MOJavaScriptObject *)action;
 
 - (void)hit:(id)sender;
-
-- (BOOL)hasBeenHit;
-
-- (void)clear;
 
 @end
