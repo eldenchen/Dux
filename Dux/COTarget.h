@@ -8,35 +8,28 @@
 
 /* example usage in Cocoa Script:
  
- // create window
+ // create a window
  var window = [[NSWindow alloc] init]
  
- // create OK button
+ // create an OK button
  var okButton = [[NSButton alloc] initWithFrame:NSMakeRect(10, 10, 100, 100)]
  [okButton setTitle:"Continue"]
- [okButton setBezelStyle:NSRoundedBezelStyle]
  [okButton sizeToFit]
  [okButton setKeyEquivalent:"\r"]
  [[window contentView] addSubview:okButton]
  
+ //// put more stuff in the window here; text fields, etc ////
+ 
  // show window, and wait for the OK button to be pressed
- var okButtonTarget = [COTarget new]
+ var okButtonTarget = [COTarget targetWithAction:function(sender) {
+   [window orderOut:nil];
+   [NSApp stopModal];
+ }]
  [okButton setTarget:okButtonTarget]
- [okButton setAction:"hit:"]
+ [okButton setAction:"callAction:"]
  
- var session = [NSApp beginModalSessionForWindow:window];
- while (1) {
- if ([NSApp runModalSession:session] != NSModalResponseContinue)
- break
- 
- if ([okButtonTarget hasBeenHit]) {
- break
- }
- 
- [NSThread sleepForTimeInterval:0.05]
- }
- [NSApp endModalSession:session];
- [window orderOut:nil]
+ // run modal
+ [NSApp runModalForWindow:window];
 */
 
 #import <Foundation/Foundation.h>
@@ -51,6 +44,6 @@
 
 - (instancetype)initWithAction:(MOJavaScriptObject *)action;
 
-- (void)hit:(id)sender;
+- (void)callAction:(id)sender;
 
 @end

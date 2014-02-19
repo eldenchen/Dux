@@ -165,8 +165,6 @@ static NSArray *loadedBundles;
           [bundle load];
         }
       });
-      
-      [bundlesDirEnumerator skipDescendants];
     }
     
     for (DuxBundle *bundle in previouslyLoadedBundles) {

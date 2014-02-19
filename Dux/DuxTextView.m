@@ -22,6 +22,7 @@
 
 @property NSUInteger goToSymbolFindOperationCounter;
 @property CGFloat spaceWidth; // the width of a single " " character in the current font
+@property BOOL miniCompletionVisible;
 
 @end
 
@@ -542,7 +543,58 @@ static NSCharacterSet *newlineCharacterSet;
     [typingAtts removeObjectForKey:NSBackgroundColorAttributeName];
     self.typingAttributes = typingAtts.copy;
   }
+}
 
+- (NSString *)miniCompletionForCurrentCursorOffset
+{
+  // at the beginning of the document?
+  if (self.selectedRange.location == 0)
+    return nil;
+  
+  // find the start of the word
+  NSMutableCharacterSet *mutableCharset = [NSCharacterSet alphanumericCharacterSet];
+  [mutableCharset addCharactersInString:@"_"];
+  NSCharacterSet *wordBoundaryCharset = mutableCharset.invertedSet;
+  
+  NSUInteger wordStart = [self.textStorage.string rangeOfCharacterFromSet:wordBoundaryCharset options:NSBackwardsSearch | NSDiacriticInsensitiveSearch range:NSMakeRange(0, self.selectedRange.location)].location;
+  if (wordStart == NSNotFound)
+    return nil;
+  wordStart++;
+  
+  if (wordStart == self.selectedRange.location)
+    return nil;
+  
+  // find all possible completions
+  NSArray *completions = [self completionsForPartialWordRange:NSMakeRange(wordStart, self.selectedRange.location - wordStart) indexOfSelectedItem:NULL];
+
+  // return the second one (first one is always the current word)
+  if (completions.count < 2)
+    return nil;
+  
+  return completions[1];
+}
+
+- (void)insertMiniCompletion
+{
+  // find completion
+  NSString *completion = [self miniCompletionForCurrentCursorOffset];
+  if (!completion)
+    return;
+  
+  // find the start of the word
+  NSMutableCharacterSet *mutableCharset = [NSCharacterSet alphanumericCharacterSet];
+  [mutableCharset addCharactersInString:@"_"];
+  NSCharacterSet *wordBoundaryCharset = mutableCharset.invertedSet;
+  
+  NSUInteger wordStart = [self.textStorage.string rangeOfCharacterFromSet:wordBoundaryCharset options:NSBackwardsSearch | NSDiacriticInsensitiveSearch range:NSMakeRange(0, self.selectedRange.location)].location;
+  if (wordStart == NSNotFound)
+    return;
+  wordStart++;
+  
+  // do replacement
+  [self setSelectedRange:NSMakeRange(wordStart, self.selectedRange.location - wordStart)];
+  [self insertText:completion];
+  self.miniCompletionVisible = NO;
 }
 
 - (NSArray *)completionsForPartialWordRange:(NSRange)charRange indexOfSelectedItem:(NSInteger *)index
@@ -551,25 +603,63 @@ static NSCharacterSet *newlineCharacterSet;
   NSString *string = textStorage.string;
   NSUInteger stringLength = string.length;
   
-  // figure out the partial word
   NSString *partialWord = [string substringWithRange:charRange];
-  NSString *wordPattern = [NSString stringWithFormat:@"\\b%@[a-zA-Z0-9_]+", [NSRegularExpression escapedPatternForString:partialWord]];
-  NSRegularExpression *wordExpression = [[NSRegularExpression alloc] initWithPattern:wordPattern options:0 error:NULL];
+  NSMutableString *searchPattern = [NSMutableString stringWithString:@""];
+  NSString *operatorChars = @"*?+[(){}^$|\\./";
+  for (int charPos = 0; charPos < partialWord.length; charPos++) {
+    NSString *character = [partialWord substringWithRange:NSMakeRange(charPos, 1)];
+    
+    if ([operatorChars rangeOfString:character].location != NSNotFound)
+    character = [NSString stringWithFormat:@"\\%@", character];
+    
+    [searchPattern appendFormat:@"%@[a-zA-Z0-9_]*", character];
+  }
+  NSRegularExpression *wordExpression = [NSRegularExpression regularExpressionWithPattern:[NSString stringWithFormat:@"\\b(%@)", searchPattern] options:NSRegularExpressionCaseInsensitive error:NULL];
   
-  // find every word in the current document that begins with the same string
+  // find language completions
   NSMutableSet *completions = [NSMutableSet set];
+  for (NSString *languageWord in self.highlighter.baseLanguage.autocompleteWords) {
+    if ([wordExpression numberOfMatchesInString:languageWord options:0 range:NSMakeRange(0, languageWord.length)] > 0)
+        [completions addObject:languageWord];
+  }
+  
+  // search the current document for words
   __block NSString *completion;
   [wordExpression enumerateMatchesInString:string options:0 range:NSMakeRange(0, stringLength) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
     completion = [string substringWithRange:match.range];
-    
-    if ([completions containsObject:completion]) {
+
+    if ([completions containsObject:completion] || [completion isEqualToString:partialWord]) {
       return;
     }
-    
+
     [completions addObject:completion];
   }];
   
-  return [completions sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES]]];
+//  NSLog(@"%@", completions);
+  
+  NSMutableArray *result = [completions sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"length" ascending:YES]]].mutableCopy;
+  [result insertObject:partialWord atIndex:0];
+  return result.copy;
+  
+//  // figure out the partial word
+//  NSString *partialWord = [string substringWithRange:charRange];
+//  NSString *wordPattern = [NSString stringWithFormat:@"\\b%@[a-zA-Z0-9_]+", [NSRegularExpression escapedPatternForString:partialWord]];
+//  NSRegularExpression *wordExpression = [[NSRegularExpression alloc] initWithPattern:wordPattern options:0 error:NULL];
+//  
+//  // find every word in the current document that begins with the same string
+//  NSMutableSet *completions = [NSMutableSet set];
+//  __block NSString *completion;
+//  [wordExpression enumerateMatchesInString:string options:0 range:NSMakeRange(0, stringLength) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
+//    completion = [string substringWithRange:match.range];
+//    
+//    if ([completions containsObject:completion]) {
+//      return;
+//    }
+//    
+//    [completions addObject:completion];
+//  }];
+//  
+//  return [completions sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES]]];
 }
 
 - (void)insertCompletion:(NSString *)word forPartialWordRange:(NSRange)partialWordRange movement:(NSInteger)movement isFinal:(BOOL)isFinal
@@ -709,6 +799,7 @@ static NSCharacterSet *newlineCharacterSet;
   // handle tab completion?
   if (([[theEvent charactersIgnoringModifiers] characterAtIndex:0] == NSTabCharacter) && self.selectedRange.length == 0 && !([theEvent modifierFlags] & NSShiftKeyMask)) {
   
+    // try bundle completion
     id target = [NSApp targetForAction:@selector(performDuxBundle:)];
     if (target) {
       for (NSDictionary *triggerAndBundle in [DuxBundle tabTriggerBundlesSortedByTriggerLength]) {
@@ -731,6 +822,14 @@ static NSCharacterSet *newlineCharacterSet;
         [NSApp sendAction:@selector(performDuxBundle:) to:nil from:bundle.menuItem];
         return;
       }
+    }
+    
+    // mini completion
+//    if (self.miniCompletionVisible) {
+    NSString *completion = [self miniCompletionForCurrentCursorOffset];
+    if (completion) {
+      [self insertMiniCompletion];
+      return;
     }
   }
   
@@ -800,7 +899,13 @@ static NSCharacterSet *newlineCharacterSet;
     
   }
   
+  // handle key down
   [super keyDown:theEvent];
+  
+  // if there are no modifiers, and it's an ascii character, show auto complete
+  unichar keyPressed = [[theEvent charactersIgnoringModifiers] characterAtIndex:0];
+  BOOL isAlphanumeric = [[NSCharacterSet alphanumericCharacterSet] characterIsMember:keyPressed];
+  self.miniCompletionVisible = isAlphanumeric;
 }
 
 - (BOOL)handleOpeningClosingCharactersInEvent:(NSEvent *)event
@@ -1291,6 +1396,40 @@ static NSCharacterSet *newlineCharacterSet;
   }
   
   [super drawRect:dirtyRect];
+  
+  // draw mini completion
+  if (self.selectedRange.length > 0)
+    self.miniCompletionVisible = NO;
+  
+  if (self.miniCompletionVisible) {
+    NSUInteger wordStart = [self findBeginingOfSubwordStartingAt:self.selectedRange.location];
+    NSUInteger wordEnd = [self findEndOfSubwordStartingAt:wordStart];
+    
+    if (wordEnd != self.selectedRange.location)
+      self.miniCompletionVisible = NO;
+  }
+  
+  if (self.miniCompletionVisible) {
+    NSString *completion = [self miniCompletionForCurrentCursorOffset];
+    if (completion) {
+      completion = [NSString stringWithFormat:@"⇥ %@", completion];
+      
+      NSMutableDictionary *attributes = self.highlighter.baseAttributes.mutableCopy;
+      attributes[NSForegroundColorAttributeName] = [(NSColor *)(attributes[NSForegroundColorAttributeName]) colorWithAlphaComponent:0.5];
+      NSSize completionSize = [completion sizeWithAttributes:attributes];
+      
+      glyphRange = [layoutManager glyphRangeForCharacterRange:self.selectedRange actualCharacterRange:NULL];
+      
+      glyphRects = [layoutManager rectArrayForGlyphRange:glyphRange withinSelectedGlyphRange:glyphRange inTextContainer:textContainer rectCount:&glyphRectsCount];
+      CGRect glyphRect = glyphRects[0];
+      glyphRect.origin.x += glyphRectExtraX;
+      glyphRect.size = NSMakeSize(completionSize.width + 7, completionSize.height);
+      [self.backgroundColor set];
+      [NSBezierPath fillRect:glyphRect];
+      
+      [completion drawAtPoint:NSMakePoint(glyphRect.origin.x + 3, glyphRect.origin.y - 3) withAttributes:attributes];
+    }
+  }
 }
 
 - (void)selectionDidChange:(NSNotification *)notif

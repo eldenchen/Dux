@@ -40,4 +40,6 @@
  */
 - (void)findSymbolsInDocumentContents:(NSString *)string foundSymbolHandler:(BOOL(^) (NSDictionary *symbol))foundSymbolHandler finishedSearchHandler:(void(^)())finishedHandler;
 
+- (NSSet *)autocompleteWords;
+
 @end

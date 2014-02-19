@@ -25,7 +25,7 @@
   return self;
 }
 
-- (void)hit:(id)sender
+- (void)callAction:(id)sender
 {
   JSObjectRef actionRef = [self.action JSObject];
   
