@@ -20,7 +20,7 @@ static void DuxSwizzle(Class cls, SEL orig, SEL new) {
   if (class_addMethod(cls, orig, method_getImplementation(newMethod), method_getTypeEncoding(newMethod))) {
     class_replaceMethod(cls, new, method_getImplementation(origMethod), method_getTypeEncoding(origMethod));
   } else {
-		method_exchangeImplementations(origMethod, newMethod);
+    method_exchangeImplementations(origMethod, newMethod);
   }
 }
 
