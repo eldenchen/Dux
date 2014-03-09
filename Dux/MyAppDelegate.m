@@ -14,6 +14,7 @@
 #import "DuxPreferencesWindowController.h"
 #import "DuxProjectWindowController.h"
 #import "DuxBundle.h"
+#import "DuxTheme.h"
 #import "DuxRunBundleQuicklyWindowController.h"
 #import "DuxAcknowledgementsController.h"
 
@@ -34,6 +35,11 @@
 {
   if (!(self = [super init]))
     return nil;
+  [DuxTheme loadThemeNamed:[DuxPreferences themeName]];
+  
+  if ([[NSFileManager defaultManager] fileExistsAtPath:[@"~/Library/Containers/com.duxapp.Dux" stringByStandardizingPath] isDirectory:NULL]) {
+    [[NSAlert alertWithMessageText:@"Sandbox directory found at:\n~/Library/Containers/com.duxapp.Dux" defaultButton:@"Got It" alternateButton:nil otherButton:nil informativeTextWithFormat:@"This can cause problems as we are no-longer using the sandbox, you should delete the sandbox container after checking for any important data inside (bundles, preferences, documents, etc)"] runModal];
+  }
   
   return self;
 }

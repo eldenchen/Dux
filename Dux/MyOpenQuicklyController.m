@@ -77,7 +77,6 @@
   
   // cancel the operation queue
   [updateResultsQueue cancelAllOperations];
-  [updateResultsQueue waitUntilAllOperationsAreFinished];
   
   NSArray *operationSearchPaths = [self.searchPaths copy];
   MyOpenQuicklyController *blockSelf = self; // avoid retain cycle warnings
@@ -171,10 +170,7 @@
   
   // cancel all operation queues
   [updateSearchPathsQueue cancelAllOperations];
-  [updateSearchPathsQueue waitUntilAllOperationsAreFinished];
-  
   [updateResultsQueue cancelAllOperations];
-  [updateResultsQueue waitUntilAllOperationsAreFinished];
   
   // init
   self.searchPaths = [NSArray array];
@@ -297,10 +293,7 @@
     return;
   
   [updateSearchPathsQueue cancelAllOperations];
-  [updateSearchPathsQueue waitUntilAllOperationsAreFinished];
-  
   [updateResultsQueue cancelAllOperations];
-  [updateResultsQueue waitUntilAllOperationsAreFinished];
 }
 
 @end

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		373A9D45180D65E800B874AB /* Default.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 373A9D44180D65E800B874AB /* Default.tmTheme */; };
+		373A9D47180D674B00B874AB /* Dark.tmTheme in Resources */ = {isa = PBXBuildFile; fileRef = 373A9D46180D674B00B874AB /* Dark.tmTheme */; };
+		3754085418187175006B27C8 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3754085318187175006B27C8 /* CoreServices.framework */; };
+		376F9C79180B5718007DED82 /* DuxTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 376F9C78180B5718007DED82 /* DuxTheme.m */; };
 		3804A81B1478DA3E005C587A /* DuxPlainTextLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3804A81A1478DA3E005C587A /* DuxPlainTextLanguage.m */; };
 		3804A81E1478DA7F005C587A /* DuxPlainTextBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3804A81D1478DA7F005C587A /* DuxPlainTextBaseElement.m */; };
 		380AED3D14500377005770D7 /* DuxTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 380AED3C14500377005770D7 /* DuxTextView.m */; };
@@ -57,6 +61,8 @@
 		38734F521406133200992D33 /* OpenQuickly.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38734F511406133200992D33 /* OpenQuickly.xib */; };
 		38734F561406135A00992D33 /* MyOpenQuicklyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38734F551406135A00992D33 /* MyOpenQuicklyController.m */; };
 		38734F591406163A00992D33 /* MyAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 38734F581406163A00992D33 /* MyAppDelegate.m */; };
+		387A6C88180B384400AB859D /* DuxScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 387A6C87180B384400AB859D /* DuxScrollView.m */; };
+		387A6C8B180B386000AB859D /* DuxScrollClipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 387A6C8A180B386000AB859D /* DuxScrollClipView.m */; };
 		387B21491473D94E00F191F1 /* DuxPHPSingleLineCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 387B21481473D94E00F191F1 /* DuxPHPSingleLineCommentElement.m */; };
 		387B214D1473D95B00F191F1 /* DuxPHPBlockCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 387B214C1473D95B00F191F1 /* DuxPHPBlockCommentElement.m */; };
 		3883058C14DE845B00409F43 /* DuxFontSelectorTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 3883058B14DE845B00409F43 /* DuxFontSelectorTextField.m */; };
@@ -65,6 +71,8 @@
 		3886D4B514790FE700970CAE /* DuxCSSBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3886D4B414790FE700970CAE /* DuxCSSBaseElement.m */; };
 		3886D4B81479100000970CAE /* DuxCSSCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3886D4B71479100000970CAE /* DuxCSSCommentElement.m */; };
 		3886D4C3147912BC00970CAE /* DuxCSSClassSelectorElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3886D4C2147912BC00970CAE /* DuxCSSClassSelectorElement.m */; };
+		388A4E38182673E600A9FD17 /* CocoaScript.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 388A4E37182673E600A9FD17 /* CocoaScript.framework */; };
+		388A4E391826742A00A9FD17 /* CocoaScript.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 388A4E37182673E600A9FD17 /* CocoaScript.framework */; };
 		38983C731474FEC8004DD914 /* JumpToLinePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38983C721474FEC8004DD914 /* JumpToLinePanel.xib */; };
 		38983C7614751B66004DD914 /* DuxLanguageMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 38983C7514751B65004DD914 /* DuxLanguageMenuItem.m */; };
 		389ACC4D172265A100E01DB3 /* DuxNavigatorFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 389ACC4C172265A100E01DB3 /* DuxNavigatorFilesViewController.m */; };
@@ -93,7 +101,6 @@
 		389C8EC4148B0E530029B942 /* DuxStringLineEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 389C8EC3148B0E530029B942 /* DuxStringLineEnumerator.m */; };
 		38ACB57117FE2DFE0087C97E /* AboutPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38ACB57017FE2DFE0087C97E /* AboutPanel.xib */; };
 		38ACB57317FE32F90087C97E /* about-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 38ACB57217FE32F90087C97E /* about-logo.png */; };
-		38B5BB0E171E5526000C8525 /* NSColor+DuxColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B5BB0D171E5526000C8525 /* NSColor+DuxColors.m */; };
 		38BB441D147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BB441C147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m */; };
 		38BC9216148764B700CE73EB /* DuxHTMLCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC9215148764B700CE73EB /* DuxHTMLCommentElement.m */; };
 		38BC921A148766DD00CE73EB /* DuxXMLCommentElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC9219148766DD00CE73EB /* DuxXMLCommentElement.m */; };
@@ -144,6 +151,10 @@
 		38D6059E1403859700D70F81 /* MyTextDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38D6059C1403859700D70F81 /* MyTextDocument.xib */; };
 		38D605A11403859700D70F81 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38D6059F1403859700D70F81 /* MainMenu.xib */; };
 		38D605D714039A0600D70F81 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D605D614039A0600D70F81 /* CoreFoundation.framework */; };
+		38E0638A1820EB0E004D966B /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38E063891820EB0E004D966B /* JavaScriptCore.framework */; };
+		38E0638C1820EB1E004D966B /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38E0638B1820EB1E004D966B /* ScriptingBridge.framework */; };
+		38E0638E1820EB2A004D966B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38E0638D1820EB2A004D966B /* Carbon.framework */; };
+		38E567F5182E0CC300538602 /* COTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 38E567F4182E0CC300538602 /* COTarget.m */; };
 		38E6807815076FDA00ECCC6C /* DuxShellLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38E6807715076FDA00ECCC6C /* DuxShellLanguage.m */; };
 		38E6807B1507708F00ECCC6C /* DuxShellBaseElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38E6807A1507708F00ECCC6C /* DuxShellBaseElement.m */; };
 		38E6807E1507709E00ECCC6C /* DuxShellKeywordElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 38E6807D1507709E00ECCC6C /* DuxShellKeywordElement.m */; };
@@ -171,7 +182,49 @@
 		C9F4E9451725543100E7AEC8 /* PaneGradientBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C9F4E9431725543100E7AEC8 /* PaneGradientBar@2x.png */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		3839D921183046C800DCEBA3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3839D91B183046C800DCEBA3 /* Cocoa Script.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D15AC370486D014006FF6A4;
+			remoteInfo = "Cocoa Script Editor";
+		};
+		3839D923183046C800DCEBA3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3839D91B183046C800DCEBA3 /* Cocoa Script.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CC5FB7C20F1FDCCC00F4ECC2;
+			remoteInfo = "coscript tool";
+		};
+		3839D925183046C800DCEBA3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3839D91B183046C800DCEBA3 /* Cocoa Script.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CC41431A0F25254200E46669;
+			remoteInfo = "Cocoa Script Framework";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		38E063871820E8E0004D966B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				388A4E391826742A00A9FD17 /* CocoaScript.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		373A9D44180D65E800B874AB /* Default.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Default.tmTheme; sourceTree = "<group>"; };
+		373A9D46180D674B00B874AB /* Dark.tmTheme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Dark.tmTheme; sourceTree = "<group>"; };
+		3754085318187175006B27C8 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		376F9C77180B5718007DED82 /* DuxTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxTheme.h; sourceTree = "<group>"; };
+		376F9C78180B5718007DED82 /* DuxTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxTheme.m; sourceTree = "<group>"; };
 		3804A8191478DA3E005C587A /* DuxPlainTextLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPlainTextLanguage.h; sourceTree = "<group>"; };
 		3804A81A1478DA3E005C587A /* DuxPlainTextLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPlainTextLanguage.m; sourceTree = "<group>"; };
 		3804A81C1478DA7F005C587A /* DuxPlainTextBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPlainTextBaseElement.h; sourceTree = "<group>"; };
@@ -212,6 +265,8 @@
 		3837FAB11475E058002CC459 /* NSStringDuxAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringDuxAdditions.m; sourceTree = "<group>"; };
 		38383A04146FB25C008CD049 /* DuxHTMLTagAttributeElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLTagAttributeElement.h; sourceTree = "<group>"; };
 		38383A05146FB25C008CD049 /* DuxHTMLTagAttributeElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxHTMLTagAttributeElement.m; sourceTree = "<group>"; };
+		3839D91B183046C800DCEBA3 /* Cocoa Script.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Cocoa Script.xcodeproj"; path = "../CocoaScript-ccgus/Cocoa Script.xcodeproj"; sourceTree = "<group>"; };
+		3839D927183046E000DCEBA3 /* MOJavaScriptObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MOJavaScriptObject.h; sourceTree = "<group>"; };
 		38487A111692A8040055EDAA /* DuxBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxBundle.h; sourceTree = "<group>"; };
 		38487A121692A8040055EDAA /* DuxBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxBundle.m; sourceTree = "<group>"; };
 		384FDFDE14710EFC00BD0D8D /* DuxHTMLEntityElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLEntityElement.h; sourceTree = "<group>"; };
@@ -245,6 +300,10 @@
 		38734F551406135A00992D33 /* MyOpenQuicklyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyOpenQuicklyController.m; sourceTree = "<group>"; };
 		38734F571406163A00992D33 /* MyAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAppDelegate.h; sourceTree = "<group>"; };
 		38734F581406163A00992D33 /* MyAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAppDelegate.m; sourceTree = "<group>"; };
+		387A6C86180B384400AB859D /* DuxScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxScrollView.h; sourceTree = "<group>"; };
+		387A6C87180B384400AB859D /* DuxScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxScrollView.m; sourceTree = "<group>"; };
+		387A6C89180B386000AB859D /* DuxScrollClipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxScrollClipView.h; sourceTree = "<group>"; };
+		387A6C8A180B386000AB859D /* DuxScrollClipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxScrollClipView.m; sourceTree = "<group>"; };
 		387B21471473D94E00F191F1 /* DuxPHPSingleLineCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPSingleLineCommentElement.h; sourceTree = "<group>"; };
 		387B21481473D94E00F191F1 /* DuxPHPSingleLineCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxPHPSingleLineCommentElement.m; sourceTree = "<group>"; };
 		387B214B1473D95B00F191F1 /* DuxPHPBlockCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxPHPBlockCommentElement.h; sourceTree = "<group>"; };
@@ -261,6 +320,7 @@
 		3886D4B71479100000970CAE /* DuxCSSCommentElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSCommentElement.m; sourceTree = "<group>"; };
 		3886D4C1147912BC00970CAE /* DuxCSSClassSelectorElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxCSSClassSelectorElement.h; sourceTree = "<group>"; };
 		3886D4C2147912BC00970CAE /* DuxCSSClassSelectorElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxCSSClassSelectorElement.m; sourceTree = "<group>"; };
+		388A4E37182673E600A9FD17 /* CocoaScript.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CocoaScript.framework; sourceTree = "<group>"; };
 		38983C721474FEC8004DD914 /* JumpToLinePanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JumpToLinePanel.xib; sourceTree = "<group>"; };
 		38983C7414751B65004DD914 /* DuxLanguageMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxLanguageMenuItem.h; sourceTree = "<group>"; };
 		38983C7514751B65004DD914 /* DuxLanguageMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxLanguageMenuItem.m; sourceTree = "<group>"; };
@@ -272,8 +332,6 @@
 		389C8EC3148B0E530029B942 /* DuxStringLineEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxStringLineEnumerator.m; sourceTree = "<group>"; };
 		38ACB57017FE2DFE0087C97E /* AboutPanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutPanel.xib; sourceTree = "<group>"; };
 		38ACB57217FE32F90087C97E /* about-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "about-logo.png"; path = "Artwork/about-logo.png"; sourceTree = SOURCE_ROOT; };
-		38B5BB0C171E5526000C8525 /* NSColor+DuxColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+DuxColors.h"; sourceTree = "<group>"; };
-		38B5BB0D171E5526000C8525 /* NSColor+DuxColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+DuxColors.m"; sourceTree = "<group>"; };
 		38BB441B147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxOpenQuicklyTableViewCell.h; sourceTree = "<group>"; };
 		38BB441C147F5F54007CAB5B /* DuxOpenQuicklyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxOpenQuicklyTableViewCell.m; sourceTree = "<group>"; };
 		38BC9214148764B700CE73EB /* DuxHTMLCommentElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxHTMLCommentElement.h; sourceTree = "<group>"; };
@@ -370,6 +428,11 @@
 		38D605A01403859700D70F81 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		38D605D614039A0600D70F81 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		38DF856B147EFE620004B358 /* Dux.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Dux.entitlements; sourceTree = "<group>"; };
+		38E063891820EB0E004D966B /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		38E0638B1820EB1E004D966B /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
+		38E0638D1820EB2A004D966B /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		38E567F3182E0CC300538602 /* COTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = COTarget.h; sourceTree = "<group>"; };
+		38E567F4182E0CC300538602 /* COTarget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = COTarget.m; sourceTree = "<group>"; };
 		38E6807615076FDA00ECCC6C /* DuxShellLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DuxShellLanguage.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		38E6807715076FDA00ECCC6C /* DuxShellLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuxShellLanguage.m; sourceTree = "<group>"; };
 		38E680791507708F00ECCC6C /* DuxShellBaseElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuxShellBaseElement.h; sourceTree = "<group>"; };
@@ -433,6 +496,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38E0638E1820EB2A004D966B /* Carbon.framework in Frameworks */,
+				38E0638C1820EB1E004D966B /* ScriptingBridge.framework in Frameworks */,
+				38E0638A1820EB0E004D966B /* JavaScriptCore.framework in Frameworks */,
+				388A4E38182673E600A9FD17 /* CocoaScript.framework in Frameworks */,
+				3754085418187175006B27C8 /* CoreServices.framework in Frameworks */,
 				38D605D714039A0600D70F81 /* CoreFoundation.framework in Frameworks */,
 				38D605881403859600D70F81 /* Cocoa.framework in Frameworks */,
 			);
@@ -441,6 +509,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		376F9C74180B5683007DED82 /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				373A9D46180D674B00B874AB /* Dark.tmTheme */,
+				373A9D44180D65E800B874AB /* Default.tmTheme */,
+			);
+			path = Themes;
+			sourceTree = SOURCE_ROOT;
+		};
 		3804A8161478DA00005C587A /* Languages */ = {
 			isa = PBXGroup;
 			children = (
@@ -474,6 +551,10 @@
 			children = (
 				380AED3B14500377005770D7 /* DuxTextView.h */,
 				380AED3C14500377005770D7 /* DuxTextView.m */,
+				387A6C86180B384400AB859D /* DuxScrollView.h */,
+				387A6C87180B384400AB859D /* DuxScrollView.m */,
+				387A6C89180B386000AB859D /* DuxScrollClipView.h */,
+				387A6C8A180B386000AB859D /* DuxScrollClipView.m */,
 				38CD8FA5147F8F0500062D34 /* DuxTextContainer.h */,
 				38CD8FA6147F8F0500062D34 /* DuxTextContainer.m */,
 				3824F07314522FAB00F00B96 /* DuxSyntaxHighlighter.h */,
@@ -487,8 +568,6 @@
 				388682AB1480409F00C362EE /* DuxLineNumberString.h */,
 				388682AC1480409F00C362EE /* DuxLineNumberString.m */,
 				38983C721474FEC8004DD914 /* JumpToLinePanel.xib */,
-				38B5BB0C171E5526000C8525 /* NSColor+DuxColors.h */,
-				38B5BB0D171E5526000C8525 /* NSColor+DuxColors.m */,
 				3804A8161478DA00005C587A /* Languages */,
 			);
 			name = "Text View";
@@ -529,6 +608,16 @@
 				38D4B49017209FA300B2EDEC /* DuxAcknowledgementsController.m */,
 			);
 			name = Misc;
+			sourceTree = "<group>";
+		};
+		3839D91C183046C800DCEBA3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3839D922183046C800DCEBA3 /* Cocoa Script Editor.app */,
+				3839D924183046C800DCEBA3 /* coscript */,
+				3839D926183046C800DCEBA3 /* CocoaScript.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		385115021692FA8E0066B876 /* Run Bundle */ = {
@@ -749,6 +838,13 @@
 		38D605861403859600D70F81 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3839D927183046E000DCEBA3 /* MOJavaScriptObject.h */,
+				3839D91B183046C800DCEBA3 /* Cocoa Script.xcodeproj */,
+				388A4E37182673E600A9FD17 /* CocoaScript.framework */,
+				38E0638D1820EB2A004D966B /* Carbon.framework */,
+				38E0638B1820EB1E004D966B /* ScriptingBridge.framework */,
+				38E063891820EB0E004D966B /* JavaScriptCore.framework */,
+				3754085318187175006B27C8 /* CoreServices.framework */,
 				38D605871403859600D70F81 /* Cocoa.framework */,
 				386EC889172A22B9000C7430 /* SenTestingKit.framework */,
 				38D605891403859600D70F81 /* Other Frameworks */,
@@ -770,6 +866,7 @@
 		38D6058D1403859600D70F81 /* Dux */ = {
 			isa = PBXGroup;
 			children = (
+				376F9C74180B5683007DED82 /* Themes */,
 				C9F4E9411725543100E7AEC8 /* Assets */,
 				38734F571406163A00992D33 /* MyAppDelegate.h */,
 				38734F581406163A00992D33 /* MyAppDelegate.m */,
@@ -788,6 +885,8 @@
 				38313275168FB8E400E334E8 /* DuxClickAndHoldPopUpButton.m */,
 				38487A111692A8040055EDAA /* DuxBundle.h */,
 				38487A121692A8040055EDAA /* DuxBundle.m */,
+				38E567F3182E0CC300538602 /* COTarget.h */,
+				38E567F4182E0CC300538602 /* COTarget.m */,
 				380AED3914500340005770D7 /* Text View */,
 				38BC921B1487731E00CE73EB /* Preferences */,
 				385115021692FA8E0066B876 /* Run Bundle */,
@@ -805,6 +904,8 @@
 				382F146517EBCA440095BC59 /* Images.xcassets */,
 				38ACB57017FE2DFE0087C97E /* AboutPanel.xib */,
 				38ACB57217FE32F90087C97E /* about-logo.png */,
+				376F9C77180B5718007DED82 /* DuxTheme.h */,
+				376F9C78180B5718007DED82 /* DuxTheme.m */,
 			);
 			path = Dux;
 			sourceTree = "<group>";
@@ -922,6 +1023,7 @@
 				38D6057F1403859600D70F81 /* Sources */,
 				38D605801403859600D70F81 /* Frameworks */,
 				38D605811403859600D70F81 /* Resources */,
+				38E063871820E8E0004D966B /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -942,6 +1044,11 @@
 				TargetAttributes = {
 					38D605821403859600D70F81 = {
 						DevelopmentTeam = Y48LQG59RS;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -955,6 +1062,12 @@
 			mainGroup = 38D605781403859600D70F81;
 			productRefGroup = 38D605841403859600D70F81 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 3839D91C183046C800DCEBA3 /* Products */;
+					ProjectRef = 3839D91B183046C800DCEBA3 /* Cocoa Script.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				38D605821403859600D70F81 /* Dux */,
@@ -962,6 +1075,30 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		3839D922183046C800DCEBA3 /* Cocoa Script Editor.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "Cocoa Script Editor.app";
+			remoteRef = 3839D921183046C800DCEBA3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3839D924183046C800DCEBA3 /* coscript */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = coscript;
+			remoteRef = 3839D923183046C800DCEBA3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3839D926183046C800DCEBA3 /* CocoaScript.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CocoaScript.framework;
+			remoteRef = 3839D925183046C800DCEBA3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		386EC885172A22B9000C7430 /* Resources */ = {
@@ -985,11 +1122,13 @@
 				38CFE15E1403CBCD00CA7044 /* docicon.icns in Resources */,
 				38734F521406133200992D33 /* OpenQuickly.xib in Resources */,
 				38983C731474FEC8004DD914 /* JumpToLinePanel.xib in Resources */,
+				373A9D47180D674B00B874AB /* Dark.tmTheme in Resources */,
 				38BC921D1487733B00CE73EB /* PreferencesWindow.xib in Resources */,
 				38F1060A16490F8A00467839 /* DuxMultiFileSearchWindowController.xib in Resources */,
 				38ACB57117FE2DFE0087C97E /* AboutPanel.xib in Resources */,
 				385115081692FADE0066B876 /* DuxRunBundleQuicklyWindowController.xib in Resources */,
 				38D4B48E17209E6800B2EDEC /* Acknowledgements.xib in Resources */,
+				373A9D45180D65E800B874AB /* Default.tmTheme in Resources */,
 				38D4B4931720A28D00B2EDEC /* Fonts in Resources */,
 				C9F4E9441725543100E7AEC8 /* PaneGradientBar.png in Resources */,
 				C9F4E9451725543100E7AEC8 /* PaneGradientBar@2x.png in Resources */,
@@ -1060,6 +1199,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				376F9C79180B5718007DED82 /* DuxTheme.m in Sources */,
 				38D605941403859600D70F81 /* main.m in Sources */,
 				38D6059B1403859600D70F81 /* MyTextDocument.m in Sources */,
 				38734F561406135A00992D33 /* MyOpenQuicklyController.m in Sources */,
@@ -1121,6 +1261,7 @@
 				38CD8FD4147FA26D00062D34 /* DuxJavaScriptKeywordElement.m in Sources */,
 				38CD8FD7147FA27A00062D34 /* DuxJavaScriptSingleLineCommentElement.m in Sources */,
 				38CD8FDA147FA28700062D34 /* DuxJavaScriptBlockCommentElement.m in Sources */,
+				387A6C8B180B386000AB859D /* DuxScrollClipView.m in Sources */,
 				388682AD1480409F00C362EE /* DuxLineNumberString.m in Sources */,
 				3822EAAB148623970068330B /* DuxScrollViewAnimation.m in Sources */,
 				38BC9216148764B700CE73EB /* DuxHTMLCommentElement.m in Sources */,
@@ -1137,6 +1278,7 @@
 				38CC7D9A14E265AB00FE1594 /* DuxRubyKeywordElement.m in Sources */,
 				38CC7D9D14E265DD00FE1594 /* DuxRubySingleLineCommentElement.m in Sources */,
 				38CC7DA014E267AC00FE1594 /* DuxRubyRegularExpressionElement.m in Sources */,
+				387A6C88180B384400AB859D /* DuxScrollView.m in Sources */,
 				38E6807815076FDA00ECCC6C /* DuxShellLanguage.m in Sources */,
 				38E6807B1507708F00ECCC6C /* DuxShellBaseElement.m in Sources */,
 				38E6807E1507709E00ECCC6C /* DuxShellKeywordElement.m in Sources */,
@@ -1147,6 +1289,7 @@
 				38E6808E150772E200ECCC6C /* DuxShellSingleQuotedStringElement.m in Sources */,
 				38E68092150772ED00ECCC6C /* DuxShellDoubleQuotedStringElement.m in Sources */,
 				38FBDAD815DF895300B9FE70 /* DuxFileContentsWatcher.m in Sources */,
+				38E567F5182E0CC300538602 /* COTarget.m in Sources */,
 				386FE37616194A31002C0755 /* DuxJavaScriptRegexElement.m in Sources */,
 				38F1060916490F8A00467839 /* DuxMultiFileSearchWindowController.m in Sources */,
 				3829B272168A74BB0034C0A1 /* DuxProjectWindowController.m in Sources */,
@@ -1155,7 +1298,6 @@
 				38313276168FB8E400E334E8 /* DuxClickAndHoldPopUpButton.m in Sources */,
 				38487A131692A8040055EDAA /* DuxBundle.m in Sources */,
 				385115071692FADE0066B876 /* DuxRunBundleQuicklyWindowController.m in Sources */,
-				38B5BB0E171E5526000C8525 /* NSColor+DuxColors.m in Sources */,
 				38D4B49117209FA300B2EDEC /* DuxAcknowledgementsController.m in Sources */,
 				389ACC4D172265A100E01DB3 /* DuxNavigatorFilesViewController.m in Sources */,
 				C97713171724C90B00AC1757 /* DuxNavigatorFileCell.m in Sources */,
@@ -1321,14 +1463,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = Dux/Dux.entitlements;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/abhi/projects/Dux,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Dux/Dux-Prefix.pch";
 				INFOPLIST_FILE = "Dux/Dux-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = Dux;
@@ -1342,13 +1488,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_ENTITLEMENTS = Dux/Dux.entitlements;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "";
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/abhi/projects/Dux,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Dux/Dux-Prefix.pch";
 				INFOPLIST_FILE = "Dux/Dux-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = "-licucore";
 				PRODUCT_NAME = Dux;

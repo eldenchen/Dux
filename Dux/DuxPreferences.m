@@ -30,7 +30,7 @@ static NSUserDefaults *userDefaults;
    @"DuxEditorFontSize": [NSNumber numberWithFloat:editorFont.pointSize],
    @"DuxEditorShowLineNumbers": [NSNumber numberWithBool:YES],
    @"DuxEditorPageGuide": [NSNumber numberWithBool:YES],
-   @"DuxEditorPageGuidePosition": [NSNumber numberWithInteger:800],
+   @"DuxEditorPageGuidePosition": [NSNumber numberWithInteger:80],
    @"DuxEditorShowOtherInstancesOfSelectedSymbol": [NSNumber numberWithBool:YES],
    @"DuxEditorTabIndentBehaviour": [NSNumber numberWithInteger:DuxTabIndentInLeadingWhitespace],
    @"DuxEditorIndentWithSpaces": [NSNumber numberWithBool:NO],
@@ -40,6 +40,8 @@ static NSUserDefaults *userDefaults;
    @"NSSplitView Subview Frames DuxProjectWindowSplitView": @[@"0.000000, 0.000000, 0.000000, 1556.000000, NO", @"1.000000, 0.000000, 1280.000000, 1556.000000, NO"],
    @"DuxProjectNavigatorLastNonCollapsedWidth": @350,
    @"DuxEditorDarkMode": [NSNumber numberWithBool:NO],
+   @"DuxEditorTheme": @"Default",
+   @"DuxNavigatorFilesViewFoldersAtTop": [NSNumber numberWithBool:NO]
   }];
 }
 
@@ -158,14 +160,24 @@ static NSUserDefaults *userDefaults;
   return [userDefaults arrayForKey:@"OpenQuicklyExcludesFilesWithExtension"];
 }
 
-+ (BOOL)editorDarkMode
+//+ (BOOL)editorDarkMode
+//{
+//  return [userDefaults boolForKey:@"DuxEditorDarkMode"];
+//}
+
+//+ (void)setEditorDarkMode:(BOOL)darkMode
+//{
+//  [userDefaults setBool:darkMode forKey:@"DuxEditorDarkMode"];
+//}
+
++ (NSString *)themeName
 {
-  return [userDefaults boolForKey:@"DuxEditorDarkMode"];
+  return [userDefaults stringForKey:@"DuxEditorTheme"];
 }
 
-+ (void)setEditorDarkMode:(BOOL)darkMode
++ (BOOL)navigatorFilesViewFoldersAtTop
 {
-  [userDefaults setBool:darkMode forKey:@"DuxEditorDarkMode"];
+  return [userDefaults boolForKey:@"DuxNavigatorFilesViewFoldersAtTop"];
 }
 
 @end

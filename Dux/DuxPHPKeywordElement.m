@@ -24,7 +24,7 @@ static NSColor *color;
   [mutableCharset addCharactersInString:@"_"];
   nextElementCharacterSet = [[mutableCharset copy] invertedSet];
   
-  color = [NSColor colorWithCalibratedRed:0.557 green:0.031 blue:0.329 alpha:1];
+  color = [[DuxTheme currentTheme] colorForKey:@"keyword.php"];
 }
 
 - (id)init

@@ -10,6 +10,7 @@
 
 #import "DuxPreferencesWindowController.h"
 #import "DuxPreferences.h"
+#import "DuxTheme.h"
 
 @interface DuxPreferencesWindowController ()
 
@@ -76,8 +77,6 @@
   if (!sectionIdentifier)
     sectionIdentifier = @"editor";
   [self showSection:sectionIdentifier animate:NO];
-  
-  [self.darkModeRadioMatrix selectCellWithTag:(NSInteger)[DuxPreferences editorDarkMode]];
 }
 
 - (void)editorFontDidChange:(NSNotification *)notif
@@ -166,9 +165,9 @@
 	[DuxPreferences setShowOtherInstancesOfSelectedSymbol:self.showOtherInstancesOfSelectedSymbolButton.state == NSOnState];
 }
 
-- (IBAction)setDarkMode:(id)sender
+- (IBAction)openThemesDir:(id)sender
 {
-  [DuxPreferences setEditorDarkMode:[NSNumber numberWithInteger:self.darkModeRadioMatrix.selectedTag].boolValue];
+  [[NSWorkspace sharedWorkspace] openURL:[DuxTheme themesURL]];
 }
 
 @end

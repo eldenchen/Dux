@@ -26,7 +26,7 @@
 {
   static NSArray *extensions = nil;
   if (!extensions) {
-    extensions = @[@"css", @"less"];
+    extensions = @[@"css", @"less", @"sass", @"scss"];
   }
   
   if (URL && [extensions containsObject:[URL pathExtension]])

@@ -44,10 +44,14 @@ typedef NSUInteger DuxTabIndentBehaviour;
 + (NSUInteger)indentWidth;
 + (void)setIndentWidth:(NSUInteger)newValue;
 
++ (BOOL)navigatorFilesViewFoldersAtTop;
+
 + (NSArray *)openQuicklyExcludesFilesWithExtension;
 
-+ (BOOL)editorDarkMode;
-+ (void)setEditorDarkMode:(BOOL)darkMode;
+//+ (BOOL)editorDarkMode;
+//+ (void)setEditorDarkMode:(BOOL)darkMode;
+
++ (NSString *)themeName;
 
 @end
 

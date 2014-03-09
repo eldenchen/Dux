@@ -15,10 +15,14 @@
 #import "DuxScrollViewAnimation.h"
 #import "DuxPreferences.h"
 #import "DuxBundle.h"
+#import "DuxProjectWindow.h"
+#import "DuxTheme.h"
 
 @interface DuxTextView ()
 
 @property NSUInteger goToSymbolFindOperationCounter;
+@property CGFloat spaceWidth; // the width of a single " " character in the current font
+@property BOOL miniCompletionVisible;
 
 @end
 
@@ -30,8 +34,6 @@
 @synthesize textDocument;
 @synthesize highlightedElements;
 @synthesize showLineNumbers;
-@synthesize showPageGuide;
-@synthesize pageGuidePosition;
 
 static NSCharacterSet *newlineCharacterSet;
 
@@ -67,18 +69,13 @@ static NSCharacterSet *newlineCharacterSet;
   self.delegate = self;
   
   self.drawsBackground = NO; // disable NSTextView's background so we can draw our own
-  
-  if ([DuxPreferences editorDarkMode]) {
-    self.insertionPointColor = [NSColor colorWithCalibratedWhite:1 alpha:1];
-    
-    // built in selected text attributes are useless in dark mode, and we cannot set the value of some of them, so instead we disable super's selected text attributes and specify our own ones in setSelectedRange:
-    self.selectedTextAttributes = @{};
-  }
-  
-  
+
+  self.insertionPointColor = [[DuxTheme currentTheme] caret];
+  // always manually specify selected text atributes
+  self.selectedTextAttributes = @{};
+
+  self.spaceWidth = [@" " sizeWithAttributes:@{NSFontAttributeName: [DuxPreferences editorFont]}].width;
   self.showLineNumbers = [DuxPreferences showLineNumbers];
-  self.showPageGuide = [DuxPreferences showPageGuide];
-  self.pageGuidePosition = [DuxPreferences pageGuidePosition];
   
   DuxTextContainer *container = [[DuxTextContainer alloc] init];
   container.leftGutterWidth = self.showLineNumbers ? 34 : 0;
@@ -102,9 +99,7 @@ static NSCharacterSet *newlineCharacterSet;
   [notifCenter addObserver:self selector:@selector(textDidChange:) name:NSTextDidChangeNotification object:self];
   [notifCenter addObserver:self selector:@selector(editorFontDidChange:) name:DuxPreferencesEditorFontDidChangeNotification object:nil];
   [notifCenter addObserver:self selector:@selector(showLineNumbersDidChange:) name:DuxPreferencesShowLineNumbersDidChangeNotification object:nil];
-  [notifCenter addObserver:self selector:@selector(showPageGuideDidChange:) name:DuxPreferencesShowPageGuideDidChangeNotification object:nil];
 	[notifCenter addObserver:self selector:@selector(showOtherInstancesOfSelectedSymbolDidChange:) name:DuxPreferencesShowOtherInstancesOfSelectedSymbolDidChangeNotification object:nil];
-  [notifCenter addObserver:self selector:@selector(pageGuidePositionDidChange:) name:DuxPreferencesPageGuidePositionDidChangeNotification object:nil];
 	[notifCenter addObserver:self selector:@selector(editorTabWidthDidChange:) name:DuxPreferencesTabWidthDidChangeNotification object:nil];
 	[notifCenter addObserver:self selector:@selector(textContainerSizeDidChange:) name:DuxTextContainerSizeDidChangeNotification object:container];
 }
@@ -510,25 +505,96 @@ static NSCharacterSet *newlineCharacterSet;
 
 - (void)setSelectedRanges:(NSArray *)ranges affinity:(NSSelectionAffinity)affinity stillSelecting:(BOOL)stillSelectingFlag
 {
-  // built in selected text attributes are useless in dark mode, and we cannot set the value of some of them, so instead we disable super's selected text attributes and specify our own ones in setSelectedRange:
-  if ([DuxPreferences editorDarkMode]) {
-    for (NSValue *value in self.selectedRanges) {
-      if (value.rangeValue.length == 0)
-        continue;
-      
-      [self.textStorage removeAttribute:NSBackgroundColorAttributeName range:value.rangeValue];
-    }
+  static NSColor *selectionColor;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    selectionColor = [[DuxTheme currentTheme] selection];
+  });
+
+  // disable super's selected text attributes and specify our own ones in setSelectedRange:
+  for (NSValue *value in self.selectedRanges) {
+    if (value.rangeValue.length == 0)
+      continue;
     
-    // apply new bacgkround colors
-    for (NSValue *value in ranges) {
-      if (value.rangeValue.length == 0)
-        continue;
-      
-      [self.textStorage addAttribute:NSBackgroundColorAttributeName value:[NSColor colorWithCalibratedRed:0.504 green:0.710 blue:1.000 alpha:0.3] range:value.rangeValue];
-    }
+    NSRange range = value.rangeValue;
+    range.location =  MIN(range.location, self.textStorage.length);
+    range.length = MIN(range.length, self.textStorage.length - range.location);
+    
+    [self.textStorage removeAttribute:NSBackgroundColorAttributeName range:range];
+  }
+  
+  // apply new bacgkround colors
+  for (NSValue *value in ranges) {
+    if (value.rangeValue.length == 0)
+      continue;
+    
+    NSRange range = value.rangeValue;
+    range.location =  MIN(range.location, self.textStorage.length);
+    range.length = MIN(range.length, self.textStorage.length - range.location);
+    
+    [self.textStorage addAttribute:NSBackgroundColorAttributeName value:selectionColor range:range];
   }
   
   [super setSelectedRanges:ranges affinity:affinity stillSelecting:stillSelectingFlag];
+  
+  // make sure our typing attributes have no background color
+  if (self.typingAttributes[NSBackgroundColorAttributeName]) {
+    NSMutableDictionary *typingAtts = self.typingAttributes.mutableCopy;
+    [typingAtts removeObjectForKey:NSBackgroundColorAttributeName];
+    self.typingAttributes = typingAtts.copy;
+  }
+}
+
+- (NSString *)miniCompletionForCurrentCursorOffset
+{
+  // at the beginning of the document?
+  if (self.selectedRange.location == 0)
+    return nil;
+  
+  // find the start of the word
+  NSMutableCharacterSet *mutableCharset = [NSCharacterSet alphanumericCharacterSet];
+  [mutableCharset addCharactersInString:@"_"];
+  NSCharacterSet *wordBoundaryCharset = mutableCharset.invertedSet;
+  
+  NSUInteger wordStart = [self.textStorage.string rangeOfCharacterFromSet:wordBoundaryCharset options:NSBackwardsSearch | NSDiacriticInsensitiveSearch range:NSMakeRange(0, self.selectedRange.location)].location;
+  if (wordStart == NSNotFound)
+    return nil;
+  wordStart++;
+  
+  if (wordStart == self.selectedRange.location)
+    return nil;
+  
+  // find all possible completions
+  NSArray *completions = [self completionsForPartialWordRange:NSMakeRange(wordStart, self.selectedRange.location - wordStart) indexOfSelectedItem:NULL];
+
+  // return the second one (first one is always the current word)
+  if (completions.count < 2)
+    return nil;
+  
+  return completions[1];
+}
+
+- (void)insertMiniCompletion
+{
+  // find completion
+  NSString *completion = [self miniCompletionForCurrentCursorOffset];
+  if (!completion)
+    return;
+  
+  // find the start of the word
+  NSMutableCharacterSet *mutableCharset = [NSCharacterSet alphanumericCharacterSet];
+  [mutableCharset addCharactersInString:@"_"];
+  NSCharacterSet *wordBoundaryCharset = mutableCharset.invertedSet;
+  
+  NSUInteger wordStart = [self.textStorage.string rangeOfCharacterFromSet:wordBoundaryCharset options:NSBackwardsSearch | NSDiacriticInsensitiveSearch range:NSMakeRange(0, self.selectedRange.location)].location;
+  if (wordStart == NSNotFound)
+    return;
+  wordStart++;
+  
+  // do replacement
+  [self setSelectedRange:NSMakeRange(wordStart, self.selectedRange.location - wordStart)];
+  [self insertText:completion];
+  self.miniCompletionVisible = NO;
 }
 
 - (NSArray *)completionsForPartialWordRange:(NSRange)charRange indexOfSelectedItem:(NSInteger *)index
@@ -537,25 +603,72 @@ static NSCharacterSet *newlineCharacterSet;
   NSString *string = textStorage.string;
   NSUInteger stringLength = string.length;
   
-  // figure out the partial word
   NSString *partialWord = [string substringWithRange:charRange];
-  NSString *wordPattern = [NSString stringWithFormat:@"\\b%@[a-zA-Z0-9_]+", [NSRegularExpression escapedPatternForString:partialWord]];
-  NSRegularExpression *wordExpression = [[NSRegularExpression alloc] initWithPattern:wordPattern options:0 error:NULL];
+  NSMutableString *searchPattern = [NSMutableString stringWithString:@""];
+  NSString *operatorChars = @"*?+[(){}^$|\\./";
+  for (int charPos = 0; charPos < partialWord.length; charPos++) {
+    NSString *character = [partialWord substringWithRange:NSMakeRange(charPos, 1)];
+    
+    if ([operatorChars rangeOfString:character].location != NSNotFound)
+    character = [NSString stringWithFormat:@"\\%@", character];
+    
+    [searchPattern appendFormat:@"%@[a-zA-Z0-9_]*", character];
+  }
+  NSRegularExpression *wordExpression = [NSRegularExpression regularExpressionWithPattern:[NSString stringWithFormat:@"\\b(%@)", searchPattern] options:NSRegularExpressionCaseInsensitive error:NULL];
   
-  // find every word in the current document that begins with the same string
+  // find language completions
   NSMutableSet *completions = [NSMutableSet set];
+  for (NSString *languageWord in self.highlighter.baseLanguage.autocompleteWords) {
+    if ([wordExpression numberOfMatchesInString:languageWord options:0 range:NSMakeRange(0, languageWord.length)] > 0)
+        [completions addObject:languageWord];
+  }
+  
+  // search the current document for words
   __block NSString *completion;
   [wordExpression enumerateMatchesInString:string options:0 range:NSMakeRange(0, stringLength) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
     completion = [string substringWithRange:match.range];
-    
-    if ([completions containsObject:completion]) {
+
+    if ([completions containsObject:completion] || [completion isEqualToString:partialWord]) {
       return;
     }
-    
+
     [completions addObject:completion];
   }];
   
-  return [completions sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES]]];
+//  NSLog(@"%@", completions);
+  
+  NSMutableArray *result = [completions sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"length" ascending:YES]]].mutableCopy;
+  [result insertObject:partialWord atIndex:0];
+  return result.copy;
+  
+//  // figure out the partial word
+//  NSString *partialWord = [string substringWithRange:charRange];
+//  NSString *wordPattern = [NSString stringWithFormat:@"\\b%@[a-zA-Z0-9_]+", [NSRegularExpression escapedPatternForString:partialWord]];
+//  NSRegularExpression *wordExpression = [[NSRegularExpression alloc] initWithPattern:wordPattern options:0 error:NULL];
+//  
+//  // find every word in the current document that begins with the same string
+//  NSMutableSet *completions = [NSMutableSet set];
+//  __block NSString *completion;
+//  [wordExpression enumerateMatchesInString:string options:0 range:NSMakeRange(0, stringLength) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
+//    completion = [string substringWithRange:match.range];
+//    
+//    if ([completions containsObject:completion]) {
+//      return;
+//    }
+//    
+//    [completions addObject:completion];
+//  }];
+//  
+//  return [completions sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES]]];
+}
+
+- (void)insertCompletion:(NSString *)word forPartialWordRange:(NSRange)partialWordRange movement:(NSInteger)movement isFinal:(BOOL)isFinal
+{
+  [super insertCompletion:word forPartialWordRange:partialWordRange movement:movement isFinal:isFinal];
+  
+  if (isFinal) {
+    [self.textStorage removeAttribute:NSBackgroundColorAttributeName range:NSMakeRange(partialWordRange.location, word.length)];
+  }
 }
 
 - (NSUInteger)countSpacesInLeadingWhitespace:(NSString *)lineString
@@ -604,14 +717,19 @@ static NSCharacterSet *newlineCharacterSet;
 
 - (void)insertText:(id)insertString
 {
-  // built in selected text attributes are useless in dark mode, and we cannot set the value of some of them, so instead we disable super's selected text attributes and specify our own ones in setSelectedRange:
-  if ([DuxPreferences editorDarkMode]) {
-    for (NSValue *value in self.selectedRanges) {
-      if (value.rangeValue.length == 0)
-        continue;
-      
-      [self.textStorage removeAttribute:NSBackgroundColorAttributeName range:value.rangeValue];
-    }
+  // if any text is selected, remove background color (selected text range)
+  for (NSValue *value in self.selectedRanges) {
+    if (value.rangeValue.length == 0)
+      continue;
+    
+    [self.textStorage removeAttribute:NSBackgroundColorAttributeName range:value.rangeValue];
+  }
+  
+  // make sure our typing attributes have no background color
+  if (self.typingAttributes[NSBackgroundColorAttributeName]) {
+    NSMutableDictionary *typingAtts = self.typingAttributes.mutableCopy;
+    [typingAtts removeObjectForKey:NSBackgroundColorAttributeName];
+    self.typingAttributes = typingAtts.copy;
   }
   
   [super insertText:insertString];
@@ -681,6 +799,7 @@ static NSCharacterSet *newlineCharacterSet;
   // handle tab completion?
   if (([[theEvent charactersIgnoringModifiers] characterAtIndex:0] == NSTabCharacter) && self.selectedRange.length == 0 && !([theEvent modifierFlags] & NSShiftKeyMask)) {
   
+    // try bundle completion
     id target = [NSApp targetForAction:@selector(performDuxBundle:)];
     if (target) {
       for (NSDictionary *triggerAndBundle in [DuxBundle tabTriggerBundlesSortedByTriggerLength]) {
@@ -703,6 +822,14 @@ static NSCharacterSet *newlineCharacterSet;
         [NSApp sendAction:@selector(performDuxBundle:) to:nil from:bundle.menuItem];
         return;
       }
+    }
+    
+    // mini completion
+//    if (self.miniCompletionVisible) {
+    NSString *completion = [self miniCompletionForCurrentCursorOffset];
+    if (completion) {
+      [self insertMiniCompletion];
+      return;
     }
   }
   
@@ -739,7 +866,13 @@ static NSCharacterSet *newlineCharacterSet;
         if ([self removeEmptyMarkPairIfFound])
           return;
       }
-      
+
+      if (([theEvent modifierFlags] &  NSCommandKeyMask)
+          && [self.string beginingOfLineAtOffset:self.selectedRange.location] == self.selectedRange.location) {
+        [self deleteBackward:self];
+        return;
+      }
+
       if (!([theEvent modifierFlags] & NSControlKeyMask))
         break;
       
@@ -766,7 +899,13 @@ static NSCharacterSet *newlineCharacterSet;
     
   }
   
+  // handle key down
   [super keyDown:theEvent];
+  
+  // if there are no modifiers, and it's an ascii character, show auto complete
+  unichar keyPressed = [[theEvent charactersIgnoringModifiers] characterAtIndex:0];
+  BOOL isAlphanumeric = [[NSCharacterSet alphanumericCharacterSet] characterIsMember:keyPressed];
+  self.miniCompletionVisible = isAlphanumeric;
 }
 
 - (BOOL)handleOpeningClosingCharactersInEvent:(NSEvent *)event
@@ -1205,38 +1344,24 @@ static NSCharacterSet *newlineCharacterSet;
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-	NSRect documentVisibleRect = self.enclosingScrollView.documentVisibleRect;
+
 	NSLayoutManager *layoutManager = self.layoutManager;
 	NSTextContainer *textContainer = self.textContainer;
   
   // background
-  [self.backgroundColor set];
-  NSRectFill(dirtyRect);
-  
-  // page guide
-  if (self.showPageGuide) {
-if ([DuxPreferences editorDarkMode]) {
-    [[NSColor colorWithDeviceWhite:1 alpha:0.1] set];
-} else {
-    [[NSColor colorWithDeviceWhite:0.85 alpha:1] set];
-}
-    float position = self.pageGuidePosition;
-    if (self.showLineNumbers)
-      position += 34;
-    position += 0.5;
-    [NSBezierPath strokeLineFromPoint:NSMakePoint(position, NSMinY(documentVisibleRect)) toPoint:NSMakePoint(position, NSMaxY(documentVisibleRect))];
-  }
-  
+  //[self.backgroundColor set];
+  //NSRectFill(dirtyRect);
+    
   // draw highlighted elements
   NSRange glyphRange;
   NSRectArray glyphRects;
   NSUInteger glyphRectsIndex;
   NSUInteger glyphRectsCount;
-if ([DuxPreferences editorDarkMode]) {
-  [[NSColor colorWithCalibratedRed:0.173 green:0.151 blue:0.369 alpha:1.000] set];
-} else {
-  [[NSColor colorWithCalibratedRed:0.973 green:0.951 blue:0.769 alpha:1.000] set];
-}
+//  if ([DuxPreferences editorDarkMode]) {
+//    [[NSColor colorWithCalibratedRed:0.173 green:0.151 blue:0.369 alpha:1.000] set];
+//  } else {
+    [[NSColor colorWithCalibratedRed:0.973 green:0.951 blue:0.769 alpha:1.000] set];
+//  }
   float glyphRectExtraX = (self.showLineNumbers) ? 33.5 : 0;
   for (NSValue *range in self.highlightedElements) {
     glyphRange = [layoutManager glyphRangeForCharacterRange:range.rangeValue actualCharacterRange:NULL];
@@ -1271,6 +1396,40 @@ if ([DuxPreferences editorDarkMode]) {
   }
   
   [super drawRect:dirtyRect];
+  
+  // draw mini completion
+  if (self.selectedRange.length > 0)
+    self.miniCompletionVisible = NO;
+  
+  if (self.miniCompletionVisible) {
+    NSUInteger wordStart = [self findBeginingOfSubwordStartingAt:self.selectedRange.location];
+    NSUInteger wordEnd = [self findEndOfSubwordStartingAt:wordStart];
+    
+    if (wordEnd != self.selectedRange.location)
+      self.miniCompletionVisible = NO;
+  }
+  
+  if (self.miniCompletionVisible) {
+    NSString *completion = [self miniCompletionForCurrentCursorOffset];
+    if (completion) {
+      completion = [NSString stringWithFormat:@"⇥ %@", completion];
+      
+      NSMutableDictionary *attributes = self.highlighter.baseAttributes.mutableCopy;
+      attributes[NSForegroundColorAttributeName] = [(NSColor *)(attributes[NSForegroundColorAttributeName]) colorWithAlphaComponent:0.5];
+      NSSize completionSize = [completion sizeWithAttributes:attributes];
+      
+      glyphRange = [layoutManager glyphRangeForCharacterRange:self.selectedRange actualCharacterRange:NULL];
+      
+      glyphRects = [layoutManager rectArrayForGlyphRange:glyphRange withinSelectedGlyphRange:glyphRange inTextContainer:textContainer rectCount:&glyphRectsCount];
+      CGRect glyphRect = glyphRects[0];
+      glyphRect.origin.x += glyphRectExtraX;
+      glyphRect.size = NSMakeSize(completionSize.width + 7, completionSize.height);
+      [self.backgroundColor set];
+      [NSBezierPath fillRect:glyphRect];
+      
+      [completion drawAtPoint:NSMakePoint(glyphRect.origin.x + 3, glyphRect.origin.y - 3) withAttributes:attributes];
+    }
+  }
 }
 
 - (void)selectionDidChange:(NSNotification *)notif
@@ -1385,9 +1544,8 @@ if ([DuxPreferences editorDarkMode]) {
   [paragraphStyle setBaseWritingDirection:NSWritingDirectionLeftToRight];
   [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
   
-  float spaceWidth = [@" " sizeWithAttributes:[textStorage attributesAtIndex:0 effectiveRange:NULL]].width;
-  [paragraphStyle setDefaultTabInterval:spaceWidth * [DuxPreferences tabWidth]];
-  float headIndentWidth = spaceWidth * ([DuxPreferences tabWidth] * 2);
+  [paragraphStyle setDefaultTabInterval:self.spaceWidth * [DuxPreferences tabWidth]];
+  float headIndentWidth = self.spaceWidth * ([DuxPreferences tabWidth] * 2);
   
   NSUInteger whitespaceCount;
   NSNumber *oldWhitespaceCount;
@@ -1437,7 +1595,7 @@ if ([DuxPreferences editorDarkMode]) {
         }
         
         [textStorage addAttribute:@"DuxEditorLeadingWhitespaceCount" value:[NSNumber numberWithInteger:whitespaceCount] range:lineRange];
-        [paragraphStyle setHeadIndent:headIndentWidth + (whitespaceCount * spaceWidth)];
+        [paragraphStyle setHeadIndent:headIndentWidth + (whitespaceCount * self.spaceWidth)];
         [textStorage addAttribute:NSParagraphStyleAttributeName value:[paragraphStyle copy] range:lineRange];
       }
     }
@@ -1523,6 +1681,8 @@ if ([DuxPreferences editorDarkMode]) {
     NSRange range = NSMakeRange(0, self.textStorage.length);
     [self.textStorage setAttributes:[NSDictionary dictionary] range:range];
     [self.highlighter updateHighlightingForStorage:self.textStorage range:range];
+    
+    self.spaceWidth = [@" " sizeWithAttributes:@{NSFontAttributeName: [DuxPreferences editorFont]}].width;
   });
 }
 
@@ -1545,23 +1705,9 @@ if ([DuxPreferences editorDarkMode]) {
   [self setNeedsDisplay:YES];
 }
 
-- (void)showPageGuideDidChange:(NSNotification *)notif
-{
-  self.showPageGuide = [DuxPreferences showPageGuide];
-  
-  [self setNeedsDisplay:YES];
-}
-
 - (void)showOtherInstancesOfSelectedSymbolDidChange:(NSNotification *)notif
 {
 	[self updateHighlightedElements];
-}
-
-- (void)pageGuidePositionDidChange:(NSNotification *)notif
-{
-  self.pageGuidePosition = [DuxPreferences pageGuidePosition];
-  
-  [self setNeedsDisplay:YES];
 }
 
 - (void)textContainerSizeDidChange:(NSNotification *)notif
@@ -1574,26 +1720,17 @@ if ([DuxPreferences editorDarkMode]) {
   return self.window.undoManager;
 }
 
-- (BOOL)becomeFirstResponder
+- (NSString *)selectedText
 {
-  BOOL accept = [super becomeFirstResponder];
-
-  if (accept) {
-    self.backgroundColor = [NSColor duxEditorColor];
-  }
+  if (self.selectedRange.length == 0)
+    return @"";
   
-  return accept;
+  return [self.string substringWithRange:self.selectedRange];
 }
 
-- (BOOL)resignFirstResponder
+- (NSString *)newlineString
 {
-  BOOL accept = [super resignFirstResponder];
-  
-  if (accept) {
-    self.backgroundColor = [NSColor duxBackgroundEditorColor];
-  }
-  
-  return accept;
+  return [NSString stringForNewlineStyle:self.textDocument.activeNewlineStyle];
 }
 
 @end

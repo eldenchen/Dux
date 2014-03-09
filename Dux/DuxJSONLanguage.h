@@ -8,6 +8,7 @@
 //
 
 #import "DuxLanguage.h"
+#import "DuxTheme.h"
 
 @interface DuxJSONLanguage : DuxLanguage
 

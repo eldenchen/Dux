@@ -28,12 +28,12 @@
 @property (weak) DuxSyntaxHighlighter *highlighter;
 @property (strong) NSSet *highlightedElements;
 @property BOOL showLineNumbers;
-@property BOOL showPageGuide;
-@property NSUInteger pageGuidePosition;
 
 @property (strong) IBOutlet NSPanel *goToLinePanel;
 @property (strong) DuxQuickFindPanelController *goToSymbolPanel;
 @property (weak) IBOutlet NSSearchField *goToLineSearchField;
+
+@property (readonly) CGFloat spaceWidth;
 
 - (void)initDuxTextView;
 
@@ -68,5 +68,8 @@
 - (BOOL)tabShouldIndentWithCurrentSelectedRange;
 
 - (NSUInteger)countSpacesInLeadingWhitespace:(NSString *)lineString;
+
+- (NSString *)selectedText; // currently selected text
+- (NSString *)newlineString; // @"\n" or @"\r" or @"\r\n" depending on the active newline style for this document
 
 @end

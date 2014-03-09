@@ -73,4 +73,15 @@ static NSMutableArray *registeredLanguages = nil;
   finishedHandler();
 }
 
+- (NSSet *)autocompleteWords
+{
+  static NSSet *set = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    set = [NSSet set];
+  });
+  
+  return set;
+}
+
 @end

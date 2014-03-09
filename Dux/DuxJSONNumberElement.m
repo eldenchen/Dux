@@ -19,7 +19,8 @@ static NSColor *color;
 {
   if (self == [DuxJSONNumberElement class]) {
     nextElementCharacterSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."] invertedSet];
-    color = [NSColor colorWithDeviceRed:0.11 green:0.36 blue:0.87 alpha:1.0];
+
+    color = [[DuxTheme currentTheme] colorForKey:@"constant.numeric.json"];
   }
 }
 

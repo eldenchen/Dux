@@ -12,6 +12,8 @@
 #import "DuxMultiFileSearchWindowController.h"
 #import "DuxClickAndHoldPopUpButton.h"
 #import "DuxBundle.h"
+#import "DuxProjectWindow.h"
+#import "DuxTheme.h"
 
 @interface DuxProjectWindowController ()
 
@@ -78,14 +80,14 @@ static NSMutableArray *projects = nil;
   self.noEditorTextView.alphaValue = 0.65;
   
   [self.window setMovableByWindowBackground:YES];
-  if ([DuxPreferences editorDarkMode]) {
-    self.window.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:1];
-    self.noEditorTextView.textColor = [NSColor whiteColor];
-    self.noEditorTextView.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:0.2];
-    self.documentPathLabel.textColor = [NSColor lightGrayColor];
-  } else {
+//  if ([DuxPreferences editorDarkMode]) {
+//    self.window.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:1];
+//    self.noEditorTextView.textColor = [NSColor whiteColor];
+//    self.noEditorTextView.backgroundColor = [NSColor colorWithCalibratedWhite:0 alpha:0.2];
+//    self.documentPathLabel.textColor = [NSColor lightGrayColor];
+//  } else {
     self.window.backgroundColor = [NSColor colorWithCalibratedRed:0.886 green:0.902 blue:0.929 alpha:1.000];
-  }
+//  }
   
   if (self.document) {
     [self.noEditorView setHidden:YES];
@@ -97,7 +99,9 @@ static NSMutableArray *projects = nil;
   
   // seems to be a bug in IB that prevents custom views from being properly connected to their toolbar item
   self.historyToolbarItem.view = self.historyToolbarItemView;
+  
   self.pathToolbarItem.view = self.pathToolbarItemView;
+  self.pathToolbarItem.maxSize = NSMakeSize(FLT_MAX, self.pathToolbarItem.maxSize.height); // NSToolbar Documentation: "As of OS X v10.5, if you call setView: on an NSToolbarItem object without also calling setMinSize: or setMaxSize:, the toolbar item sets its minimum and maximum size equal to the view’s frame."
   
   [self reloadDocumentHistoryPopUp];
 }
@@ -126,6 +130,11 @@ static NSMutableArray *projects = nil;
     [self reloadDocumentHistoryPopUp];
     self.documentPathLabel.stringValue = @"";
     [self.noEditorView setHidden:NO];
+    
+    DuxProjectWindow *window = (DuxProjectWindow *)self.window;
+    if ([window isKindOfClass:[DuxProjectWindow class]]) {
+      window.duxProjectWindowShowPageGuide = NO;
+    }
     return;
   }
   
@@ -485,7 +494,7 @@ static NSMutableArray *projects = nil;
   if (item.action == @selector(performDuxBundle:)) {
     DuxBundle *bundle = [DuxBundle bundleForSender:item];
     
-    if (![@[DuxBundleInputTypeNone, DuxBundleInputTypeAlert, DuxBundleInputTypeDocumentContents] containsObject:bundle.inputType])
+    if (![@[DuxBundleInputTypeNone, DuxBundleInputTypeAlert, DuxBundleInputTypeDocumentContents, DuxBundleInputTypeSelection] containsObject:bundle.inputType])
       return NO;
     
     if (self.document && [@[DuxBundleOutputTypeInsertSnippet, DuxBundleOutputTypeReplaceDocument, DuxBundleOutputTypeInsertText, DuxBundleInputTypeDocumentContents] containsObject:bundle.outputType])
@@ -510,6 +519,10 @@ static NSMutableArray *projects = nil;
     [[(MyTextDocument *)self.document textView] insertSnippet:output];
   }
   if ([DuxBundleOutputTypeInsertText isEqualToString:bundle.outputType]) {
+    // if there's no selection and the input type is selection, select all before inserting text output
+    if ([bundle.inputType isEqualToString:(NSString *)DuxBundleInputTypeSelection] && [(MyTextDocument *)self.document textView].selectedRange.length == 0)
+      [[(MyTextDocument *)self.document textView] selectAll:self];
+    
     [[(MyTextDocument *)self.document textView] insertText:output];
   }
   if ([DuxBundleOutputTypeReplaceDocument isEqualToString:bundle.outputType]) {
@@ -524,23 +537,13 @@ static NSMutableArray *projects = nil;
   if (notification.object != self.window)
     return;
   
-  self.window.backgroundColor = [NSColor duxEditorColor];
-  
-  if ([self.window.firstResponder isKindOfClass:[DuxTextView class]]) {
-    ((DuxTextView *)self.window.firstResponder).backgroundColor = [NSColor duxEditorColor];
-  }
+  self.window.backgroundColor = [[DuxTheme currentTheme] background];
 }
 
 - (void)windowDidResignMain:(NSNotification *)notification
 {
   if (notification.object != self.window)
     return;
-  
-  self.window.backgroundColor = [NSColor duxBackgroundEditorColor];
-  
-  if ([self.window.firstResponder isKindOfClass:[DuxTextView class]]) {
-    ((DuxTextView *)self.window.firstResponder).backgroundColor = [NSColor duxBackgroundEditorColor];
-  }
 }
 
 - (IBAction)performFindPanelAction:(id)sender
@@ -618,6 +621,11 @@ static NSMutableArray *projects = nil;
 - (void)duxNavigatorDidCreateFile:(NSURL *)url
 {
   [[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:url display:YES completionHandler:NULL];
+}
+
+- (IBAction)refreshFilesList:(id)sender
+{
+  [self.navigatorFilesViewController refreshFilesList:sender];
 }
 
 @end

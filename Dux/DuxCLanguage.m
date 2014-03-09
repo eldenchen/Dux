@@ -75,7 +75,7 @@ static NSIndexSet *keywordIndexSet = nil;
 {
   static NSArray *extensions = nil;
   if (!extensions) {
-    extensions = [NSArray arrayWithObjects:@"h", @"hh", @"hpp", @"hxx", @"h++", @"c", @"cc", @"cpp", @"cxx", @"c++", @"m", @"mm", nil];
+    extensions = [NSArray arrayWithObjects:@"h", @"hh", @"hpp", @"hxx", @"h++", @"c", @"cc", @"cpp", @"cxx", @"c++", @"m", @"mm", @"jstalk", @"coscript", nil];
   }
   
   if (URL && [extensions containsObject:[URL pathExtension]])

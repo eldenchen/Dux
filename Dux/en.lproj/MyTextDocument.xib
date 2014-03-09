@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4510" systemVersion="13A584" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4488.2" systemVersion="13A603" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1070" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4510"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4488.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="DuxProjectWindowController">
@@ -31,6 +31,7 @@
                 <outlet property="delegate" destination="-2" id="100262"/>
                 <outlet property="filesMenu" destination="100265" id="100279"/>
                 <outlet property="filesView" destination="100248" id="100261"/>
+                <outlet property="scrollView" destination="100247" id="c6f-Kt-xxG"/>
                 <outlet property="view" destination="100237" id="100257"/>
             </connections>
         </viewController>
@@ -45,39 +46,39 @@
                 <rect key="frame" x="0.0" y="0.0" width="1020" height="700"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <splitView autosaveName="DuxProjectWindowSplitView" vertical="YES" id="100232">
+                    <splitView autosaveName="DuxProjectWindowSplitView" dividerStyle="thin" vertical="YES" id="100232">
                         <rect key="frame" x="-1" y="0.0" width="1021" height="700"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <customView id="100230">
-                                <rect key="frame" x="0.0" y="0.0" width="203" height="700"/>
+                                <rect key="frame" x="0.0" y="0.0" width="205" height="700"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <tabView drawsBackground="NO" type="noTabsNoBorder" initialItem="100234" id="100233">
-                                        <rect key="frame" x="0.0" y="1" width="203" height="699"/>
+                                        <rect key="frame" x="0.0" y="1" width="205" height="699"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <font key="font" metaFont="system"/>
                                         <tabViewItems>
                                             <tabViewItem label="Tab" identifier="1" id="100234">
                                                 <view key="view" id="100237">
-                                                    <rect key="frame" x="0.0" y="0.0" width="203" height="699"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="205" height="699"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <scrollView focusRingType="none" borderType="none" autohidesScrollers="YES" horizontalLineScroll="20" horizontalPageScroll="10" verticalLineScroll="20" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="100247">
-                                                            <rect key="frame" x="0.0" y="24" width="203" height="675"/>
+                                                            <rect key="frame" x="0.0" y="24" width="205" height="675"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="HhV-e8-bjM">
-                                                                <rect key="frame" x="0.0" y="0.0" width="203" height="675"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="205" height="675"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <subviews>
                                                                     <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnResizing="NO" autosaveColumns="NO" rowHeight="20" indentationPerLevel="14" outlineTableColumn="100252" id="100248">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="203" height="675"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="205" height="675"/>
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                         <size key="intercellSpacing" width="3" height="0.0"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                         <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                                         <tableColumns>
-                                                                            <tableColumn editable="NO" width="200" minWidth="16" maxWidth="1000" id="100252">
+                                                                            <tableColumn editable="NO" width="202" minWidth="16" maxWidth="1000" id="100252">
                                                                                 <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                                                     <font key="font" metaFont="smallSystem"/>
                                                                                     <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -113,7 +114,7 @@
                                                             </scroller>
                                                         </scrollView>
                                                         <customView id="iab-dy-fDx">
-                                                            <rect key="frame" x="46" y="0.0" width="111" height="22"/>
+                                                            <rect key="frame" x="47" y="0.0" width="111" height="22"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <subviews>
                                                                 <button id="100284">
@@ -156,22 +157,22 @@
                                 </subviews>
                             </customView>
                             <customView id="100229">
-                                <rect key="frame" x="212" y="0.0" width="809" height="700"/>
+                                <rect key="frame" x="206" y="0.0" width="815" height="700"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <customView id="100195">
-                                        <rect key="frame" x="0.0" y="0.0" width="809" height="700"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="815" height="700"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </customView>
                                     <customView id="100223">
-                                        <rect key="frame" x="0.0" y="0.0" width="809" height="700"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="815" height="700"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="750" id="100199">
-                                                <rect key="frame" x="361" y="341" width="86" height="19"/>
+                                                <rect key="frame" x="364" y="341" width="86" height="19"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" title="No Editor" drawsBackground="YES" id="100200">
-                                                    <font key="font" metaFont="systemBold" size="16"/>
+                                                    <font key="font" size="16" name="LucidaGrande-Bold"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </textFieldCell>
@@ -193,7 +194,7 @@
                     <toolbarItem implicitItemIdentifier="11560338-BB62-491D-952A-6CFB19E7F9D5" label="History" paletteLabel="History" tag="-1" id="100166">
                         <nil key="toolTip"/>
                         <size key="minSize" width="66" height="15"/>
-                        <size key="maxSize" width="69" height="16"/>
+                        <size key="maxSize" width="66" height="15"/>
                         <customView key="view" id="100165">
                             <rect key="frame" x="0.0" y="14" width="66" height="16"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -202,7 +203,7 @@
                     <toolbarItem implicitItemIdentifier="D6010CD2-6A41-4FE2-9F9E-62D241A71B95" label="Path" paletteLabel="Path" id="100163">
                         <nil key="toolTip"/>
                         <size key="minSize" width="70" height="15"/>
-                        <size key="maxSize" width="9083" height="15"/>
+                        <size key="maxSize" width="70" height="15"/>
                         <textField key="view" verticalHuggingPriority="750" id="100140">
                             <rect key="frame" x="0.0" y="14" width="70" height="15"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -330,13 +331,6 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="newFolder:" target="100256" id="euQ-1D-36r"/>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="7Hk-GY-0eD"/>
-                <menuItem title="Reload Files" id="100290">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="refreshFilesList:" target="100256" id="nuU-jo-oeG"/>
                     </connections>
                 </menuItem>
             </items>
